@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Core" GeneratedClassName="App">
+  <Profiles />
+  <Settings>
+    <Setting Name="projectExtension" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">mproject</Value>
+    </Setting>
+    <Setting Name="moduleNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">modules</Value>
+    </Setting>
+    <Setting Name="moduleNamespaceURI" Type="System.String" Scope="User">
+      <Value Profile="(Default)">~</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

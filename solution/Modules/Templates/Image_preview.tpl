@@ -1,0 +1,1 @@
+﻿<img src="{{_setup.setup_source}}" id="{{_setup.setup_id}}" alt="{{_setup.setup_alt}}" />
