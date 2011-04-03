@@ -9,12 +9,12 @@ using System.Windows.Forms;
 using mshtml;
 using System.Runtime.InteropServices;
 
-namespace Frontend.UserControls
+namespace EditableWebBrowser
 {
-    public partial class PreviewWebBrowser : EditableWebBrowser.WebBrowser
+    public partial class WebBrowser : System.Windows.Forms.WebBrowser
     {
-        //private IHTMLDocument2 doc;
-        public PreviewWebBrowser()
+
+        public WebBrowser()
         {
         }
     }

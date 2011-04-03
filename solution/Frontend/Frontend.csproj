@@ -91,8 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CFormController.cs" />
-    <Compile Include="CEditHost.cs" />
-    <Compile Include="CEditDesigner.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +195,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{1D6EFEDD-88AA-47E2-9E28-4707FFDD2896}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EditableWebBrowser\EditableWebBrowser.csproj">
+      <Project>{A16F981F-6733-4438-833F-36FA524F1660}</Project>
+      <Name>EditableWebBrowser</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

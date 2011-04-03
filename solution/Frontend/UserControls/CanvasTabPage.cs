@@ -23,16 +23,38 @@ namespace Frontend.UserControls
         {
             InitializeComponent();
 
-            // Init wysiwyg mode
+            // doctext cannot be void
             previewWebBrowser1.DocumentText = "init";
-            //previewWebBrowser1.
+            // unmanaged HTMLDocument
             doc = (IHTMLDocument2)previewWebBrowser1.Document.DomDocument;
 
-            //IHTMLEditServices editservices = (IHTMLEditServices)previewWebBrowser1;
+            //EditableWebBrowser.IServiceProvider sp = (EditableWebBrowser.IServiceProvider)previewWebBrowser1.Document.DomDocument;
+
+            // get unknown interface for 
+            //IntPtr docUnkn = Marshal.GetIUnknownForObject(doc);
+            //Guid iServiceProviderGuid = new Guid("16379F40-0C57-41ED-9A41-1F255CC942BE"); //Frontend.IServiceProvider
+
+            //IntPtr documentIServiceProvider;
+            //int hr = Marshal.QueryInterface(docUnkn, ref iServiceProviderGuid, out documentIServiceProvider);
+
+            //Frontend.IServiceProvider sp = (Frontend.IServiceProvider)Marshal.GetObjectForIUnknown(documentIServiceProvider);
+
+
+
+            //IntPtr docISer
+
+
+
+            return;
+            //IntPtr ispiface = Marshal.QueryInterface(doc, typeof(IServiceProvider));
+            //IntPtr ispiface = Marshal.GetComInterfaceForObject(doc, typeof(IServiceProvider));
+
+            //IServiceProvider editservices = (IServiceProvider)Marshal.GetObjectForIUnknown(Marshal.GetComInterfaceForObject(doc, typeof(IServiceProvider)));
+            //IServiceProvider editservices = (IServiceProvider)doc;
 
 
             //IHTMLEditDesigner designer = new CEditDesigner();
-            //IHTMLEditServices es = (IHTMLEditServices)Marshal.GetObjectForIUnknown((IntPtr)previewWebBrowser1.GetService(typeof(PreviewWebBrowser)));
+            //IHTMLEditServices es = (IHTMLEditServices)Marshal.GetObjectForIUnknown((IntPtr)previewWebBrowser1.GetService(typeof(IHTMLEditServices)));
             //es.AddDesigner(designer);
             //previewWebBrowser1.GetService(typeof
             //return;
@@ -139,7 +161,7 @@ namespace Frontend.UserControls
                 doc.write(output);
                 doc.close();
                 doc.designMode = "On";
-                doc.ondragstart = "x";
+                //doc.ondragstart = "x";
                 previewSucceeded = true;
             }
             catch (System.Xml.XmlException exc)
