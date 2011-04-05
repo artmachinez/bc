@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CustomMarshalers" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -44,19 +45,14 @@
   <ItemGroup>
     <Compile Include="EWBInterop\IEditDesigner.cs" />
     <Compile Include="EWBInterop\IHTMLEditServices.cs" />
+    <Compile Include="EWBInterop\IOle.cs" />
     <Compile Include="EWBInterop\IServiceProvider.cs" />
-    <Compile Include="WebBrowser.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebBrowser.Designer.cs">
-      <DependentUpon>WebBrowser.cs</DependentUpon>
-    </Compile>
+    <Compile Include="EWBInterop\IWebBrowser2.cs" />
+    <Compile Include="EWBInterop\enums.cs" />
+    <Compile Include="EWBInterop\structs.cs" />
+    <Compile Include="EWBInterop\win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WebBrowser.resx">
-      <DependentUpon>WebBrowser.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="WebBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MSHTML">

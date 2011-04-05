@@ -42,9 +42,9 @@ namespace Frontend.Forms
                     modules.AddRange(CModuleReader.Instance.langToModulesMap[String.Empty]);
                 }
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
-                CFormController.Instance.mainForm.setStatus("no WS modules found");
+                CFormController.Instance.mainForm.setStatus("no WS modules found: ");
             }
 
             listView1.Groups.Clear();

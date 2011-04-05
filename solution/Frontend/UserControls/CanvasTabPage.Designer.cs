@@ -1,4 +1,5 @@
-﻿namespace Frontend.UserControls
+﻿using System;
+namespace Frontend.UserControls
 {
     partial class CanvasTabPage
     {
@@ -17,7 +18,12 @@
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
+            try
+            {
+                base.Dispose(disposing);
+            }
+            catch (Exception) { }
+
         }
 
         #region Component Designer generated code
@@ -30,12 +36,10 @@
         {
             System.Windows.Forms.TabControl tabControl1;
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.previewWebBrowser1 = new Frontend.UserControls.PreviewWebBrowser();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +63,6 @@
             // tabPage1
             // 
             this.tabPage1.AllowDrop = true;
-            this.tabPage1.Controls.Add(this.previewWebBrowser1);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -67,18 +70,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "view";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // previewWebBrowser1
-            // 
-            this.previewWebBrowser1.AllowNavigation = false;
-            this.previewWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewWebBrowser1.Location = new System.Drawing.Point(3, 3);
-            this.previewWebBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.previewWebBrowser1.Name = "previewWebBrowser1";
-            this.previewWebBrowser1.Size = new System.Drawing.Size(578, 524);
-            this.previewWebBrowser1.TabIndex = 0;
-            this.previewWebBrowser1.Url = new System.Uri("http://www.google.com", System.UriKind.Absolute);
-            this.previewWebBrowser1.VisibleChanged += new System.EventHandler(this.webBrowser1_VisibleChanged);
             // 
             // tabPage2
             // 
@@ -116,7 +107,6 @@
             this.Name = "ControlCanvas";
             this.Size = new System.Drawing.Size(611, 538);
             tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
@@ -128,6 +118,5 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         internal System.Windows.Forms.TextBox textBox1;
-        private PreviewWebBrowser previewWebBrowser1;
     }
 }

@@ -11,11 +11,12 @@ using System.Runtime.InteropServices;
 
 namespace Frontend.UserControls
 {
-    public partial class PreviewWebBrowser : EditableWebBrowser.WebBrowser
+    public partial class PreviewWebBrowser : WebBrowser
     {
         //private IHTMLDocument2 doc;
         public PreviewWebBrowser()
         {
+
         }
     }
 }

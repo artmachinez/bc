@@ -52,7 +52,7 @@ namespace Core
                     Object[] args = new Object[] { attribute.Value };
                     module.setup.GetType().InvokeMember(attribute.Name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty, null, module.setup, args);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // Attribute not found, ignoring
                 }
