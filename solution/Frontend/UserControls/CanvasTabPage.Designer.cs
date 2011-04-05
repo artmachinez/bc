@@ -37,6 +37,7 @@ namespace Frontend.UserControls
             System.Windows.Forms.TabControl tabControl1;
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.htmlEditor1 = new onlyconnect.HtmlEditor();
             this.textBox1 = new System.Windows.Forms.TextBox();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabControl1.SuspendLayout();
@@ -63,6 +64,7 @@ namespace Frontend.UserControls
             // tabPage1
             // 
             this.tabPage1.AllowDrop = true;
+            this.tabPage1.Controls.Add(this.htmlEditor1);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -82,6 +84,29 @@ namespace Frontend.UserControls
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "edit";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // htmlEditor1
+            // 
+            this.htmlEditor1.DefaultComposeSettings.BackColor = System.Drawing.Color.White;
+            this.htmlEditor1.DefaultComposeSettings.DefaultFont = new System.Drawing.Font("Arial", 10F);
+            this.htmlEditor1.DefaultComposeSettings.Enabled = false;
+            this.htmlEditor1.DefaultComposeSettings.ForeColor = System.Drawing.Color.Black;
+            this.htmlEditor1.DefaultPreamble = onlyconnect.EncodingType.UTF8;
+            this.htmlEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.htmlEditor1.DocumentEncoding = onlyconnect.EncodingType.WindowsCurrent;
+            this.htmlEditor1.IsDesignMode = true;
+            this.htmlEditor1.Location = new System.Drawing.Point(3, 3);
+            this.htmlEditor1.Name = "htmlEditor1";
+            this.htmlEditor1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.htmlEditor1.SelectionBackColor = System.Drawing.Color.Empty;
+            this.htmlEditor1.SelectionBullets = false;
+            this.htmlEditor1.SelectionFont = null;
+            this.htmlEditor1.SelectionForeColor = System.Drawing.Color.Empty;
+            this.htmlEditor1.SelectionNumbering = false;
+            this.htmlEditor1.Size = new System.Drawing.Size(578, 524);
+            this.htmlEditor1.TabIndex = 0;
+            this.htmlEditor1.Text = "htmlEditor1";
+            this.htmlEditor1.VisibleChanged += new System.EventHandler(this.wb_VisibleChanged);
             // 
             // textBox1
             // 
@@ -118,5 +143,6 @@ namespace Frontend.UserControls
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         internal System.Windows.Forms.TextBox textBox1;
+        private onlyconnect.HtmlEditor htmlEditor1;
     }
 }

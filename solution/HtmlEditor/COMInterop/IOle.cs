@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.CustomMarshalers;
 
-namespace EditableWebBrowser.EWBInterop
+namespace onlyconnect
 {
     [ComVisible(true), ComImport(),
     Guid("00000119-0000-0000-C000-000000000046"),
@@ -131,8 +131,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int SetActiveObject([In, MarshalAs(UnmanagedType.Interface)]
-                        IOleInPlaceActiveObject pActiveObject, [In, MarshalAs(UnmanagedType.LPWStr)]
-                        String pszObjName);
+			IOleInPlaceActiveObject pActiveObject, [In, MarshalAs(UnmanagedType.LPWStr)]
+			String pszObjName);
     }
 
     [ComVisible(true), ComImport(),
@@ -162,8 +162,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int SetActiveObject([In, MarshalAs(UnmanagedType.Interface)]
-                        IOleInPlaceActiveObject pActiveObject, [In, MarshalAs(UnmanagedType.LPWStr)]
-                        String pszObjName);
+			IOleInPlaceActiveObject pActiveObject, [In, MarshalAs(UnmanagedType.LPWStr)]
+			String pszObjName);
 
         //IOleInPlaceFrame
         [return: MarshalAs(UnmanagedType.I4)]
@@ -230,8 +230,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
 
 
         //void OnUIDeactivate(
-        //      [In, MarshalAs(UnmanagedType.I4)]
-        //      int fUndoable);
+        //	[In, MarshalAs(UnmanagedType.I4)]
+        //	int fUndoable);
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int OnUIDeactivate([In, MarshalAs(UnmanagedType.I4)] int fUndoable);
@@ -288,7 +288,7 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int SetInPlaceSite([In, MarshalAs(UnmanagedType.Interface)]
-                        IOleInPlaceSite pIPSite);
+			IOleInPlaceSite pIPSite);
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int GetInPlaceSite([Out, MarshalAs(UnmanagedType.Interface)] IOleInPlaceSite ppIPSite);
@@ -468,7 +468,7 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
             pDataObject, [In, MarshalAs(UnmanagedType.Bool)] Boolean fCreation, [In,
             MarshalAs(UnmanagedType.U4)] uint dwReserved);
         int GetClipboardData([In, MarshalAs(UnmanagedType.U4)] uint dwReserved, out
-                        Object data);
+			Object data);
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int DoVerb([In, MarshalAs(UnmanagedType.I4)] int iVerb, [In] IntPtr lpmsg,
@@ -494,15 +494,15 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int SetExtent([In, MarshalAs(UnmanagedType.U4)] uint dwDrawAspect, [In]
-                        Object pSizel); // tagSIZEL
+			Object pSizel); // tagSIZEL
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int GetExtent([In, MarshalAs(UnmanagedType.U4)] uint dwDrawAspect, [Out]
-                        Object pSizel); // tagSIZEL
+			Object pSizel); // tagSIZEL
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int Advise([In, MarshalAs(UnmanagedType.Interface)] IAdviseSink pAdvSink, out
-                        int cookie);
+			int cookie);
         [return: MarshalAs(UnmanagedType.I4)]
         [PreserveSig]
         int Unadvise([In, MarshalAs(UnmanagedType.U4)] int dwConnection);
@@ -526,13 +526,13 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         int OleGetData(
             FORMATETC pFormatetc,
             [Out]
-                        STGMEDIUM pMedium);
+			STGMEDIUM pMedium);
 
 
         int OleGetDataHere(
             FORMATETC pFormatetc,
             [In, Out]
-                        STGMEDIUM pMedium);
+			STGMEDIUM pMedium);
 
 
         int OleQueryGetData(
@@ -542,7 +542,7 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         int OleGetCanonicalFormatEtc(
             FORMATETC pformatectIn,
             [Out]
-                        FORMATETC pformatetcOut);
+			FORMATETC pformatetcOut);
 
 
         int OleSetData(
@@ -554,24 +554,24 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [return: MarshalAs(UnmanagedType.Interface)]
         IEnumFORMATETC OleEnumFormatEtc(
             [In, MarshalAs(UnmanagedType.U4)]
-                        int dwDirection);
+			int dwDirection);
 
         int OleDAdvise(
             FORMATETC pFormatetc,
             [In, MarshalAs(UnmanagedType.U4)]
-                        int advf,
+			int advf,
             [In, MarshalAs(UnmanagedType.Interface)]
-                        object pAdvSink,
+			object pAdvSink,
             [Out, MarshalAs(UnmanagedType.LPArray)]
-                        int[] pdwConnection);
+			int[] pdwConnection);
 
         int OleDUnadvise(
             [In, MarshalAs(UnmanagedType.U4)]
-                        int dwConnection);
+			int dwConnection);
 
         int OleEnumDAdvise(
             [Out, MarshalAs(UnmanagedType.LPArray)]
-                        object[] ppenumAdvise);
+			object[] ppenumAdvise);
     }
 
     [ComVisible(true), ComImport(),
@@ -585,7 +585,7 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [PreserveSig]
         int QueryStatus(
             [In, MarshalAs(UnmanagedType.Struct)]
-                        ref Guid pguidCmdGroup,
+			ref Guid pguidCmdGroup,
             UInt32 cCmds2,
             [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] OLECMD prgCmds,
             ref OLECMDTEXT pCmdText);
@@ -600,15 +600,6 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
             int nCmdexecopt,
             [In, MarshalAs(UnmanagedType.LPArray)] object[] pvaIn,
             [Out, MarshalAs(UnmanagedType.LPArray)] object[] pvaOut);
-    }
-
-    [ComVisible(true), StructLayout(LayoutKind.Sequential)]
-    public struct OLECMD
-    {
-        [MarshalAs(UnmanagedType.U4)]
-        public int cmdID;
-        [MarshalAs(UnmanagedType.U4)]
-        public int cmdf;
     }
 
 

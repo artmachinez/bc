@@ -11,7 +11,7 @@ using System.IO;
 using Frontend.Forms;
 //using mshtml;
 using System.Runtime.InteropServices;
-using Frontend.Editor.HtmlEditor;
+using onlyconnect;
 
 namespace Frontend.UserControls
 {
@@ -19,25 +19,22 @@ namespace Frontend.UserControls
     {
         //private EditableWebBrowser.WebBrowser ewb;
 
-        private HtmlEditor htmlEditor;
+        //private HtmlEditor htmlEditor;
 
         private bool previewSucceeded = true;
 
         public CanvasTabPage()
         {
             InitializeComponent();
+            htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
+        }
 
-            this.htmlEditor = new HtmlEditor();
-            this.htmlEditor.Dock = DockStyle.Fill;
-            this.htmlEditor.VisibleChanged += new EventHandler(wb_VisibleChanged);
-            onlyconnect.IHTMLEditDesigner designer = new Editor.CRestrictedEditDesigner();
-            this.htmlEditor.SetEditDesigner(designer);
-            this.htmlEditor.IsDesignMode = true;
-
-
-            this.tabPage1.Controls.Add(htmlEditor);
-
-            return;
+        void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
+        {
+            if (e.ReadyState == "complete")
+            {
+                htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
+            }
         }
 
         public String content
@@ -68,10 +65,10 @@ namespace Frontend.UserControls
             }
         }
 
-        public void RefreshBrowser()
-        {
-            htmlEditor.Refresh();
-        }
+        //public void RefreshBrowser()
+        //{
+        //    htmlEditor1.Refresh();
+        //}
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
@@ -114,13 +111,12 @@ namespace Frontend.UserControls
             try
             {
                 String output = CXMLParser.Instance.getPreviewFromProjectXML(this.content);
-                this.htmlEditor.LoadDocument(output);
-                //this.htmlEditor.HtmlDocument2.SetDesignMode("On");
+                this.htmlEditor1.LoadDocument(output);
                 previewSucceeded = true;
             }
             catch (System.Xml.XmlException exc)
             {
-                this.htmlEditor.LoadDocument(exc.Message);
+                this.htmlEditor1.LoadDocument(exc.Message);
                 previewSucceeded = false;
             }
             return;
@@ -130,7 +126,7 @@ namespace Frontend.UserControls
         {
             if (previewSucceeded)
             {
-                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor.HtmlDocument2.GetBody().innerHTML); //this.ewb.doc2wb.body.innerHTML);// .innerHTML;
+                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             }
         }
 
