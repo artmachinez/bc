@@ -18,12 +18,7 @@ namespace Frontend.UserControls
             {
                 components.Dispose();
             }
-            try
-            {
-                base.Dispose(disposing);
-            }
-            catch (Exception) { }
-
+            base.Dispose(disposing);
         }
 
         #region Component Designer generated code
@@ -34,56 +29,44 @@ namespace Frontend.UserControls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TabControl tabControl1;
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.browserTabPage = new System.Windows.Forms.TabPage();
             this.htmlEditor1 = new onlyconnect.HtmlEditor();
+            this.textEditorTabPage = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            tabControl1 = new System.Windows.Forms.TabControl();
-            tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.browserTabPage.SuspendLayout();
+            this.textEditorTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
-            tabControl1.AllowDrop = true;
-            tabControl1.Controls.Add(this.tabPage1);
-            tabControl1.Controls.Add(this.tabPage2);
-            tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            tabControl1.HotTrack = true;
-            tabControl1.Location = new System.Drawing.Point(0, 0);
-            tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            tabControl1.Multiline = true;
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new System.Drawing.Size(611, 538);
-            tabControl1.TabIndex = 3;
-            tabControl1.TabStop = false;
+            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Controls.Add(this.browserTabPage);
+            this.tabControl1.Controls.Add(this.textEditorTabPage);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl1.Multiline = true;
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(611, 538);
+            this.tabControl1.TabIndex = 3;
+            this.tabControl1.TabStop = false;
             // 
             // tabPage1
             // 
-            this.tabPage1.AllowDrop = true;
-            this.tabPage1.Controls.Add(this.htmlEditor1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(584, 530);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "view";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.AllowDrop = true;
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(584, 530);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "edit";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.browserTabPage.AllowDrop = true;
+            this.browserTabPage.Controls.Add(this.htmlEditor1);
+            this.browserTabPage.Location = new System.Drawing.Point(4, 4);
+            this.browserTabPage.Name = "tabPage1";
+            this.browserTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.browserTabPage.Size = new System.Drawing.Size(584, 530);
+            this.browserTabPage.TabIndex = 0;
+            this.browserTabPage.Text = "view";
+            this.browserTabPage.UseVisualStyleBackColor = true;
             // 
             // htmlEditor1
             // 
@@ -108,6 +91,18 @@ namespace Frontend.UserControls
             this.htmlEditor1.Text = "htmlEditor1";
             this.htmlEditor1.VisibleChanged += new System.EventHandler(this.wb_VisibleChanged);
             // 
+            // tabPage2
+            // 
+            this.textEditorTabPage.AllowDrop = true;
+            this.textEditorTabPage.Controls.Add(this.textBox1);
+            this.textEditorTabPage.Location = new System.Drawing.Point(4, 4);
+            this.textEditorTabPage.Name = "tabPage2";
+            this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.textEditorTabPage.Size = new System.Drawing.Size(584, 530);
+            this.textEditorTabPage.TabIndex = 1;
+            this.textEditorTabPage.Text = "edit";
+            this.textEditorTabPage.UseVisualStyleBackColor = true;
+            // 
             // textBox1
             // 
             this.textBox1.AllowDrop = true;
@@ -128,21 +123,23 @@ namespace Frontend.UserControls
             // 
             this.AllowDrop = true;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.Controls.Add(tabControl1);
+            this.Controls.Add(this.tabControl1);
             this.Name = "ControlCanvas";
             this.Size = new System.Drawing.Size(611, 538);
-            tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.browserTabPage.ResumeLayout(false);
+            this.textEditorTabPage.ResumeLayout(false);
+            this.textEditorTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage browserTabPage;
+        private System.Windows.Forms.TabPage textEditorTabPage;
         internal System.Windows.Forms.TextBox textBox1;
         private onlyconnect.HtmlEditor htmlEditor1;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }

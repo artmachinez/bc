@@ -36,16 +36,16 @@ namespace Core
         }
 
         /// <summary>
-        /// Creates instance of module from XML node
+        /// Creates instance of module from HTML node
         /// </summary>
-        /// <param name="node">Module XML node</param>
+        /// <param name="node">Module HTML node</param>
         /// <returns>Instance of AModule with UserSetup</returns>
-        private AModule getModuleFromXMLNode(XmlNode node)
+        private AModule getModuleFromNode(HtmlNode node)
         {
-            AModule module = CModuleReader.Instance.GetModuleInstanceFromTag(node.LocalName);
+            AModule module = CModuleReader.Instance.GetModuleInstanceFromTag(node.Name);
 
             // Set attributes
-            foreach (XmlAttribute attribute in node.Attributes)
+            foreach (HtmlAttribute attribute in node.Attributes)
             {
                 try
                 {
@@ -63,36 +63,6 @@ namespace Core
 
             return module;
         }
-
-        /// <summary>
-        /// Creates instance of module from XML node
-        /// </summary>
-        /// <param name="node">Module XML node</param>
-        /// <returns>Instance of AModule with UserSetup</returns>
-        //private AModule getModuleFromXMLNode(HtmlNode node)
-        //{
-        //    AModule module = CModuleReader.Instance.GetModuleInstanceFromTag(node.LocalName);
-
-        //    // Set attributes
-        //    foreach (XmlAttribute attribute in node.Attributes)
-        //    {
-        //        try
-        //        {
-        //            Object[] args = new Object[] { attribute.Value };
-        //            module.setup.GetType().InvokeMember(attribute.Name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty, null, module.setup, args);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            // Attribute not found, ignoring
-        //        }
-        //    }
-        //    // And location
-        //    RectangleConverter converter = new RectangleConverter();
-        //    module.setup.location = (Rectangle)converter.ConvertFromString(node.Attributes["location"].Value);
-
-        //    return module;
-        //}
-
         /// <summary>
         /// Creates XML string from instance of module
         /// </summary>
@@ -128,47 +98,30 @@ namespace Core
         }
 
         /// <summary>
-        /// Takes whole XML document and replaces modules tag with their preview templates
+        /// Takes whole HTML document and replaces modules tag with their preview templates
         /// </summary>
-        /// <param name="inputXML">Complete project XML</param>
+        /// <param name="inputHTML">Complete project HTML</param>
         /// <returns>Complete preview</returns>
-        public String getPreviewFromProjectXML(String inputXML)
+        public String getPreviewFromProjectXML(String inputHTML)
         {
-            XmlDocument doc = new XmlDocument();
-            // Throws XmlException
-            doc.LoadXml(inputXML);
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(inputHTML);
 
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("modules", "~");
+            HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
 
-            XmlNodeList moduleNodeList = doc.SelectNodes("//modules:*", nsmgr);
-
-            foreach (XmlNode moduleNode in moduleNodeList)
+            if (moduleNodeList != null)
             {
-                XmlDocument containerNode = new XmlDocument();
-
-                // Save setup to a xmlnode called <module[modulename]>
-                XmlElement setupNode = containerNode.CreateElement(App.Default.moduleNamespace + moduleNode.LocalName);
-                foreach (XmlAttribute attr in moduleNode.Attributes)
+                foreach (HtmlNode moduleNode in moduleNodeList)
                 {
-                    setupNode.SetAttribute(attr.LocalName, attr.Value);
-                    //setupNode.Attributes.Append(containerNode.ImportNode(attr, true));
+                    HtmlNode newNode = doc.CreateElement("div");
+                    newNode.SetAttributeValue("class", "modulecontainer");
+                    newNode.AppendChild(moduleNode);
+                    newNode.InnerHtml += this.getModuleFromNode(moduleNode).generatePreview();
+
+                    moduleNode.ParentNode.ReplaceChild(newNode, moduleNode);
                 }
-
-                XmlElement rootNode = containerNode.CreateElement("div");
-                rootNode.SetAttribute("class", "module");
-                rootNode.AppendChild(setupNode);
-
-                //rootNode.AppendChild(containerNode.CreateE(moduleNode.OuterXml));
-                rootNode.InnerXml += this.getModuleFromXMLNode(moduleNode).generatePreview();
-
-                containerNode.AppendChild(rootNode);
-                
-                // Switch 
-                moduleNode.ParentNode.ReplaceChild(doc.ImportNode(containerNode.DocumentElement, true), moduleNode);
             }
-
-            return doc.OuterXml;
+            return doc.DocumentNode.OuterHtml;
         }
 
         /// <summary>

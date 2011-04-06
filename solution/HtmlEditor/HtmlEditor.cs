@@ -760,17 +760,18 @@ namespace onlyconnect
             hr = ((IMarkupContainer2)this.HtmlDocument2).RegisterForDirtyRange(mChangeMonitor, out changeCookie);
         }
 
-
-        public void SetEditDesigner()
+        // Edit jv: added optional parameter for creating own editdesigners 
+        public void SetEditDesigner(IHTMLEditDesigner ds = null)
         {
-            IHTMLDocument2 htmldoc = (IHTMLDocument2)this.mHtmlDoc;
-            htmldoc.SetDesignMode("On");
+            //IHTMLDocument2 htmldoc = (IHTMLDocument2)this.mHtmlDoc;
+            //htmldoc.SetDesignMode("On");
             onlyconnect.IServiceProvider isp = (onlyconnect.IServiceProvider)mHtmlDoc;
             onlyconnect.IHTMLEditServices es;
             System.Guid IHtmlEditServicesGuid = new System.Guid("3050f663-98b5-11cf-bb82-00aa00bdce0b");
             System.Guid SHtmlEditServicesGuid = new System.Guid(0x3050f7f9, 0x98b5, 0x11cf, 0xbb, 0x82, 0x00, 0xaa, 0x00, 0xbd, 0xce, 0x0b);
             IntPtr ppv;
-            onlyconnect.IHTMLEditDesigner ds = (onlyconnect.IHTMLEditDesigner)theSite;
+            if(ds == null)
+                ds = (onlyconnect.IHTMLEditDesigner)theSite;
             if (isp != null)
             {
                 isp.QueryService(ref SHtmlEditServicesGuid, ref IHtmlEditServicesGuid, out ppv);
@@ -779,28 +780,6 @@ namespace onlyconnect
                 Marshal.Release(ppv);
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ds"></param>
-        public void SetEditDesigner(IHTMLEditDesigner ds)
-        {
-            onlyconnect.IServiceProvider isp = (onlyconnect.IServiceProvider)this.mHtmlDoc;
-            onlyconnect.IHTMLEditServices es;
-            System.Guid IHtmlEditServicesGuid = new System.Guid("3050f663-98b5-11cf-bb82-00aa00bdce0b");
-            System.Guid SHtmlEditServicesGuid = new System.Guid(0x3050f7f9, 0x98b5, 0x11cf, 0xbb, 0x82, 0x00, 0xaa, 0x00, 0xbd, 0xce, 0x0b);
-            IntPtr ppv;
-            if (isp != null)
-            {
-                isp.QueryService(ref SHtmlEditServicesGuid, ref IHtmlEditServicesGuid, out ppv);
-                es = (onlyconnect.IHTMLEditServices)Marshal.GetObjectForIUnknown(ppv);
-                int retval = es.AddDesigner(ds);
-                Marshal.Release(ppv);
-            }
-            return;
-        }
-
 
         void SetHTMLEvents()
         {

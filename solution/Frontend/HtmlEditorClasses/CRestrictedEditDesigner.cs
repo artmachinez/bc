@@ -11,7 +11,7 @@ namespace Frontend.HtmlEditorClasses
     class CRestrictedEditDesigner : IHTMLEditDesigner
     {
 
-        public int isForbidden(IHTMLElement elem)
+        private int isForbidden(IHTMLElement elem)
         {
             if (elem == null)
                 return HRESULT.S_FALSE;
@@ -21,11 +21,6 @@ namespace Frontend.HtmlEditorClasses
                 return HRESULT.S_OK;
 
             return HRESULT.S_FALSE;
-
-
-
-
-            //return HRESULT.S_OK;
         }
 
         public int PostEditorEventNotify(int inEvtDispId, IHTMLEventObj pIEventObj)
@@ -52,8 +47,12 @@ namespace Frontend.HtmlEditorClasses
             //    return HRESULT.S_FALSE;
             //if (isForbidden(pIEventObj.ToElement) == HRESULT.S_OK)
             //    return HRESULT.S_OK;
-
-            return isForbidden(pIEventObj.SrcElement);
+            //if (pIEventObj.EventType == "mousedown")
+            //{
+                //if (pIEventObj.ToElement != null)
+                //    return HRESULT.S_FALSE;
+                return isForbidden(pIEventObj.SrcElement);
+            //}
             //return HRESULT.S_FALSE;
         }
 

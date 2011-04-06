@@ -41,11 +41,26 @@ namespace Frontend.UserControls
         {
             set
             {
+                htmlEditor1.LoadDocument(CXMLParser.Instance.getPreviewFromProjectXML(value));
                 textBox1.Text = value;
             }
             get
             {
-                return textBox1.Text;
+                if (this.tabControl1.SelectedTab == browserTabPage)
+                {
+                    try
+                    {
+                        return CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+                    }
+                    catch(Exception)
+                    {
+                        return textBox1.Text;
+                    }
+                }
+                else
+                {
+                    return textBox1.Text;
+                }
             }
         }
 
@@ -110,8 +125,9 @@ namespace Frontend.UserControls
         {
             try
             {
-                String output = CXMLParser.Instance.getPreviewFromProjectXML(this.content);
-                this.htmlEditor1.LoadDocument(output);
+                //String output = CXMLParser.Instance.getPreviewFromProjectXML(this.content);
+                //this.htmlEditor1.LoadDocument(output);
+                this.content = textBox1.Text;
                 previewSucceeded = true;
             }
             catch (System.Xml.XmlException exc)
