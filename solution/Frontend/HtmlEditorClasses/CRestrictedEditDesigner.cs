@@ -17,7 +17,7 @@ namespace Frontend.HtmlEditorClasses
                 return HRESULT.S_FALSE;
             if (elem.className == null)
                 return isForbidden(elem.parentElement);
-            if (elem.className == "module")
+            if (elem.className == "modulecontainer")
                 return HRESULT.S_OK;
 
             return HRESULT.S_FALSE;

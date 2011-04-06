@@ -31,29 +31,5 @@ namespace Core {
                 return ((string)(this["projectExtension"]));
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("modules")]
-        public string moduleNamespace {
-            get {
-                return ((string)(this["moduleNamespace"]));
-            }
-            set {
-                this["moduleNamespace"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("~")]
-        public string moduleNamespaceURI {
-            get {
-                return ((string)(this["moduleNamespaceURI"]));
-            }
-            set {
-                this["moduleNamespaceURI"] = value;
-            }
-        }
     }
 }

@@ -176,26 +176,7 @@ namespace Core
                     return this.GetModuleInstanceFromType(type);
                 }
             }
-            //return null;
-            throw new Exception();
-        }
-
-        /// <summary>
-        /// Gets instance of module (with usersetup)
-        /// </summary>
-        /// <param name="moduleTag">Module tag</param>
-        /// <returns>Instance of module</returns>
-        public AModule GetModuleInstanceFromTag(String moduleTag)
-        {
-            foreach (Type type in this.modules)
-            {
-                String tag = (String)type.GetField("tag", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy).GetValue(null);
-                if (tag == moduleTag)
-                {
-                    return this.GetModuleInstanceFromType(type);
-                }
-            }
-            throw new Exception();
+            throw new Exception("module not found");
         }
 
         /// <summary>
@@ -220,7 +201,15 @@ namespace Core
         {
             String currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetCallingAssembly().Location);
             String modulesDir = currentDir + Path.DirectorySeparatorChar + Mod.Default.modulesDir;
-            return new Uri(modulesDir).LocalPath;
+            String completePath = new Uri(modulesDir).LocalPath;
+
+            if (!Directory.Exists(completePath))
+            {
+                Directory.CreateDirectory(completePath);
+            }
+
+            return completePath;
+
         }
 
         /// <summary>

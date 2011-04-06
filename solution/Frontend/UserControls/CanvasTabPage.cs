@@ -94,7 +94,7 @@ namespace Frontend.UserControls
                 ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)e.Data.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
                 foreach (ListViewItem listViewItemModule in listViewItemModules)
                 {
-                    input += CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterXml;
+                    input += CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml;
                 }
 
                 int cursorPosition = textBox1.SelectionStart;
