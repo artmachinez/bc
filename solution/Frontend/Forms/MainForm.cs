@@ -154,7 +154,7 @@ namespace Frontend.Forms
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
             System.IO.File.WriteAllText(@activeChild.url, activeChild.content);
-            activeChild.RefreshBrowser();
+            //activeChild.RefreshBrowser();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

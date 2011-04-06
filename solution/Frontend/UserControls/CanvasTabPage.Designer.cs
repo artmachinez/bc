@@ -1,4 +1,5 @@
-﻿namespace Frontend.UserControls
+﻿using System;
+namespace Frontend.UserControls
 {
     partial class CanvasTabPage
     {
@@ -17,7 +18,12 @@
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
+            try
+            {
+                base.Dispose(disposing);
+            }
+            catch (Exception) { }
+
         }
 
         #region Component Designer generated code
@@ -30,12 +36,11 @@
         {
             System.Windows.Forms.TabControl tabControl1;
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.previewWebBrowser1 = new Frontend.UserControls.PreviewWebBrowser();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.htmlEditor1 = new onlyconnect.HtmlEditor();
             this.textBox1 = new System.Windows.Forms.TextBox();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +64,7 @@
             // tabPage1
             // 
             this.tabPage1.AllowDrop = true;
-            this.tabPage1.Controls.Add(this.previewWebBrowser1);
+            this.tabPage1.Controls.Add(this.htmlEditor1);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -67,18 +72,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "view";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // previewWebBrowser1
-            // 
-            this.previewWebBrowser1.AllowNavigation = false;
-            this.previewWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewWebBrowser1.Location = new System.Drawing.Point(3, 3);
-            this.previewWebBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.previewWebBrowser1.Name = "previewWebBrowser1";
-            this.previewWebBrowser1.Size = new System.Drawing.Size(578, 524);
-            this.previewWebBrowser1.TabIndex = 0;
-            this.previewWebBrowser1.Url = new System.Uri("http://www.google.com", System.UriKind.Absolute);
-            this.previewWebBrowser1.VisibleChanged += new System.EventHandler(this.webBrowser1_VisibleChanged);
             // 
             // tabPage2
             // 
@@ -91,6 +84,29 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "edit";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // htmlEditor1
+            // 
+            this.htmlEditor1.DefaultComposeSettings.BackColor = System.Drawing.Color.White;
+            this.htmlEditor1.DefaultComposeSettings.DefaultFont = new System.Drawing.Font("Arial", 10F);
+            this.htmlEditor1.DefaultComposeSettings.Enabled = false;
+            this.htmlEditor1.DefaultComposeSettings.ForeColor = System.Drawing.Color.Black;
+            this.htmlEditor1.DefaultPreamble = onlyconnect.EncodingType.UTF8;
+            this.htmlEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.htmlEditor1.DocumentEncoding = onlyconnect.EncodingType.WindowsCurrent;
+            this.htmlEditor1.IsDesignMode = true;
+            this.htmlEditor1.Location = new System.Drawing.Point(3, 3);
+            this.htmlEditor1.Name = "htmlEditor1";
+            this.htmlEditor1.SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.htmlEditor1.SelectionBackColor = System.Drawing.Color.Empty;
+            this.htmlEditor1.SelectionBullets = false;
+            this.htmlEditor1.SelectionFont = null;
+            this.htmlEditor1.SelectionForeColor = System.Drawing.Color.Empty;
+            this.htmlEditor1.SelectionNumbering = false;
+            this.htmlEditor1.Size = new System.Drawing.Size(578, 524);
+            this.htmlEditor1.TabIndex = 0;
+            this.htmlEditor1.Text = "htmlEditor1";
+            this.htmlEditor1.VisibleChanged += new System.EventHandler(this.wb_VisibleChanged);
             // 
             // textBox1
             // 
@@ -116,7 +132,6 @@
             this.Name = "ControlCanvas";
             this.Size = new System.Drawing.Size(611, 538);
             tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
@@ -128,6 +143,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         internal System.Windows.Forms.TextBox textBox1;
-        private PreviewWebBrowser previewWebBrowser1;
+        private onlyconnect.HtmlEditor htmlEditor1;
     }
 }

@@ -90,6 +90,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlEditorClasses\CRestrictedEditDesigner.cs" />
     <Compile Include="CFormController.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -140,7 +141,6 @@
     <Compile Include="UserControls\PreviewWebBrowser.Designer.cs">
       <DependentUpon>PreviewWebBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="win32.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,9 +196,9 @@
       <Project>{1D6EFEDD-88AA-47E2-9E28-4707FFDD2896}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EditableWebBrowser\EditableWebBrowser.csproj">
-      <Project>{A16F981F-6733-4438-833F-36FA524F1660}</Project>
-      <Name>EditableWebBrowser</Name>
+    <ProjectReference Include="..\HtmlEditor\HtmlEditor.csproj">
+      <Project>{46B962CC-097B-4E5E-8835-6D89E548ED12}</Project>
+      <Name>HtmlEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

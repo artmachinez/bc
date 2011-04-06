@@ -9,78 +9,32 @@ using System.Windows.Forms;
 using Core;
 using System.IO;
 using Frontend.Forms;
-using mshtml;
+//using mshtml;
 using System.Runtime.InteropServices;
+using onlyconnect;
 
 namespace Frontend.UserControls
 {
     public partial class CanvasTabPage : TabPage
     {
-        private IHTMLDocument2 doc;
+        //private EditableWebBrowser.WebBrowser ewb;
+
+        //private HtmlEditor htmlEditor;
+
         private bool previewSucceeded = true;
 
         public CanvasTabPage()
         {
             InitializeComponent();
-
-            // doctext cannot be void
-            previewWebBrowser1.DocumentText = "init";
-            // unmanaged HTMLDocument
-            doc = (IHTMLDocument2)previewWebBrowser1.Document.DomDocument;
-
-            //EditableWebBrowser.IServiceProvider sp = (EditableWebBrowser.IServiceProvider)previewWebBrowser1.Document.DomDocument;
-
-            // get unknown interface for 
-            //IntPtr docUnkn = Marshal.GetIUnknownForObject(doc);
-            //Guid iServiceProviderGuid = new Guid("16379F40-0C57-41ED-9A41-1F255CC942BE"); //Frontend.IServiceProvider
-
-            //IntPtr documentIServiceProvider;
-            //int hr = Marshal.QueryInterface(docUnkn, ref iServiceProviderGuid, out documentIServiceProvider);
-
-            //Frontend.IServiceProvider sp = (Frontend.IServiceProvider)Marshal.GetObjectForIUnknown(documentIServiceProvider);
-
-
-
-            //IntPtr docISer
-
-
-
-            return;
-            //IntPtr ispiface = Marshal.QueryInterface(doc, typeof(IServiceProvider));
-            //IntPtr ispiface = Marshal.GetComInterfaceForObject(doc, typeof(IServiceProvider));
-
-            //IServiceProvider editservices = (IServiceProvider)Marshal.GetObjectForIUnknown(Marshal.GetComInterfaceForObject(doc, typeof(IServiceProvider)));
-            //IServiceProvider editservices = (IServiceProvider)doc;
-
-
-            //IHTMLEditDesigner designer = new CEditDesigner();
-            //IHTMLEditServices es = (IHTMLEditServices)Marshal.GetObjectForIUnknown((IntPtr)previewWebBrowser1.GetService(typeof(IHTMLEditServices)));
-            //es.AddDesigner(designer);
-            //previewWebBrowser1.GetService(typeof
-            //return;
-            //IServiceProvider isp = (IServiceProvider)doc;
-            //IHTMLEditServices es;
-            //System.Guid IHtmlEditServicesGuid = new System.Guid("3050f663-98b5-11cf-bb82-00aa00bdce0b");
-            //System.Guid SHtmlEditServicesGuid = new System.Guid(0x3050f7f9, 0x98b5, 0x11cf, 0xbb, 0x82, 0x00, 0xaa, 0x00, 0xbd, 0xce, 0x0b);
-            //IntPtr ppv;
-            //IHTMLEditDesigner designer = new EditDesigner();
-            //if (isp != null)
-            //{
-            //    isp.QueryService(ref SHtmlEditServicesGuid, ref IHtmlEditServicesGuid, out ppv);
-            //    es = (IHTMLEditServices)Marshal.GetObjectForIUnknown(ppv);
-            //    int retval = es.AddDesigner(ds);
-            //    Marshal.Release(ppv);
-            //}
-
-            //editservices = \ 
-            //doc.que
-            //IHTMLEditServices
-            //editservices.AddDesigner(designer);
-            
+            htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
         }
 
-        private void eventer(object sender, EventArgs args)
+        void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
         {
+            if (e.ReadyState == "complete")
+            {
+                htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
+            }
         }
 
         public String content
@@ -111,10 +65,10 @@ namespace Frontend.UserControls
             }
         }
 
-        public void RefreshBrowser()
-        {
-            previewWebBrowser1.Refresh();
-        }
+        //public void RefreshBrowser()
+        //{
+        //    htmlEditor1.Refresh();
+        //}
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
@@ -152,22 +106,17 @@ namespace Frontend.UserControls
             }
         }
 
-        private void webBrowser1_VisibleChanged(object sender, EventArgs e)
+        private void wb_VisibleChanged(object sender, EventArgs e)
         {
             try
             {
                 String output = CXMLParser.Instance.getPreviewFromProjectXML(this.content);
-                //doc.designMode = "On";
-                doc.write(output);
-                doc.close();
-                doc.designMode = "On";
-                //doc.ondragstart = "x";
+                this.htmlEditor1.LoadDocument(output);
                 previewSucceeded = true;
             }
             catch (System.Xml.XmlException exc)
             {
-                doc.write(exc.Message);
-                doc.close();
+                this.htmlEditor1.LoadDocument(exc.Message);
                 previewSucceeded = false;
             }
             return;
@@ -177,7 +126,7 @@ namespace Frontend.UserControls
         {
             if (previewSucceeded)
             {
-                this.content = CXMLParser.Instance.getProjectXMLFromPreview(doc.body.innerHTML);// .innerHTML;
+                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             }
         }
 
