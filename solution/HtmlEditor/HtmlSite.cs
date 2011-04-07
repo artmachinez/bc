@@ -29,7 +29,8 @@ namespace onlyconnect
         IDocHostShowUI,
         IOleInPlaceUIWindow,
         HTMLDocumentEvents2,
-        IPropertyNotifySink
+        IPropertyNotifySink,
+        IOleDropTarget
     {
         HtmlEditor container;
         IOleObject m_document;
@@ -855,8 +856,8 @@ namespace onlyconnect
         public int GetDropTarget(IOleDropTarget pDropTarget, out IOleDropTarget ppDropTarget)
         {
             //  Debug.WriteLine("GetDropTarget");
-            ppDropTarget = null;
-            return HRESULT.E_NOTIMPL;
+            ppDropTarget = this;
+            return HRESULT.S_OK;
         }
 
         public int GetExternal(out Object ppDispatch)
@@ -1345,5 +1346,25 @@ namespace onlyconnect
 
         #endregion IPropertyNotifySink ===============
 
+
+        public int OleDragEnter(IntPtr pDataObj, int grfKeyState, long pt, ref int pdwEffect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OleDragOver(int grfKeyState, long pt, ref int pdwEffect)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OleDragLeave()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OleDrop(IntPtr pDataObj, int grfKeyState, long pt, ref int pdwEffect)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
