@@ -56,7 +56,7 @@ namespace onlyconnect
 
         internal HtmlSite theSite;
         String url = String.Empty;
-        String sDocument = String.Empty;
+        public String sDocument = String.Empty;
         internal bool mDesignMode = false;
         private bool mIsContextMenuEnabled = true;
         private string mOptionKeyPath = null;
