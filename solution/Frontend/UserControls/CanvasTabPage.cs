@@ -158,7 +158,7 @@ namespace Frontend.UserControls
         {
             if (previewSucceeded)
             {
-                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.sDocument);
+                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             }
         }
 
