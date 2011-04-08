@@ -56,12 +56,12 @@ namespace Frontend.UserControls
             this.tabControl1.TabIndex = 3;
             this.tabControl1.TabStop = false;
             // 
-            // tabPage1
+            // browserTabPage
             // 
             this.browserTabPage.AllowDrop = true;
             this.browserTabPage.Controls.Add(this.htmlEditor1);
             this.browserTabPage.Location = new System.Drawing.Point(4, 4);
-            this.browserTabPage.Name = "tabPage1";
+            this.browserTabPage.Name = "browserTabPage";
             this.browserTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.browserTabPage.Size = new System.Drawing.Size(584, 530);
             this.browserTabPage.TabIndex = 0;
@@ -70,6 +70,7 @@ namespace Frontend.UserControls
             // 
             // htmlEditor1
             // 
+            this.htmlEditor1.AllowDrop = true;
             this.htmlEditor1.DefaultComposeSettings.BackColor = System.Drawing.Color.White;
             this.htmlEditor1.DefaultComposeSettings.DefaultFont = new System.Drawing.Font("Arial", 10F);
             this.htmlEditor1.DefaultComposeSettings.Enabled = false;
@@ -91,12 +92,12 @@ namespace Frontend.UserControls
             this.htmlEditor1.Text = "htmlEditor1";
             this.htmlEditor1.VisibleChanged += new System.EventHandler(this.wb_VisibleChanged);
             // 
-            // tabPage2
+            // textEditorTabPage
             // 
             this.textEditorTabPage.AllowDrop = true;
             this.textEditorTabPage.Controls.Add(this.textBox1);
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 4);
-            this.textEditorTabPage.Name = "tabPage2";
+            this.textEditorTabPage.Name = "textEditorTabPage";
             this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.textEditorTabPage.Size = new System.Drawing.Size(584, 530);
             this.textEditorTabPage.TabIndex = 1;

@@ -10,6 +10,9 @@ using System.Drawing;
 
 namespace onlyconnect
 {
+    public delegate void DragEnterHandler(object sender, EventArgs e);
+    public delegate void DropHandler(object sender, EventArgs e);
+
     /// <summary>
     /// Implements the site on which mshtml is hosted
     /// </summary>
@@ -43,6 +46,8 @@ namespace onlyconnect
         IntPtr m_docHwnd = IntPtr.Zero;
         internal bool mFullyActive = false;
         internal CSnap snapper;
+        public event DragEnterHandler dragEnter;
+        public event DropHandler drop;
 
         ~HtmlSite()
         {
@@ -857,7 +862,7 @@ namespace onlyconnect
         {
             //  Debug.WriteLine("GetDropTarget");
             ppDropTarget = this;
-            return HRESULT.S_OK;
+            return HRESULT.E_NOTIMPL;
         }
 
         public int GetExternal(out Object ppDispatch)
@@ -1349,22 +1354,32 @@ namespace onlyconnect
 
         public int OleDragEnter(IntPtr pDataObj, int grfKeyState, long pt, ref int pdwEffect)
         {
-            throw new NotImplementedException();
+            System.Windows.Forms.DataObject theDataObject;
+            Object theObject = Marshal.GetObjectForIUnknown(pDataObj);
+            theDataObject = new DataObject(theObject);
+            this.dragEnter(theDataObject, EventArgs.Empty);
+            return HRESULT.S_OK;
         }
 
         public int OleDragOver(int grfKeyState, long pt, ref int pdwEffect)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return HRESULT.E_NOTIMPL;
         }
 
         public int OleDragLeave()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return HRESULT.E_NOTIMPL;
         }
 
         public int OleDrop(IntPtr pDataObj, int grfKeyState, long pt, ref int pdwEffect)
         {
-            throw new NotImplementedException();
+            System.Windows.Forms.DataObject theDataObject;
+            Object theObject = Marshal.GetObjectForIUnknown(pDataObj);
+            theDataObject = new DataObject(theObject);
+            this.drop(theDataObject, EventArgs.Empty);
+            return HRESULT.S_OK;
         }
     }
 }

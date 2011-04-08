@@ -27,6 +27,19 @@ namespace Frontend.UserControls
         {
             InitializeComponent();
             htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
+            //htmlEditor1.theSite.dragEnter += new DragEnterHandler(theSite_dragEnter);
+            //htmlEditor1.theSite.drop += new DropHandler(theSite_drop);
+            //htmlEditor1.AllowDrop = true;
+        }
+
+        void theSite_drop(object sender, EventArgs e)
+        {
+            CFormController.Instance.mainForm.setStatus("drop");
+        }
+
+        void theSite_dragEnter(object sender, EventArgs e)
+        {
+            CFormController.Instance.mainForm.setStatus("dragEnter");
         }
 
         void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
@@ -34,6 +47,9 @@ namespace Frontend.UserControls
             if (e.ReadyState == "complete")
             {
                 htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
+                htmlEditor1.theSite.dragEnter += new DragEnterHandler(theSite_dragEnter);
+                htmlEditor1.theSite.drop += new DropHandler(theSite_drop);
+                htmlEditor1.AllowDrop = true;
             }
         }
 

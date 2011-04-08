@@ -54,7 +54,7 @@ namespace onlyconnect
         internal bool mAcceptsReturn = true;
         internal DocHTML mDocHTML = null;
 
-        internal HtmlSite theSite;
+        public HtmlSite theSite;
         String url = String.Empty;
         public String sDocument = String.Empty;
         internal bool mDesignMode = false;
