@@ -331,6 +331,13 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
             ppViewNew);
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct tagPOINT
+    {
+        public int x;
+        public int y;
+    }
+
     [ComVisible(true), ComImport(), Guid("00000122-0000-0000-C000-000000000046"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IOleDropTarget
     {
@@ -341,8 +348,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
             IntPtr pDataObj,
             [In, MarshalAs(UnmanagedType.U4)]
                 int grfKeyState,
-            [In, MarshalAs(UnmanagedType.U8)]
-                long pt,
+            [In, MarshalAs(UnmanagedType.Struct)]
+                tagPOINT pt,
             [In, Out]
                 ref int pdwEffect);
 
@@ -350,8 +357,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         int OleDragOver(
             [In, MarshalAs(UnmanagedType.U4)]
                 int grfKeyState,
-            [In, MarshalAs(UnmanagedType.U8)]
-                long pt,
+            [In, MarshalAs(UnmanagedType.Struct)]
+                tagPOINT pt,
             [In, Out]
                 ref int pdwEffect);
 
@@ -364,8 +371,8 @@ InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
             IntPtr pDataObj,
             [In, MarshalAs(UnmanagedType.U4)]
                 int grfKeyState,
-            [In, MarshalAs(UnmanagedType.U8)]
-                long pt,
+            [In, MarshalAs(UnmanagedType.Struct)]
+                tagPOINT pt,
             [In, Out]
                 ref int pdwEffect);
     }

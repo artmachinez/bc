@@ -170,6 +170,7 @@
     <Compile Include="DownloadOnlySite.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DropTarget.cs" />
     <Compile Include="EventHandlers.cs">
       <SubType>Code</SubType>
     </Compile>

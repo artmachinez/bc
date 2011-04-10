@@ -82,6 +82,7 @@ namespace onlyconnect
 
         private ChangeMonitor mChangeMonitor;
 
+        public DropTarget dropTarget;
 
         public HtmlEditor()
         {

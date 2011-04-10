@@ -17,39 +17,48 @@ namespace Frontend.UserControls
 {
     public partial class CanvasTabPage : TabPage
     {
-        //private EditableWebBrowser.WebBrowser ewb;
-
-        //private HtmlEditor htmlEditor;
-
         private bool previewSucceeded = true;
+        private bool eventsBound = false;
 
         public CanvasTabPage()
         {
             InitializeComponent();
             htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
-            //htmlEditor1.theSite.dragEnter += new DragEnterHandler(theSite_dragEnter);
-            //htmlEditor1.theSite.drop += new DropHandler(theSite_drop);
-            //htmlEditor1.AllowDrop = true;
         }
 
-        void theSite_drop(object sender, EventArgs e)
+        void theSite_drop(DataObject sender, DragEventArgs e)
         {
-            CFormController.Instance.mainForm.setStatus("drop");
+            CFormController.Instance.mainForm.setStatus("drop" + e.X.ToString());
+            if (sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false) != null)
+            {
+                String input = String.Empty;
+                ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
+                foreach (ListViewItem listViewItemModule in listViewItemModules)
+                {
+                    input += CXMLParser.Instance.getPreviewFromProjectXML(CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml);
+                }
+                htmlEditor1.HtmlDocument2.GetBody().innerHTML += input;
+            }
         }
 
-        void theSite_dragEnter(object sender, EventArgs e)
+        void theSite_dragEnter(DataObject sender, DragEventArgs e)
         {
-            CFormController.Instance.mainForm.setStatus("dragEnter");
+            CFormController.Instance.mainForm.setStatus("dragEnter " + e.X.ToString());
         }
 
         void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
         {
             if (e.ReadyState == "complete")
             {
-                htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
-                htmlEditor1.theSite.dragEnter += new DragEnterHandler(theSite_dragEnter);
-                htmlEditor1.theSite.drop += new DropHandler(theSite_drop);
-                htmlEditor1.AllowDrop = true;
+                if (!this.eventsBound)
+                {
+                    htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
+                    htmlEditor1.AllowDrop = true;
+                    htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
+                    htmlEditor1.dropTarget.drop += new DropHandler(theSite_drop);
+
+                    this.eventsBound = true;
+                }
             }
         }
 
@@ -86,20 +95,13 @@ namespace Frontend.UserControls
         {
             set
             {
-                //previewWebBrowser1.Url = new Uri(value);
                 this._url = value;
             }
             get
             {
-                //return previewWebBrowser1.Url.LocalPath;
                 return this._url;
             }
         }
-
-        //public void RefreshBrowser()
-        //{
-        //    htmlEditor1.Refresh();
-        //}
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
