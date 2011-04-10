@@ -9,9 +9,9 @@ using System.Windows.Forms;
 using Core;
 using System.IO;
 using Frontend.Forms;
-//using mshtml;
 using System.Runtime.InteropServices;
 using onlyconnect;
+using System.Diagnostics;
 
 namespace Frontend.UserControls
 {
@@ -26,6 +26,28 @@ namespace Frontend.UserControls
             htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
         }
 
+        /// <summary>
+        /// Init when htmlEditor is ready
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
+        {
+            if (e.ReadyState == "complete")
+            {
+                if (!this.eventsBound)
+                {
+                    htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
+                    htmlEditor1.AllowDrop = true;
+                    htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
+                    htmlEditor1.dropTarget.drop += new DropHandler(theSite_drop);
+                    htmlEditor1.dropTarget.dragOver += new DragOverHandler(dropTarget_dragOver);
+
+                    this.eventsBound = true;
+                }
+            }
+        }
+
         void theSite_drop(DataObject sender, DragEventArgs e)
         {
             CFormController.Instance.mainForm.setStatus("drop" + e.X.ToString());
@@ -37,7 +59,24 @@ namespace Frontend.UserControls
                 {
                     input += CXMLParser.Instance.getPreviewFromProjectXML(CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml);
                 }
-                htmlEditor1.HtmlDocument2.GetBody().innerHTML += input;
+
+                Point htmlEditorCorner = htmlEditor1.PointToScreen(new Point(0, 0));
+                int X = e.X - htmlEditorCorner.X;
+                int Y = e.Y - htmlEditorCorner.Y;
+
+                IHTMLElement hoverElem = htmlEditor1.HtmlDocument2.ElementFromPoint(X, Y);
+
+                Console.WriteLine(hoverElem.tagName + " " + X + "-" + Y);
+
+                try
+                {
+                    hoverElem.outerHTML += input;
+                }
+                catch (COMException exc)
+                {
+                    htmlEditor1.HtmlDocument2.GetBody().innerHTML += input;
+                    Debug.WriteLine(exc.Message);
+                }
             }
         }
 
@@ -46,20 +85,36 @@ namespace Frontend.UserControls
             CFormController.Instance.mainForm.setStatus("dragEnter " + e.X.ToString());
         }
 
-        void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
+        void dropTarget_dragOver(DataObject sender, DragEventArgs e)
         {
-            if (e.ReadyState == "complete")
-            {
-                if (!this.eventsBound)
-                {
-                    htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
-                    htmlEditor1.AllowDrop = true;
-                    htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
-                    htmlEditor1.dropTarget.drop += new DropHandler(theSite_drop);
+            //Point htmlEditorCorner = htmlEditor1.PointToScreen(new Point(0, 0));
+            //int X = e.X - htmlEditorCorner.X;
+            //int Y = e.Y - htmlEditorCorner.Y;
 
-                    this.eventsBound = true;
-                }
-            }
+            //IDisplayServices ds = (IDisplayServices)htmlEditor1.HtmlDocument2;
+            //IDisplayPointer displayPointer;
+            //ds.CreateDisplayPointer(out displayPointer);
+
+
+            //tagPOINT targetPoint = new tagPOINT();
+            ////HtmlElement elem = new HtmlElement();
+
+            //targetPoint.x = 50;
+            //targetPoint.y = 50;
+
+            //uint whatever = 1;
+            ////htmlEditor1.cur
+            //    //displayPointer
+            ////displayPointer.MoveToPoint(targetPoint, 
+            //displayPointer.MoveToPoint(targetPoint, (int)COORD_SYSTEM.COORD_SYSTEM_CONTAINER, htmlEditor1.HtmlDocument2.GetBody() , whatever, out whatever);
+
+
+            //ds.CreateDisplayPointer(out displayPointer);
+            //IHTMLCaret caret;
+            //int iRetVal = ds.GetCaret(out caret);
+            ////caret.
+
+            //caret.MoveCaretToPointer(displayPointer, false, CARET_DIRECTION.CARET_DIRECTION_FORWARD);
         }
 
         public String content

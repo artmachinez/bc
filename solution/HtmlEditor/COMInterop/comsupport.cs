@@ -2513,7 +2513,7 @@ namespace onlyconnect
     [ComVisible(true), Guid("3050f69e-98b5-11cf-bb82-00aa00bdce0b"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDisplayPointer
     {
-        //		[] HRESULT MoveToPoint([in] POINT ptPoint,[in] COORD_SYSTEM eCoordSystem,[in] IHTMLElement* pElementContext,[in] DWORD dwHitTestOptions,[out] DWORD* pdwHitTestResults);
+        HRESULT MoveToPoint(tagPOINT ptPoint, int eCoordSystem, [MarshalAs(UnmanagedType.Interface)] IHTMLElement pElementContext, UInt32 dwHitTestOptions,[Out] out UInt32 pdwHitTestResults);
         //		[] HRESULT MoveUnit([in] DISPLAY_MOVEUNIT eMoveUnit,[in] LONG lXPos);
         //		[] HRESULT PositionMarkupPointer([in] IMarkupPointer* pMarkupPointer);
         //		[] HRESULT MoveToPointer([in] IDisplayPointer* pDispPointer);

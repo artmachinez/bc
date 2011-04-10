@@ -8,7 +8,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Drawing;
-using mshtml;
 using HtmlAgilityPack;
 
 namespace Core

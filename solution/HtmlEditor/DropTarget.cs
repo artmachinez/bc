@@ -8,10 +8,12 @@ namespace onlyconnect
 {
     public delegate void DragEnterHandler(DataObject sender, DragEventArgs e);
     public delegate void DropHandler(DataObject sender, DragEventArgs e);
+    public delegate void DragOverHandler(DataObject sender, DragEventArgs e);
 
     public class DropTarget : IOleDropTarget
     {
         public event DragEnterHandler dragEnter;
+        public event DragOverHandler dragOver;
         public event DropHandler drop;
 
         HtmlEditor container;
@@ -39,6 +41,7 @@ namespace onlyconnect
 
         public int OleDragOver(int grfKeyState, tagPOINT pt, ref int pdwEffect)
         {
+            this.dragOver(null, (new DragEventArgs(null, 0, pt.x, pt.y, DragDropEffects.All, DragDropEffects.All)));
             return HRESULT.S_OK;
         }
 
