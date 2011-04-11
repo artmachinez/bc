@@ -15,6 +15,8 @@ namespace Frontend
 
         internal ComboBox languageBox;
 
+        internal PropertiesForm propertyBox;
+
         private static CFormController instance = null;
         private CFormController() 
         {

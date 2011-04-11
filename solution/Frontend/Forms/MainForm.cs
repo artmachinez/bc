@@ -20,7 +20,8 @@ namespace Frontend.Forms
         /// <summary>
         /// programatically created toolboxForm
         /// </summary>
-        private ToolBoxForm toolbox;
+        private ToolBoxForm toolboxForm;
+        public PropertiesForm propertiesForm;
 
         public MainForm()
         {
@@ -56,17 +57,22 @@ namespace Frontend.Forms
 
         private void InitToolbox()
         {
-            toolbox = new ToolBoxForm();
-            toolbox.MdiParent = this;
-            toolbox.loadModules(String.Empty);
-            toolbox.Dock = DockStyle.Fill;
-            splitContainer1.Panel1.Controls.Add(toolbox);
-            toolbox.Show();
+            toolboxForm = new ToolBoxForm();
+            toolboxForm.MdiParent = this;
+            toolboxForm.loadModules(String.Empty);
+            toolboxForm.Dock = DockStyle.Fill;
+            splitContainer1.Panel1.Controls.Add(toolboxForm);
+            toolboxForm.Show();
             hideToolBox();
         }
 
         private void InitProperties()
         {
+            propertiesForm = new PropertiesForm();
+            propertiesForm.MdiParent = this;
+            propertiesForm.Dock = DockStyle.Fill;
+            splitContainer2.Panel2.Controls.Add(propertiesForm);
+            propertiesForm.Show();
             hideProperties();
         }
 
@@ -259,16 +265,20 @@ namespace Frontend.Forms
         private void toolBoxMenuItem_Click(object sender, EventArgs e)
         {
             if (toolBoxMenuItem.Checked)
+            {
                 showToolBox();
+            }
             else
+            {
                 hideToolBox();
+            }
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (propertiesMenuItem.Checked)
             {
-                //showProperties();
+                showProperties();
             }
             else
             {
@@ -290,12 +300,17 @@ namespace Frontend.Forms
             splitContainer1.Panel1.Hide();
         }
 
-        internal void showProperties(onlyconnect.IHTMLElement element)
+        internal void showProperties(HtmlAgilityPack.HtmlNode element = null)
         {
-
             propertiesMenuItem.Checked = true;
             splitContainer2.Panel2Collapsed = false;
             splitContainer2.Panel2.Show();
+
+            if (element != null)
+            {
+                propertiesForm.SetContent(element);
+            }
+
         }
 
         internal void hideProperties()

@@ -39,7 +39,7 @@ namespace Core
         /// </summary>
         /// <param name="node">Module HTML node</param>
         /// <returns>Instance of AModule with UserSetup</returns>
-        private AModule getModuleFromNode(HtmlNode node)
+        public AModule getModuleFromNode(HtmlNode node)
         {
             AModule module = CModuleReader.Instance.GetModuleInstanceFromName(node.Attributes["name"].Value);
 
@@ -119,15 +119,19 @@ namespace Core
             {
                 foreach (HtmlNode moduleNode in moduleNodeList)
                 {
+
+                    AModule module = this.getModuleFromNode(moduleNode);
+
                     // Because nodetag is not html, HtmlNode is not in dom structure (parent is null).
                     // Therefore HtmlNode.ReplaceChild method cannot by applied asi in this.getProjectXMLFromPreview
                     HtmlNode newNode = moduleNode.Clone();
                     moduleNode.Name = "div";
                     moduleNode.Attributes.RemoveAll();
                     moduleNode.Attributes.Add("class", "modulecontainer");
+                    moduleNode.Attributes.Add("id", module.setup.id.ToString());
                     moduleNode.AppendChild(newNode);
 
-                    moduleNode.InnerHtml += this.getModuleFromNode(newNode).generatePreview();
+                    moduleNode.InnerHtml += module.generatePreview();
                 }
             }
 

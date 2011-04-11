@@ -86,9 +86,9 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.langSelectBox = new System.Windows.Forms.ComboBox();
-            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -113,7 +113,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(897, 24);
+            this.menuStrip.Size = new System.Drawing.Size(955, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -480,7 +480,7 @@
             this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(897, 25);
+            this.toolStrip.Size = new System.Drawing.Size(955, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -555,9 +555,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 644);
+            this.statusStrip.Location = new System.Drawing.Point(0, 593);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(897, 22);
+            this.statusStrip.Size = new System.Drawing.Size(955, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -578,7 +578,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(897, 595);
+            this.splitContainer1.Size = new System.Drawing.Size(955, 544);
             this.splitContainer1.SplitterDistance = 158;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 6;
@@ -592,9 +592,24 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(736, 595);
-            this.splitContainer2.SplitterDistance = 580;
+            this.splitContainer2.Size = new System.Drawing.Size(794, 544);
+            this.splitContainer2.SplitterDistance = 608;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(608, 544);
+            this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabStop = false;
             // 
             // fileSystemWatcher1
             // 
@@ -609,27 +624,12 @@
             this.langSelectBox.Size = new System.Drawing.Size(66, 21);
             this.langSelectBox.TabIndex = 0;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.AllowDrop = true;
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(580, 595);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.TabStop = false;
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 666);
+            this.ClientSize = new System.Drawing.Size(955, 615);
             this.Controls.Add(this.langSelectBox);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip);

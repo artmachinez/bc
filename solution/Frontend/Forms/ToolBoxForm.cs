@@ -26,11 +26,20 @@ namespace Frontend.Forms
             CFormController.Instance.languageBox.SelectedIndexChanged += new EventHandler(reloadModules);
         }
 
+        /// <summary>
+        /// Event handler for reloading languages / assemblies in modules directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void reloadModules(object sender, EventArgs e)
         {
             this.loadModules(CFormController.Instance.languageBox.SelectedItem.ToString());
         }
 
+        /// <summary>
+        /// Loads modules to listview
+        /// </summary>
+        /// <param name="language"></param>
         public void loadModules(String language)
         {
             List<Type> modules = new List<Type>();
@@ -62,18 +71,20 @@ namespace Frontend.Forms
             }
         }
 
-        /**
-         * not really closing, just hiding
-         */
+        /// <summary>
+        /// Not really closing, just hiding
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             CFormController.Instance.mainForm.hideToolBox();
             e.Cancel = true;
         }
 
-        /**
-         * disabling moving this window
-         */
+        /// <summary>
+        /// Disabling moving with this window
+        /// </summary>
+        /// <param name="message"></param>
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;
@@ -94,9 +105,11 @@ namespace Frontend.Forms
             base.WndProc(ref message);
         }
 
-        /**
-         * code from http://support.microsoft.com/kb/822483 for enabling drag'n'drop for listview at runtime
-         */
+        /// <summary>
+        /// Code from http://support.microsoft.com/kb/822483 for enabling drag'n'drop for listview at runtime
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listView1_ItemDrag(object sender, ItemDragEventArgs e)
         {
             listView1.DoDragDrop(listView1.SelectedItems, DragDropEffects.Copy);

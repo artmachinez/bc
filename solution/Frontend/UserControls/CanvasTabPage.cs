@@ -12,6 +12,7 @@ using Frontend.Forms;
 using System.Runtime.InteropServices;
 using onlyconnect;
 using System.Diagnostics;
+using Frontend.HtmlEditorClasses;
 
 namespace Frontend.UserControls
 {
@@ -37,10 +38,12 @@ namespace Frontend.UserControls
             {
                 // Designer needs to be setup every time webbrowser initiates
                 // (affects going from edit mode to design mode)
-                HtmlEditorClasses.CRestrictedEditDesigner red = new HtmlEditorClasses.CRestrictedEditDesigner();
-                red.moduleClicked += new HtmlEditorClasses.ModuleClickedEventHandler(red_moduleClicked);
+                HtmlEditorClasses.CRestrictedEditDesigner restrictedEditDesigner = new HtmlEditorClasses.CRestrictedEditDesigner();
+                restrictedEditDesigner.moduleClicked += new HtmlEditorClasses.ModuleClickedEventHandler(restrictedEditDesigner_moduleClicked);
+                restrictedEditDesigner.canvasClicked += new HtmlEditorClasses.CanvasClickedEventHandler(restrictedEditDesigner_canvasClicked);
+                htmlEditor1.SetEditDesigner(restrictedEditDesigner);
+
                 htmlEditor1.AllowDrop = true;
-                htmlEditor1.SetEditDesigner(red);
                 if (!this.eventsBound)
                 {
                     htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
@@ -52,10 +55,46 @@ namespace Frontend.UserControls
             }
         }
 
-        void red_moduleClicked(object sender, HtmlEditorClasses.ElementDataEventArgs e)
+        void restrictedEditDesigner_canvasClicked(object sender, HtmlEditorClasses.ElementDataEventArgs e)
         {
-            MessageBox.Show(e.element.outerHTML);
-            CFormController.Instance.mainForm.showProperties(e.element);
+            // Set menu
+            if (e.eventObj.Button == BUTTON.RIGHT)
+            {
+                htmlEditor1.ContextMenuStrip = rightClickMenu;
+            }
+        }
+
+        void restrictedEditDesigner_moduleClicked(object sender, HtmlEditorClasses.ElementDataEventArgs e)
+        {
+            // Set menu
+            if (e.eventObj.Button == BUTTON.RIGHT)
+            {
+                htmlEditor1.ContextMenuStrip = moduleRightClickMenu;
+            }
+            // On leftclick show properties window
+            if (e.eventObj.Button == BUTTON.LEFT)
+            {
+                HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
+                HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
+                //CFormController.Instance.mainForm.
+                CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
+                CFormController.Instance.mainForm.showProperties(elem);
+            }
+        }
+
+        void propertiesForm_moduleChanged(object sender, EventArgs e)
+        {
+            HtmlAgilityPack.HtmlNode activeNode = CFormController.Instance.mainForm.propertiesForm.activeElem;
+
+            //HtmlAgilityPack.HtmlDocument doc = CFormController.Instance.mainForm.propertiesForm.activeElem.OwnerDocument;
+            activeNode.InnerHtml = CXMLParser.Instance.getNodeFromModule(CFormController.Instance.mainForm.propertiesForm.module).OuterHtml;
+            activeNode.InnerHtml += CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
+            //HtmlAgilityPack.HtmlNode newNode = CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
+            //activeNode.ParentNode.ReplaceChild(, activeNode);
+
+            //CXMLParser.Instance.get
+            htmlEditor1.LoadDocument(activeNode.OwnerDocument.DocumentNode.InnerHtml);
+
         }
 
         void theSite_drop(DataObject sender, DragEventArgs e)
@@ -92,7 +131,7 @@ namespace Frontend.UserControls
 
         void theSite_dragEnter(DataObject sender, DragEventArgs e)
         {
-            CFormController.Instance.mainForm.setStatus("dragEnter " + e.X.ToString());
+            //CFormController.Instance.mainForm.setStatus("dragEnter " + e.X.ToString());
         }
 
         void dropTarget_dragOver(DataObject sender, DragEventArgs e)
@@ -227,6 +266,13 @@ namespace Frontend.UserControls
             {
                 this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             }
+        }
+
+        private void viewSource_Click(object sender, EventArgs e)
+        {
+            ShowSourceForm showSource = new ShowSourceForm();
+            showSource.textBox1.Text = htmlEditor1.GetDocumentSource();
+            showSource.ShowDialog();
         }
 
     }

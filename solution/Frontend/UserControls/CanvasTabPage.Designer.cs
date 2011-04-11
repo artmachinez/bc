@@ -29,14 +29,22 @@ namespace Frontend.UserControls
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.browserTabPage = new System.Windows.Forms.TabPage();
             this.htmlEditor1 = new onlyconnect.HtmlEditor();
             this.textEditorTabPage = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.moduleRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.moduleProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.moduleViewSource = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewSource = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.browserTabPage.SuspendLayout();
             this.textEditorTabPage.SuspendLayout();
+            this.moduleRightClickMenu.SuspendLayout();
+            this.rightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -120,6 +128,43 @@ namespace Frontend.UserControls
             this.textBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox1_DragEnter);
             this.textBox1.DragOver += new System.Windows.Forms.DragEventHandler(this.textBox1_DragOver);
             // 
+            // moduleRightClickMenu
+            // 
+            this.moduleRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moduleProperties,
+            this.moduleViewSource});
+            this.moduleRightClickMenu.Name = "moduleRightClickMenu";
+            this.moduleRightClickMenu.Size = new System.Drawing.Size(139, 48);
+            this.moduleRightClickMenu.Text = "moduleRightClickMenu";
+            // 
+            // moduleProperties
+            // 
+            this.moduleProperties.Name = "moduleProperties";
+            this.moduleProperties.Size = new System.Drawing.Size(138, 22);
+            this.moduleProperties.Text = "Properties";
+            // 
+            // moduleViewSource
+            // 
+            this.moduleViewSource.Name = "moduleViewSource";
+            this.moduleViewSource.Size = new System.Drawing.Size(138, 22);
+            this.moduleViewSource.Text = "View Source";
+            this.moduleViewSource.Click += new System.EventHandler(this.viewSource_Click);
+            // 
+            // rightClickMenu
+            // 
+            this.rightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewSource});
+            this.rightClickMenu.Name = "rightClickMenu";
+            this.rightClickMenu.Size = new System.Drawing.Size(139, 26);
+            this.rightClickMenu.Text = "rightClickMenu";
+            // 
+            // viewSource
+            // 
+            this.viewSource.Name = "viewSource";
+            this.viewSource.Size = new System.Drawing.Size(138, 22);
+            this.viewSource.Text = "View Source";
+            this.viewSource.Click += new System.EventHandler(this.viewSource_Click);
+            // 
             // CanvasTabPage
             // 
             this.AllowDrop = true;
@@ -131,6 +176,8 @@ namespace Frontend.UserControls
             this.browserTabPage.ResumeLayout(false);
             this.textEditorTabPage.ResumeLayout(false);
             this.textEditorTabPage.PerformLayout();
+            this.moduleRightClickMenu.ResumeLayout(false);
+            this.rightClickMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -142,5 +189,10 @@ namespace Frontend.UserControls
         internal System.Windows.Forms.TextBox textBox1;
         private onlyconnect.HtmlEditor htmlEditor1;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ContextMenuStrip moduleRightClickMenu;
+        private System.Windows.Forms.ToolStripMenuItem moduleProperties;
+        private System.Windows.Forms.ContextMenuStrip rightClickMenu;
+        private System.Windows.Forms.ToolStripMenuItem moduleViewSource;
+        private System.Windows.Forms.ToolStripMenuItem viewSource;
     }
 }

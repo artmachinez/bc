@@ -8,32 +8,30 @@ using System.Diagnostics;
 
 namespace Frontend.HtmlEditorClasses
 {
-    public class ElementDataEventArgs : EventArgs
-    {
-        public IHTMLElement element;
-
-        public ElementDataEventArgs(IHTMLElement e)
-        {
-            this.element = e;
-        }
-        public IHTMLElement e;
-    }
-
     /// <summary>
     /// Fires when module in htmleditor clicked
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public delegate void ModuleClickedEventHandler(object sender, ElementDataEventArgs e);
+    /// <summary>
+    /// Fires when canvas clicked (not module on it though)
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void CanvasClickedEventHandler(object sender, ElementDataEventArgs e);
 
     [ComVisible(true)]
     class CRestrictedEditDesigner : IHTMLEditDesigner
     {
         public event ModuleClickedEventHandler moduleClicked;
 
+        public event CanvasClickedEventHandler canvasClicked;
+
         private bool isModule(IHTMLElement elem, out IHTMLElement foundModule)
         {
             foundModule = null;
+
             if (elem == null)
                 return false;
             if (elem.className == null)
@@ -62,7 +60,6 @@ namespace Frontend.HtmlEditorClasses
         public int PreHandleEvent(int inEvtDispId, IHTMLEventObj pIEventObj)
         {
             // EventType [mouseover, mouseout, mousemove, mouseup]
-
             // When clicked something, check if it is module or not
             if (pIEventObj.EventType == "mousedown")
             {
@@ -70,10 +67,19 @@ namespace Frontend.HtmlEditorClasses
                 if (isModule(pIEventObj.SrcElement, out module))
                 {
                     // Fire event
-                    ElementDataEventArgs args = new ElementDataEventArgs(module);
+                    ElementDataEventArgs args = new ElementDataEventArgs();
+                    args.element = module;
+                    args.eventObj = pIEventObj;
                     this.moduleClicked(this, args);
                     // And deny the rest
                     return HRESULT.S_OK;
+                }
+                else
+                {
+                    ElementDataEventArgs args = new ElementDataEventArgs();
+                    args.element = pIEventObj.SrcElement;
+                    args.eventObj = pIEventObj;
+                    this.canvasClicked(this, args);
                 }
             }
             
