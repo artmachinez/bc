@@ -4,24 +4,50 @@ using System.Linq;
 using System.Text;
 using onlyconnect;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Frontend.HtmlEditorClasses
 {
+    public class ElementDataEventArgs : EventArgs
+    {
+        public IHTMLElement element;
+
+        public ElementDataEventArgs(IHTMLElement e)
+        {
+            this.element = e;
+        }
+        public IHTMLElement e;
+    }
+
+    /// <summary>
+    /// Fires when module in htmleditor clicked
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void ModuleClickedEventHandler(object sender, ElementDataEventArgs e);
+
     [ComVisible(true)]
     class CRestrictedEditDesigner : IHTMLEditDesigner
     {
+        public event ModuleClickedEventHandler moduleClicked;
 
-        private int isForbidden(IHTMLElement elem)
+        private bool isModule(IHTMLElement elem, out IHTMLElement foundModule)
         {
+            foundModule = null;
             if (elem == null)
-                return HRESULT.S_FALSE;
+                return false;
             if (elem.className == null)
-                return isForbidden(elem.parentElement);
+                return isModule(elem.parentElement, out foundModule);
             if (elem.className == "modulecontainer")
-                return HRESULT.S_OK;
+            {
+                foundModule = elem;
+                return true;
+            }
 
-            return HRESULT.S_FALSE;
+            return false;
         }
+
+        #region IHTMLEditDesigner Members
 
         public int PostEditorEventNotify(int inEvtDispId, IHTMLEventObj pIEventObj)
         {
@@ -35,30 +61,30 @@ namespace Frontend.HtmlEditorClasses
 
         public int PreHandleEvent(int inEvtDispId, IHTMLEventObj pIEventObj)
         {
-            ////pIEventObj.
-            //if (pIEventObj.EventType != "mouseover")
-            //    if (pIEventObj.EventType != "mouseout")
-            //        if (pIEventObj.EventType != "mousemove")
-            //            if (pIEventObj.EventType != "mousedown")
-            //                if (pIEventObj.EventType != "mouseup")
-            //        return HRESULT.S_OK;
-            //if(pIEventObj.ToElement != null)
-            //if (pIEventObj.ToElement.tagName != "BODY")
-            //    return HRESULT.S_FALSE;
-            //if (isForbidden(pIEventObj.ToElement) == HRESULT.S_OK)
-            //    return HRESULT.S_OK;
-            //if (pIEventObj.EventType == "mousedown")
-            //{
-                //if (pIEventObj.ToElement != null)
-                //    return HRESULT.S_FALSE;
-                return isForbidden(pIEventObj.SrcElement);
-            //}
-            //return HRESULT.S_FALSE;
+            // EventType [mouseover, mouseout, mousemove, mouseup]
+
+            // When clicked something, check if it is module or not
+            if (pIEventObj.EventType == "mousedown")
+            {
+                IHTMLElement module;
+                if (isModule(pIEventObj.SrcElement, out module))
+                {
+                    // Fire event
+                    ElementDataEventArgs args = new ElementDataEventArgs(module);
+                    this.moduleClicked(this, args);
+                    // And deny the rest
+                    return HRESULT.S_OK;
+                }
+            }
+            
+            return HRESULT.S_FALSE;
         }
 
         public int TranslateAccelerator(int inEvtDispId, IHTMLEventObj pIEventObj)
         {
             return HRESULT.S_FALSE;
         }
+
+        #endregion
     }
 }

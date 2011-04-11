@@ -35,10 +35,14 @@ namespace Frontend.UserControls
         {
             if (e.ReadyState == "complete")
             {
+                // Designer needs to be setup every time webbrowser initiates
+                // (affects going from edit mode to design mode)
+                HtmlEditorClasses.CRestrictedEditDesigner red = new HtmlEditorClasses.CRestrictedEditDesigner();
+                red.moduleClicked += new HtmlEditorClasses.ModuleClickedEventHandler(red_moduleClicked);
+                htmlEditor1.AllowDrop = true;
+                htmlEditor1.SetEditDesigner(red);
                 if (!this.eventsBound)
                 {
-                    htmlEditor1.SetEditDesigner(new HtmlEditorClasses.CRestrictedEditDesigner());
-                    htmlEditor1.AllowDrop = true;
                     htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
                     htmlEditor1.dropTarget.drop += new DropHandler(theSite_drop);
                     htmlEditor1.dropTarget.dragOver += new DragOverHandler(dropTarget_dragOver);
@@ -46,6 +50,12 @@ namespace Frontend.UserControls
                     this.eventsBound = true;
                 }
             }
+        }
+
+        void red_moduleClicked(object sender, HtmlEditorClasses.ElementDataEventArgs e)
+        {
+            MessageBox.Show(e.element.outerHTML);
+            CFormController.Instance.mainForm.showProperties(e.element);
         }
 
         void theSite_drop(DataObject sender, DragEventArgs e)

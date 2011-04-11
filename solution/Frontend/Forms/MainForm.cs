@@ -267,9 +267,13 @@ namespace Frontend.Forms
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (propertiesMenuItem.Checked)
-                showProperties();
+            {
+                //showProperties();
+            }
             else
+            {
                 hideProperties();
+            }
         }
 
         internal void showToolBox()
@@ -286,8 +290,9 @@ namespace Frontend.Forms
             splitContainer1.Panel1.Hide();
         }
 
-        internal void showProperties()
+        internal void showProperties(onlyconnect.IHTMLElement element)
         {
+
             propertiesMenuItem.Checked = true;
             splitContainer2.Panel2Collapsed = false;
             splitContainer2.Panel2.Show();
