@@ -31,7 +31,7 @@ namespace Frontend.Forms
         {
             InitializeComponent();
             CFormController.Instance.propertyBox = this;
-        }  
+        }
 
         /// <summary>
         /// Creates textboxes and shit
@@ -44,7 +44,6 @@ namespace Frontend.Forms
 
             module = CXMLParser.Instance.getModuleFromNode(element.FirstChild);
 
-            // Set textboxes
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.RowStyles.Clear();
             textboxList.Clear();
@@ -87,7 +86,7 @@ namespace Frontend.Forms
                 // Fire event
                 this.moduleChanged(null, null);
 
-                this.Focus();
+                CFormController.Instance.mainForm.hideProperties();
             }
         }
 

@@ -16,4 +16,12 @@ namespace Frontend.HtmlEditorClasses
         public static int RIGHT_MIDDLE = 6;
         public static int LEFT_MIDDLE_RIGHT = 7;
     }
+
+    public struct BSTR
+    {
+        public static string beforeBegin = "beforeBegin";
+        public static string afterBegin = "afterBegin";
+        public static string beforeEnd = "beforeEnd";
+        public static string afterEnd = "afterEnd";
+    }
 }

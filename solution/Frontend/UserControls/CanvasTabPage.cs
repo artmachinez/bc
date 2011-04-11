@@ -119,7 +119,25 @@ namespace Frontend.UserControls
 
                 try
                 {
-                    hoverElem.outerHTML += input;
+                    // Fix, so the content isnt added to the end of body
+                    // module tag would get moved to html meta tags
+                    if (hoverElem.tagName.Equals("BODY"))
+                    {
+                        Debug.WriteLine("dropped on body : " + input);
+                        Debug.WriteLine(hoverElem.innerHTML);
+                        if (hoverElem.innerHTML == null)
+                        {
+                            htmlEditor1.LoadDocument("<BODY>" + input + "</BODY>");
+                        }
+                        hoverElem.innerHTML += input;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("dropped on elem : " + input);
+                        Debug.WriteLine(hoverElem.innerHTML);
+                        //hoverElem.outerHTML += input;
+                        hoverElem.insertAdjacentHTML(HtmlEditorClasses.BSTR.beforeEnd, input); // outerHTML += input;
+                    }
                 }
                 catch (COMException exc)
                 {
@@ -170,7 +188,8 @@ namespace Frontend.UserControls
         {
             set
             {
-                htmlEditor1.LoadDocument(CXMLParser.Instance.getPreviewFromProjectXML(value));
+                string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
+                htmlEditor1.LoadDocument("<body>" + html + "</body>");
                 textBox1.Text = value;
             }
             get
@@ -266,6 +285,7 @@ namespace Frontend.UserControls
             {
                 this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             }
+            CFormController.Instance.mainForm.hideProperties();
         }
 
         private void viewSource_Click(object sender, EventArgs e)
