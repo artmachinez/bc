@@ -85,6 +85,7 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.langSelectBox = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -92,7 +93,7 @@
             this.italicButton = new System.Windows.Forms.ToolStripButton();
             this.underlineButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
+            this.generateCodeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -359,7 +360,8 @@
             // toolsMenu
             // 
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.generateCodeButton});
             this.toolsMenu.Name = "toolsMenu";
             this.toolsMenu.Size = new System.Drawing.Size(48, 20);
             this.toolsMenu.Text = "&Tools";
@@ -367,7 +369,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // windowsMenu
@@ -585,6 +587,22 @@
             this.splitContainer2.SplitterDistance = 615;
             this.splitContainer2.TabIndex = 0;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(615, 519);
+            this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabStop = false;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
@@ -654,21 +672,12 @@
             this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.TabIndex = 9;
             // 
-            // tabControl1
+            // generateCodeButton
             // 
-            this.tabControl1.AllowDrop = true;
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(615, 519);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.TabStop = false;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.generateCodeButton.Name = "generateCodeButton";
+            this.generateCodeButton.Size = new System.Drawing.Size(166, 22);
+            this.generateCodeButton.Text = "Generate Website";
+            this.generateCodeButton.Click += new System.EventHandler(this.generateCodeButton_Click);
             // 
             // MainForm
             // 
@@ -771,6 +780,7 @@
         private System.Windows.Forms.ToolStripButton italicButton;
         private System.Windows.Forms.ToolStripButton underlineButton;
         private System.Windows.Forms.ToolStripButton boldButton;
+        private System.Windows.Forms.ToolStripMenuItem generateCodeButton;
     }
 }
 

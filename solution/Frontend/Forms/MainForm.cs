@@ -421,5 +421,15 @@ namespace Frontend.Forms
         {
             this.hideProperties();
         }
+
+        private void generateCodeButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            GenerateCodeForm gcf = new GenerateCodeForm(activeChild);
+            gcf.Show();
+        }
     }
 }
