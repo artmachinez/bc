@@ -187,7 +187,7 @@ namespace Frontend.UserControls
         private System.Windows.Forms.TabPage browserTabPage;
         private System.Windows.Forms.TabPage textEditorTabPage;
         internal System.Windows.Forms.TextBox textBox1;
-        private onlyconnect.HtmlEditor htmlEditor1;
+        public onlyconnect.HtmlEditor htmlEditor1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ContextMenuStrip moduleRightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem moduleProperties;

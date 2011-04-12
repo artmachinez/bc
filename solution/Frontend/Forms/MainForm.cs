@@ -175,28 +175,50 @@ namespace Frontend.Forms
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("cut", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
+            {
                 activeChild.textBox1.Cut();
+            }
         }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if(activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("copy", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
+            {
                 activeChild.textBox1.Copy();
+            }
         }
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("paste", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
+            {
                 activeChild.textBox1.Paste();
+            }
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("undo", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
             {
                 activeChild.textBox1.Undo();
             }
@@ -205,7 +227,11 @@ namespace Frontend.Forms
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("undo", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
             {
                 activeChild.textBox1.Undo();
             }
@@ -214,7 +240,11 @@ namespace Frontend.Forms
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild != null)
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("selectall", false, null);
+            }
+            else if (activeChild.getSelectedTab().Equals("editor"))
             {
                 activeChild.textBox1.SelectAll();
             }
@@ -323,6 +353,34 @@ namespace Frontend.Forms
         internal void setStatus(String status)
         {
             this.toolStripStatusLabel.Text = status;
+        }
+
+        private void boldButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("bold", false, null);
+        }
+
+        private void underlinedButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("underline", false, null);
+        }
+
+        private void centerButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
+        }
+
+        private void italicButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("italic", false, null);
         }
     }
 }

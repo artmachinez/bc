@@ -296,5 +296,14 @@ namespace Frontend.UserControls
             showSource.ShowDialog();
         }
 
+        public String getSelectedTab()
+        {
+            if (this.tabControl1.SelectedTab == browserTabPage)
+                return "browser";
+            if (this.tabControl1.SelectedTab == textEditorTabPage)
+                return "editor";
+            else return String.Empty;
+        }
+
     }
 }
