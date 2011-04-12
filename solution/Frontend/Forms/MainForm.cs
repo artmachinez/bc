@@ -92,7 +92,7 @@ namespace Frontend.Forms
                     string fileName = System.IO.Path.GetFileName(fileURL);
 
                     CanvasTabPage canvas = new CanvasTabPage();
-                    canvas.XMLProjectContent = Resources.new_file.ToString();
+                    canvas.XMLProjectContent = ImageResources.new_file.ToString();
                     canvas.Text = fileName;
                     tabControl1.TabPages.Add(canvas);
                     tabControl1.SelectedTab = canvas;
@@ -159,6 +159,8 @@ namespace Frontend.Forms
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             System.IO.File.WriteAllText(@activeChild.url, activeChild.XMLProjectContent);
         }
 
@@ -175,6 +177,8 @@ namespace Frontend.Forms
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("cut", false, null);
@@ -188,6 +192,8 @@ namespace Frontend.Forms
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("copy", false, null);
@@ -201,6 +207,8 @@ namespace Frontend.Forms
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("paste", false, null);
@@ -214,6 +222,8 @@ namespace Frontend.Forms
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("undo", false, null);
@@ -227,6 +237,8 @@ namespace Frontend.Forms
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("undo", false, null);
@@ -240,6 +252,8 @@ namespace Frontend.Forms
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
             if (activeChild.getSelectedTab().Equals("browser"))
             {
                 activeChild.htmlEditor1.HtmlDocument2.ExecCommand("selectall", false, null);
@@ -358,29 +372,54 @@ namespace Frontend.Forms
         private void boldButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
 
-            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("bold", false, null);
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("bold", false, null);
+            }
         }
 
         private void underlinedButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
 
-            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("underline", false, null);
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("underline", false, null);
+            }
         }
 
         private void centerButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
 
-            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
+            }
         }
 
         private void italicButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            if (activeChild == null)
+                return;
 
-            activeChild.htmlEditor1.HtmlDocument2.ExecCommand("italic", false, null);
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("italic", false, null);
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.hideProperties();
         }
     }
 }

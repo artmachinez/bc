@@ -33,7 +33,7 @@ namespace Frontend.UserControls
                 //throw away tab focus, because of ugly dotted focusrectangle
                 this.Parent.Focus();
 
-                e.Graphics.DrawImage(Resources.active_close_button, this.GetCloseButtonArea(tabArea));// tabArea.X + tabArea.Width - 14, 3, 13, 13);
+                e.Graphics.DrawImage(ImageResources.active_close_button, this.GetCloseButtonArea(tabArea));// tabArea.X + tabArea.Width - 14, 3, 13, 13);
 
                 title = this.TabPages[e.Index].Text;
                 titleBrush = new SolidBrush(Color.Black);
@@ -45,7 +45,7 @@ namespace Frontend.UserControls
             //not selected tab
             else
             {
-                e.Graphics.DrawImage(Resources.inactive_close_button, this.GetCloseButtonArea(tabArea));// tabArea.X + tabArea.Width - 14, 3, 13, 13);
+                e.Graphics.DrawImage(ImageResources.inactive_close_button, this.GetCloseButtonArea(tabArea));// tabArea.X + tabArea.Width - 14, 3, 13, 13);
 
                 title = this.TabPages[e.Index].Text;
                 titleBrush = new SolidBrush(Color.Gray);
@@ -81,22 +81,22 @@ namespace Frontend.UserControls
                 //active+hover button
                 if (closeButtonArea.Contains(e.Location) && index == this.SelectedIndex)
                 {
-                    graphics.DrawImage(Resources.active_hover_close_button, closeButtonArea);
+                    graphics.DrawImage(ImageResources.active_hover_close_button, closeButtonArea);
                 }
                 //inactive+hover button
                 else if (closeButtonArea.Contains(e.Location))
                 {
-                    graphics.DrawImage(Resources.inactive_hover_close_button, closeButtonArea);
+                    graphics.DrawImage(ImageResources.inactive_hover_close_button, closeButtonArea);
                 }
                 //active button
                 else if (index == this.SelectedIndex)
                 {
-                    graphics.DrawImage(Resources.active_close_button, closeButtonArea);
+                    graphics.DrawImage(ImageResources.active_close_button, closeButtonArea);
                 }
                 //inactive button
                 else
                 {
-                    graphics.DrawImage(Resources.inactive_close_button, closeButtonArea);
+                    graphics.DrawImage(ImageResources.inactive_close_button, closeButtonArea);
                 }
             }
 

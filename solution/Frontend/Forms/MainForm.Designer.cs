@@ -88,11 +88,11 @@
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.langSelectBox = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.boldButton = new System.Windows.Forms.ToolStripButton();
             this.italicButton = new System.Windows.Forms.ToolStripButton();
             this.underlineButton = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -581,8 +581,8 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(765, 519);
-            this.splitContainer2.SplitterDistance = 585;
+            this.splitContainer2.Size = new System.Drawing.Size(805, 519);
+            this.splitContainer2.SplitterDistance = 615;
             this.splitContainer2.TabIndex = 0;
             // 
             // fileSystemWatcher1
@@ -610,6 +610,37 @@
             this.toolStrip1.TabIndex = 8;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // boldButton
+            // 
+            this.boldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.boldButton.Image = ((System.Drawing.Image)(resources.GetObject("boldButton.Image")));
+            this.boldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.boldButton.Name = "boldButton";
+            this.boldButton.Size = new System.Drawing.Size(35, 22);
+            this.boldButton.Text = "Bold";
+            this.boldButton.Click += new System.EventHandler(this.boldButton_Click);
+            // 
+            // italicButton
+            // 
+            this.italicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.italicButton.Image = ((System.Drawing.Image)(resources.GetObject("italicButton.Image")));
+            this.italicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.italicButton.Name = "italicButton";
+            this.italicButton.Size = new System.Drawing.Size(36, 22);
+            this.italicButton.Text = "Italic";
+            this.italicButton.ToolTipText = "Italic";
+            this.italicButton.Click += new System.EventHandler(this.italicButton_Click);
+            // 
+            // underlineButton
+            // 
+            this.underlineButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.underlineButton.Image = ((System.Drawing.Image)(resources.GetObject("underlineButton.Image")));
+            this.underlineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.underlineButton.Name = "underlineButton";
+            this.underlineButton.Size = new System.Drawing.Size(62, 22);
+            this.underlineButton.Text = "Underline";
+            this.underlineButton.Click += new System.EventHandler(this.underlinedButton_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -620,7 +651,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(955, 519);
-            this.splitContainer1.SplitterDistance = 186;
+            this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.TabIndex = 9;
             // 
             // tabControl1
@@ -634,40 +665,10 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(12, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(585, 519);
+            this.tabControl1.Size = new System.Drawing.Size(615, 519);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.TabStop = false;
-            // 
-            // boldButton
-            // 
-            this.boldButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.boldButton.Image = ((System.Drawing.Image)(resources.GetObject("boldButton.Image")));
-            this.boldButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.boldButton.Name = "boldButton";
-            this.boldButton.Size = new System.Drawing.Size(23, 22);
-            this.boldButton.Text = "Bold";
-            this.boldButton.Click += new System.EventHandler(this.boldButton_Click);
-            // 
-            // italicButton
-            // 
-            this.italicButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.italicButton.Image = ((System.Drawing.Image)(resources.GetObject("italicButton.Image")));
-            this.italicButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.italicButton.Name = "italicButton";
-            this.italicButton.Size = new System.Drawing.Size(23, 22);
-            this.italicButton.Text = "Italic";
-            this.italicButton.ToolTipText = "Italic";
-            this.italicButton.Click += new System.EventHandler(this.italicButton_Click);
-            // 
-            // underlineButton
-            // 
-            this.underlineButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.underlineButton.Image = ((System.Drawing.Image)(resources.GetObject("underlineButton.Image")));
-            this.underlineButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.underlineButton.Name = "underlineButton";
-            this.underlineButton.Size = new System.Drawing.Size(23, 22);
-            this.underlineButton.Text = "Underline";
-            this.underlineButton.Click += new System.EventHandler(this.underlinedButton_Click);
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -767,9 +768,9 @@
         private System.Windows.Forms.ComboBox langSelectBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton boldButton;
         private System.Windows.Forms.ToolStripButton italicButton;
         private System.Windows.Forms.ToolStripButton underlineButton;
+        private System.Windows.Forms.ToolStripButton boldButton;
     }
 }
 
