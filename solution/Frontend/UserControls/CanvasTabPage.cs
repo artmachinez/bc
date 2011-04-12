@@ -123,20 +123,35 @@ namespace Frontend.UserControls
                     // module tag would get moved to html meta tags
                     if (hoverElem.tagName.Equals("BODY"))
                     {
-                        Debug.WriteLine("dropped on body : " + input);
-                        Debug.WriteLine(hoverElem.innerHTML);
                         if (hoverElem.innerHTML == null)
                         {
+                            Debug.WriteLine("dropped on empty body : " + input);
+                            Debug.WriteLine(hoverElem.innerHTML);
                             htmlEditor1.LoadDocument("<BODY>" + input + "</BODY>");
                         }
-                        hoverElem.innerHTML += input;
+                        else
+                        {
+                            Debug.WriteLine("dropped on not empty body : " + input);
+                            Debug.WriteLine(hoverElem.innerHTML);
+                            hoverElem.innerHTML += input;
+                        }
                     }
                     else
                     {
-                        Debug.WriteLine("dropped on elem : " + input);
-                        Debug.WriteLine(hoverElem.innerHTML);
-                        //hoverElem.outerHTML += input;
-                        hoverElem.insertAdjacentHTML(HtmlEditorClasses.BSTR.beforeEnd, input); // outerHTML += input;
+                        if (hoverElem.innerHTML == null)
+                        {
+                            Debug.WriteLine("dropped on empty elem : " + input);
+                            Debug.WriteLine(hoverElem.innerHTML);
+                            Debug.WriteLine(((IHTMLElementCollection)hoverElem.children).length);
+                            hoverElem.insertAdjacentHTML(HtmlEditorClasses.BSTR.beforeEnd, input); // outerHTML += input;
+                        }
+                        else
+                        {
+                            Debug.WriteLine("dropped on elem : " + input);
+                            Debug.WriteLine(hoverElem.innerHTML);
+                            Debug.WriteLine(((IHTMLElementCollection)hoverElem.children).length);
+                            hoverElem.outerHTML += input;
+                        }
                     }
                 }
                 catch (COMException exc)
