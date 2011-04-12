@@ -92,7 +92,7 @@ namespace Frontend.UserControls
             activeNode.InnerHtml += CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
 
             // And load all back to IHTMLDocument
-            htmlEditor1.LoadDocument(activeNode.OwnerDocument.DocumentNode.InnerHtml);
+            htmlEditor1.LoadDocument("<BODY>" + activeNode.OwnerDocument.DocumentNode.InnerHtml + "</BODY>");
         }
 
         void theSite_drop(DataObject sender, DragEventArgs e)
