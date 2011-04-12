@@ -18,7 +18,6 @@ namespace Frontend.UserControls
 {
     public partial class CanvasTabPage : TabPage
     {
-        private bool previewSucceeded = true;
         private bool eventsBound = false;
 
         public CanvasTabPage()
@@ -44,6 +43,8 @@ namespace Frontend.UserControls
                 htmlEditor1.SetEditDesigner(restrictedEditDesigner);
 
                 htmlEditor1.AllowDrop = true;
+
+                // 
                 if (!this.eventsBound)
                 {
                     htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
@@ -76,7 +77,6 @@ namespace Frontend.UserControls
             {
                 HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
                 HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
-                //CFormController.Instance.mainForm.
                 CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
                 CFormController.Instance.mainForm.showProperties(elem);
             }
@@ -84,17 +84,15 @@ namespace Frontend.UserControls
 
         void propertiesForm_moduleChanged(object sender, EventArgs e)
         {
+            // Get edited module node
             HtmlAgilityPack.HtmlNode activeNode = CFormController.Instance.mainForm.propertiesForm.activeElem;
 
-            //HtmlAgilityPack.HtmlDocument doc = CFormController.Instance.mainForm.propertiesForm.activeElem.OwnerDocument;
+            // Change its content
             activeNode.InnerHtml = CXMLParser.Instance.getNodeFromModule(CFormController.Instance.mainForm.propertiesForm.module).OuterHtml;
             activeNode.InnerHtml += CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
-            //HtmlAgilityPack.HtmlNode newNode = CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
-            //activeNode.ParentNode.ReplaceChild(, activeNode);
 
-            //CXMLParser.Instance.get
+            // And load all back to IHTMLDocument
             htmlEditor1.LoadDocument(activeNode.OwnerDocument.DocumentNode.InnerHtml);
-
         }
 
         void theSite_drop(DataObject sender, DragEventArgs e)
@@ -102,6 +100,7 @@ namespace Frontend.UserControls
             CFormController.Instance.mainForm.setStatus("drop" + e.X.ToString());
             if (sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false) != null)
             {
+                // Get module preview (multiple modules can be dragged)
                 String input = String.Empty;
                 ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
                 foreach (ListViewItem listViewItemModule in listViewItemModules)
@@ -109,55 +108,42 @@ namespace Frontend.UserControls
                     input += CXMLParser.Instance.getPreviewFromProjectXML(CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml);
                 }
 
+                // Get relative drop location
                 Point htmlEditorCorner = htmlEditor1.PointToScreen(new Point(0, 0));
                 int X = e.X - htmlEditorCorner.X;
                 int Y = e.Y - htmlEditorCorner.Y;
 
+                // Get element on which module was dropped
                 IHTMLElement hoverElem = htmlEditor1.HtmlDocument2.ElementFromPoint(X, Y);
 
-                Console.WriteLine(hoverElem.tagName + " " + X + "-" + Y);
-
-                try
+                if (hoverElem.tagName.Equals("BODY"))
                 {
-                    // Fix, so the content isnt added to the end of body
-                    // module tag would get moved to html meta tags
-                    if (hoverElem.tagName.Equals("BODY"))
-                    {
-                        if (hoverElem.innerHTML == null)
-                        {
-                            Debug.WriteLine("dropped on empty body : " + input);
-                            Debug.WriteLine(hoverElem.innerHTML);
-                            htmlEditor1.LoadDocument("<BODY>" + input + "</BODY>");
-                        }
-                        else
-                        {
-                            Debug.WriteLine("dropped on not empty body : " + input);
-                            Debug.WriteLine(hoverElem.innerHTML);
-                            hoverElem.innerHTML += input;
-                        }
-                    }
+                    Debug.WriteLine("dropped on body");
+                    if(hoverElem.innerText == null && hoverElem.innerHTML == null)
+                        htmlEditor1.LoadDocument("<body>" + input + "</body>");
                     else
-                    {
-                        if (hoverElem.innerHTML == null)
-                        {
-                            Debug.WriteLine("dropped on empty elem : " + input);
-                            Debug.WriteLine(hoverElem.innerHTML);
-                            Debug.WriteLine(((IHTMLElementCollection)hoverElem.children).length);
-                            hoverElem.insertAdjacentHTML(HtmlEditorClasses.BSTR.beforeEnd, input); // outerHTML += input;
-                        }
-                        else
-                        {
-                            Debug.WriteLine("dropped on elem : " + input);
-                            Debug.WriteLine(hoverElem.innerHTML);
-                            Debug.WriteLine(((IHTMLElementCollection)hoverElem.children).length);
-                            hoverElem.outerHTML += input;
-                        }
-                    }
+                        hoverElem.innerHTML += input;
                 }
-                catch (COMException exc)
+                else
                 {
-                    htmlEditor1.HtmlDocument2.GetBody().innerHTML += input;
-                    Debug.WriteLine(exc.Message);
+                    Debug.WriteLine("dropped on " + hoverElem.tagName);
+
+                    // Mshtml deletes <module> in element load, 
+                    // uhm so it has to be converted to HtmlAgilityPack.HtmlDocument
+                    // and then back
+                    Guid guid = new Guid();
+                    hoverElem.SetAttribute("id", guid.ToString(), 0);
+
+                    // Get wanted element and modify its content
+                    HtmlAgilityPack.HtmlDocument htmlDoc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
+                    HtmlAgilityPack.HtmlNode node = htmlDoc.GetElementbyId(guid.ToString());
+                    node.Attributes.Remove("id");
+                    node.InnerHtml += input;
+
+                    Debug.WriteLine("dropping in the end of " + node.Name);
+
+                    // And back to IHTMLDocument
+                    htmlEditor1.LoadDocument("<body>" + htmlDoc.DocumentNode.InnerHtml + "</body>");
                 }
             }
         }
@@ -199,18 +185,27 @@ namespace Frontend.UserControls
             //caret.MoveCaretToPointer(displayPointer, false, CARET_DIRECTION.CARET_DIRECTION_FORWARD);
         }
 
-        public String content
+        /// <summary>
+        /// Project content
+        /// </summary>
+        public String XMLProjectContent
         {
             set
             {
-                string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
-                htmlEditor1.LoadDocument("<body>" + html + "</body>");
+                // Parse preview only if browser is shown
+                if (this.tabControl1.SelectedTab == browserTabPage)
+                {
+                    string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
+                    htmlEditor1.LoadDocument("<body>" + html + "</body>");
+                }
                 textBox1.Text = value;
             }
             get
             {
+                // Read project xml from browser preview
                 if (this.tabControl1.SelectedTab == browserTabPage)
                 {
+                    // Or at least try
                     try
                     {
                         return CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
@@ -220,6 +215,7 @@ namespace Frontend.UserControls
                         return textBox1.Text;
                     }
                 }
+                // Or from editmode textbox
                 else
                 {
                     return textBox1.Text;
@@ -227,9 +223,11 @@ namespace Frontend.UserControls
             }
         }
 
-        // Url of edited file
         private String _url;
-        public string url
+        /// <summary>
+        /// Url of edited file
+        /// </summary>
+        public String url
         {
             set
             {
@@ -243,16 +241,18 @@ namespace Frontend.UserControls
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
+            // If modules from toolbox dropped
             if (e.Data.GetDataPresent("System.Windows.Forms.ListView+SelectedListViewItemCollection", false))
             {
+                // Generate preview of those modules
                 String input = String.Empty;
-
                 ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)e.Data.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
                 foreach (ListViewItem listViewItemModule in listViewItemModules)
                 {
                     input += CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml;
                 }
 
+                // And insert them on cursor position
                 int cursorPosition = textBox1.SelectionStart;
                 textBox1.Text = textBox1.Text.Insert(textBox1.SelectionStart, input);
                 textBox1.SelectionStart = cursorPosition + input.Length;
@@ -279,27 +279,13 @@ namespace Frontend.UserControls
 
         private void wb_VisibleChanged(object sender, EventArgs e)
         {
-            try
-            {
-                //String output = CXMLParser.Instance.getPreviewFromProjectXML(this.content);
-                //this.htmlEditor1.LoadDocument(output);
-                this.content = textBox1.Text;
-                previewSucceeded = true;
-            }
-            catch (System.Xml.XmlException exc)
-            {
-                this.htmlEditor1.LoadDocument(exc.Message);
-                previewSucceeded = false;
-            }
-            return;
+            this.XMLProjectContent = textBox1.Text;
         }
 
         private void textBox1_VisibleChanged(object sender, EventArgs e)
         {
-            if (previewSucceeded)
-            {
-                this.content = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
-            }
+            this.XMLProjectContent = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+            // Properties not clickable from editmode .. yet
             CFormController.Instance.mainForm.hideProperties();
         }
 

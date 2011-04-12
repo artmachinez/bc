@@ -92,14 +92,14 @@ namespace Frontend.Forms
                     string fileName = System.IO.Path.GetFileName(fileURL);
 
                     CanvasTabPage canvas = new CanvasTabPage();
-                    canvas.content = Resources.new_file.ToString();
+                    canvas.XMLProjectContent = Resources.new_file.ToString();
                     canvas.Text = fileName;
                     tabControl1.TabPages.Add(canvas);
                     tabControl1.SelectedTab = canvas;
 
 
                     StreamWriter sw = new StreamWriter(fileStream);
-                    sw.Write(canvas.content);
+                    sw.Write(canvas.XMLProjectContent);
                     sw.Close();
                     fileStream.Close();
 
@@ -120,7 +120,7 @@ namespace Frontend.Forms
                 string fileName = System.IO.Path.GetFileName(fileURL);
 
                 CanvasTabPage canvas = new CanvasTabPage();
-                canvas.content = System.IO.File.ReadAllText(fileURL);
+                canvas.XMLProjectContent = System.IO.File.ReadAllText(fileURL);
                 canvas.Text = fileName;
                 canvas.url = fileURL;
                 tabControl1.TabPages.Add(canvas);
@@ -146,7 +146,7 @@ namespace Frontend.Forms
                     CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
 
                     StreamWriter sw = new StreamWriter(fileStream);
-                    sw.Write(activeChild.content);
+                    sw.Write(activeChild.XMLProjectContent);
                     sw.Close();
                     fileStream.Close();
 
@@ -159,7 +159,7 @@ namespace Frontend.Forms
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            System.IO.File.WriteAllText(@activeChild.url, activeChild.content);
+            System.IO.File.WriteAllText(@activeChild.url, activeChild.XMLProjectContent);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

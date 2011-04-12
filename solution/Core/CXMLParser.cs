@@ -145,6 +145,9 @@ namespace Core
         /// <returns></returns>
         public String getProjectXMLFromPreview(String previewHTML)
         {
+            if (previewHTML == null)
+                return String.Empty;
+
             HtmlDocument doc = new HtmlDocument();
             // Throws XmlException
             doc.LoadHtml(previewHTML);
