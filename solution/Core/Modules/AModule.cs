@@ -44,7 +44,7 @@ namespace Core.Modules
 
         public virtual String generateHTML()
         {
-            Template template = Template.Parse(this.getTemplate(this.GetType().GetMember("templateName") + "_" + this.WSOutputLanguage + ".tpl"));
+            Template template = Template.Parse(this.getTemplate(this.GetType().GetField("name", BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty).GetValue(null) + "_html.tpl"));
             return template.Render(Hash.FromAnonymousObject(new { _setup = this.setup }));
         }
 

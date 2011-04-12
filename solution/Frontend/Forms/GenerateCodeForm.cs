@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using Core;
+using System.Diagnostics;
 
 namespace Frontend.Forms
 {
@@ -37,8 +39,9 @@ namespace Frontend.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.generateHTMLFile();
-            this.Close();
+            Debug.WriteLine(CXMLParser.Instance.getHTMLFromProjectXML(this.page.XMLProjectContent));
+            //this.generateHTMLFile();
+            //this.Close();
         }
 
         private void generateHTMLFile()

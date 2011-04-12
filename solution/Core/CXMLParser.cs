@@ -14,6 +14,7 @@ namespace Core
 {
     public class CXMLParser
     {
+        #region Singleton biz
 
         private static CXMLParser instance = null;
         private CXMLParser() 
@@ -33,6 +34,8 @@ namespace Core
                 return instance;
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Creates instance of module from HTML node
@@ -102,7 +105,6 @@ namespace Core
 
             return node;
         }
-
         /// <summary>
         /// Takes whole HTML document and replaces modules tag with their preview templates
         /// </summary>
@@ -137,7 +139,6 @@ namespace Core
 
             return doc.DocumentNode.OuterHtml;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -165,7 +166,31 @@ namespace Core
 
             return doc.DocumentNode.OuterHtml;
         }
+        /// <summary>
+        /// Generates final HTML from project XML
+        /// </summary>
+        /// <param name="projectXML"></param>
+        /// <returns></returns>
+        public String getHTMLFromProjectXML(String projectXML)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(projectXML);
 
+            // Need to set script paths
 
+            // And generate modules' html
+            HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
+            if (moduleNodeList != null)
+            {
+                foreach (HtmlNode moduleNode in moduleNodeList)
+                {
+                    AModule module = this.getModuleFromNode(moduleNode);
+                    // OuterHtml plx
+                    moduleNode.InnerHtml += module.generateHTML();
+                }
+            }
+
+            return doc.DocumentNode.OuterHtml;
+        }
     }
 }
