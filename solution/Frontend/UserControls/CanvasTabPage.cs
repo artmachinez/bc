@@ -18,6 +18,9 @@ namespace Frontend.UserControls
 {
     public partial class CanvasTabPage : TabPage
     {
+        /// <summary>
+        /// For events which dont get reset on changeVisibility of htmleditor
+        /// </summary>
         private bool eventsBound = false;
 
         public CanvasTabPage()
@@ -43,7 +46,9 @@ namespace Frontend.UserControls
                 htmlEditor1.SetEditDesigner(restrictedEditDesigner);
                 htmlEditor1.AllowDrop = true;
 
-                // 
+                // dropTarget is bound on complete readyState, though
+                // remains when editor changes invisibility, so this would get
+                // bound x times, unlike editDesigner above
                 if (!this.eventsBound)
                 {
                     htmlEditor1.dropTarget.dragEnter += new DragEnterHandler(theSite_dragEnter);
@@ -71,8 +76,8 @@ namespace Frontend.UserControls
             {
                 htmlEditor1.ContextMenuStrip = moduleRightClickMenu;
             }
-            // On leftclick show properties window
-            if (e.eventObj.Button == BUTTON.LEFT)
+            // On leftclick show properties window - only when in designmode though
+            if (e.eventObj.Button == BUTTON.LEFT && this.htmlEditor1.IsDesignMode)
             {
                 HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
                 HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
