@@ -40,6 +40,8 @@ namespace Frontend.UserControls
             this.moduleViewSource = new System.Windows.Forms.ToolStripMenuItem();
             this.rightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewSource = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleEditMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.moduleToggleEditMode = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.browserTabPage.SuspendLayout();
             this.textEditorTabPage.SuspendLayout();
@@ -132,38 +134,54 @@ namespace Frontend.UserControls
             // 
             this.moduleRightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moduleProperties,
-            this.moduleViewSource});
+            this.moduleViewSource,
+            this.moduleToggleEditMode});
             this.moduleRightClickMenu.Name = "moduleRightClickMenu";
-            this.moduleRightClickMenu.Size = new System.Drawing.Size(139, 48);
+            this.moduleRightClickMenu.Size = new System.Drawing.Size(169, 70);
             this.moduleRightClickMenu.Text = "moduleRightClickMenu";
             // 
             // moduleProperties
             // 
             this.moduleProperties.Name = "moduleProperties";
-            this.moduleProperties.Size = new System.Drawing.Size(138, 22);
+            this.moduleProperties.Size = new System.Drawing.Size(168, 22);
             this.moduleProperties.Text = "Properties";
             // 
             // moduleViewSource
             // 
             this.moduleViewSource.Name = "moduleViewSource";
-            this.moduleViewSource.Size = new System.Drawing.Size(138, 22);
+            this.moduleViewSource.Size = new System.Drawing.Size(168, 22);
             this.moduleViewSource.Text = "View Source";
             this.moduleViewSource.Click += new System.EventHandler(this.viewSource_Click);
             // 
             // rightClickMenu
             // 
             this.rightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewSource});
+            this.viewSource,
+            this.toggleEditMode});
             this.rightClickMenu.Name = "rightClickMenu";
-            this.rightClickMenu.Size = new System.Drawing.Size(139, 26);
+            this.rightClickMenu.Size = new System.Drawing.Size(169, 48);
             this.rightClickMenu.Text = "rightClickMenu";
             // 
             // viewSource
             // 
             this.viewSource.Name = "viewSource";
-            this.viewSource.Size = new System.Drawing.Size(138, 22);
+            this.viewSource.Size = new System.Drawing.Size(168, 22);
             this.viewSource.Text = "View Source";
             this.viewSource.Click += new System.EventHandler(this.viewSource_Click);
+            // 
+            // toggleEditMode
+            // 
+            this.toggleEditMode.Name = "toggleEditMode";
+            this.toggleEditMode.Size = new System.Drawing.Size(168, 22);
+            this.toggleEditMode.Text = "Toggle Edit Mode";
+            this.toggleEditMode.Click += new System.EventHandler(this.toggleEditMode_Click);
+            // 
+            // moduleToggleEditMode
+            // 
+            this.moduleToggleEditMode.Name = "moduleToggleEditMode";
+            this.moduleToggleEditMode.Size = new System.Drawing.Size(168, 22);
+            this.moduleToggleEditMode.Text = "Toggle Edit Mode";
+            this.moduleToggleEditMode.Click += new System.EventHandler(this.toggleEditMode_Click);
             // 
             // CanvasTabPage
             // 
@@ -194,5 +212,7 @@ namespace Frontend.UserControls
         private System.Windows.Forms.ContextMenuStrip rightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem moduleViewSource;
         private System.Windows.Forms.ToolStripMenuItem viewSource;
+        private System.Windows.Forms.ToolStripMenuItem toggleEditMode;
+        private System.Windows.Forms.ToolStripMenuItem moduleToggleEditMode;
     }
 }

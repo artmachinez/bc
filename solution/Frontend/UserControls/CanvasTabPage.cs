@@ -41,7 +41,6 @@ namespace Frontend.UserControls
                 restrictedEditDesigner.moduleClicked += new HtmlEditorClasses.ModuleClickedEventHandler(restrictedEditDesigner_moduleClicked);
                 restrictedEditDesigner.canvasClicked += new HtmlEditorClasses.CanvasClickedEventHandler(restrictedEditDesigner_canvasClicked);
                 htmlEditor1.SetEditDesigner(restrictedEditDesigner);
-
                 htmlEditor1.AllowDrop = true;
 
                 // 
@@ -303,6 +302,20 @@ namespace Frontend.UserControls
             if (this.tabControl1.SelectedTab == textEditorTabPage)
                 return "editor";
             else return String.Empty;
+        }
+
+        private void toggleEditMode_Click(object sender, EventArgs e)
+        {
+            // Need to invoke setter to refresh content
+            // (editmode sets content to null automatically)
+            this.XMLProjectContent = this.XMLProjectContent;
+
+            // Toggle design mode
+            this.htmlEditor1.IsDesignMode = !this.htmlEditor1.IsDesignMode;
+
+            // And invoke getter
+            this.XMLProjectContent = this.XMLProjectContent;
+            this.htmlEditor1.InvokeReadyStateChanged("complete");
         }
 
     }
