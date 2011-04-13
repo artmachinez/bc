@@ -61,7 +61,7 @@ namespace Core.Modules
         public String generatePreview()
         {
             Template template = Template.Parse(this.getTemplate(this.GetType().GetField("name", BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty).GetValue(null) + "_preview.tpl"));
-            String xml = template.Render(Hash.FromAnonymousObject(new { _setup = (Object)this.setup }));
+            String xml = template.Render(Hash.FromAnonymousObject(new { _setup = this.setup.getDictionary() }));
             return xml;
         }
 

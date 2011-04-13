@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
-using DotLiquid;
 using System.Xml.Serialization;
 using System.Drawing;
+using System.Reflection;
 
 namespace Core.Modules
 {
-    public abstract class AModuleUserSetup : Drop
+    public abstract class AModuleUserSetup
     {
         /// <summary>
         /// Needed to set to get reference
@@ -31,7 +31,6 @@ namespace Core.Modules
         public String id = System.Guid.NewGuid().ToString();
 
         #endregion
-
 
         #region Own variables
 
@@ -61,6 +60,29 @@ namespace Core.Modules
         //      <div>dynamic text: {{_setup.setup_variable}}</div>
 
         #endregion
+
+        /// <summary>
+        /// Creates dictionary from this class
+        /// </summary>
+        /// <returns>Dictionary of setup_ properties + id</returns>
+        public Dictionary<String, String> getDictionary()
+        {
+            Dictionary<String, String> dict = new Dictionary<String, String>();
+
+            // Save all setup_* members to attributes
+            MemberInfo[] setupMembers = this.GetType().GetMember("setup_*", MemberTypes.Property, BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            foreach (MemberInfo setupMember in setupMembers)
+            {
+                dict[setupMember.Name] = (String)this.GetType().InvokeMember(setupMember.Name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty, null, this, null);
+            }
+
+            // ID is not property but field
+            // Fields can be used internally in modules, so rather include needed fields
+            // manually here
+            dict["id"] = this.id;
+
+            return dict;
+        }
 
 
     }
