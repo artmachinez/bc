@@ -5,7 +5,7 @@ using System.Text;
 using Frontend.Forms;
 using System.Windows.Forms;
 
-namespace Frontend
+namespace Frontend.Helpers
 {
     public class CFormController
     {
@@ -13,7 +13,7 @@ namespace Frontend
 
         internal ToolBoxForm toolbox;
 
-        internal ComboBox languageBox;
+        internal ToolStripComboBox languageBox;
 
         internal PropertiesForm propertyBox;
 

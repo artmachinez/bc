@@ -13,6 +13,7 @@ using System.Reflection;
 using System.IO;
 using System.Threading;
 using System.Windows.Threading;
+using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
@@ -33,21 +34,25 @@ namespace Frontend.Forms
         /// <param name="e"></param>
         private void reloadModules(object sender, EventArgs e)
         {
-            this.loadModules(CFormController.Instance.languageBox.SelectedItem.ToString());
+            this.loadModules((LanguageDropDownItem)CFormController.Instance.languageBox.SelectedItem);
         }
 
         /// <summary>
         /// Loads modules to listview
         /// </summary>
         /// <param name="language"></param>
-        public void loadModules(String language)
+        public void loadModules(LanguageDropDownItem language)
         {
             List<Type> modules = new List<Type>();
             try
             {
-                modules.AddRange(CModuleReader.Instance.langToModulesMap[language]);
-                if (language != String.Empty)
+                if (language.Value.Equals("empty"))
                 {
+                    modules.AddRange(CModuleReader.Instance.langToModulesMap[String.Empty]);
+                }
+                else
+                {
+                    modules.AddRange(CModuleReader.Instance.langToModulesMap[language.Value]);
                     modules.AddRange(CModuleReader.Instance.langToModulesMap[String.Empty]);
                 }
             }

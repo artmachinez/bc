@@ -12,6 +12,7 @@ using Frontend.UserControls;
 using System.Collections;
 using System.Reflection;
 using System.IO;
+using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
@@ -36,10 +37,12 @@ namespace Frontend.Forms
         private void reloadLanguageBox(object sender, EventArgs e)
         {
             langSelectBox.Items.Clear();
-            langSelectBox.Items.Add(String.Empty);
+            LanguageDropDownItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
+            //emptyItem.Value = String.Empty;
+            langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
-                langSelectBox.Items.Add(lang);
+                langSelectBox.Items.Add(Helpers.CLanguageInfoHelper.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -47,10 +50,13 @@ namespace Frontend.Forms
         private void InitLanguageBox()
         {
             CFormController.Instance.languageBox = langSelectBox;
-            langSelectBox.Items.Add(String.Empty);
+            LanguageDropDownItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
+            //emptyItem.Value = String.Empty;
+            langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
-                langSelectBox.Items.Add(lang);
+                //new item
+                langSelectBox.Items.Add(Helpers.CLanguageInfoHelper.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -59,7 +65,7 @@ namespace Frontend.Forms
         {
             toolboxForm = new ToolBoxForm();
             toolboxForm.MdiParent = this;
-            toolboxForm.loadModules(String.Empty);
+            toolboxForm.loadModules(Helpers.CLanguageInfoHelper.getLangItem("empty"));
             toolboxForm.Dock = DockStyle.Fill;
             splitContainer1.Panel1.Controls.Add(toolboxForm);
             toolboxForm.Show();

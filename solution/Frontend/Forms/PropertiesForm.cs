@@ -15,6 +15,7 @@ using System.Threading;
 using System.Windows.Threading;
 using System.Diagnostics;
 using onlyconnect;
+using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
@@ -108,7 +109,7 @@ namespace Frontend.Forms
                         // Module sent exception, show message, 
                         // but do not close properties or fire changed event
                         // - everything must be just fine
-                        MessageBox.Show(ext.InnerException.Message);
+                        MessageBox.Show(ext.InnerException.Message, "Invalid property");
                         return;
                     }
                 }

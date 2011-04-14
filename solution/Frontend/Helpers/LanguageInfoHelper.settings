@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Frontend.Helpers" GeneratedClassName="LanguageInfoHelper">
+  <Profiles />
+  <Settings>
+    <Setting Name="php" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PHP</Value>
+    </Setting>
+    <Setting Name="aspx" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASP.NET</Value>
+    </Setting>
+    <Setting Name="perl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Perl</Value>
+    </Setting>
+    <Setting Name="python" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Python</Value>
+    </Setting>
+    <Setting Name="empty" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Nothing</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

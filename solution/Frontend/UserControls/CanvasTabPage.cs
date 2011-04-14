@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using onlyconnect;
 using System.Diagnostics;
 using Frontend.HtmlEditorClasses;
+using Frontend.Helpers;
 
 namespace Frontend.UserControls
 {
