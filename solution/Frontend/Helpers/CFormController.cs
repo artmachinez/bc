@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Frontend.Forms;
 using System.Windows.Forms;
+using Frontend.UserControls;
 
 namespace Frontend.Helpers
 {
@@ -18,6 +19,7 @@ namespace Frontend.Helpers
         internal ToolBoxForm toolbox;
         internal ToolStripComboBox languageBox;
         internal PropertiesForm propertyBox;
+        internal ClosableTabControl mainTabControl;
 
         private static CFormController instance = null;
         private CFormController() 

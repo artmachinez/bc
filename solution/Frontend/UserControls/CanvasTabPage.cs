@@ -25,19 +25,108 @@ namespace Frontend.UserControls
         /// </summary>
         private bool eventsBound = false;
 
+        /// <summary>
+        /// Info about project - for saving, loading
+        /// </summary>
         internal CProjectInfo projectInfo;
 
+        /// <summary>
+        /// Url of edited file
+        /// </summary>
+        public String url;
+
+        /// <summary>
+        /// Active Project content 
+        /// - sets/gets data in dependency of texteditor/wysiwygeditor visibility
+        /// </summary>
+        public String ActiveProjectContent
+        {
+            set
+            {
+                // Parse preview only if browser is shown
+                if (this.tabControl1.SelectedTab == browserTabPage)
+                {
+                    string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
+                    htmlEditor1.LoadDocument("<body>" + html + "</body>");
+                }
+                this.projectInfo.projectXml = value;
+                textBox1.Text = value;
+            }
+            get
+            {
+                // Read project xml from browser preview
+                if (this.tabControl1.SelectedTab == browserTabPage)
+                {
+                    // Or at least try
+                    try
+                    {
+                        return CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+                    }
+                    catch (Exception)
+                    {
+                        return textBox1.Text;
+                    }
+                }
+                // Or from editmode textbox
+                else
+                {
+                    return textBox1.Text;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CanvasTabPage()
         {
             InitializeComponent();
             htmlEditor1.ReadyStateChanged += new ReadyStateChangedHandler(htmlEditor1_ReadyStateChanged);
+            CFormController.Instance.languageBox.SelectedIndexChanged += new EventHandler(languageBox_SelectedIndexChanged);
+        }
+
+        void languageBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Change project only if language is actually changed
+            bool langChanged = (this.projectInfo.languageID == ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value);
+            // And its ment to be for this project - tab is active
+            bool thisSelected = (CFormController.Instance.mainTabControl.SelectedTab == this);
+
+            if (thisSelected && !langChanged)
+            {
+                if (MessageBox.Show("Really change?", "Confirm change", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    // User accepted lang change
+                    ToolStripComboBox send = (ToolStripComboBox)sender;
+                    this.projectInfo.languageID = ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value;
+                }
+                else
+                {
+                    // User declined lang change, set language back to project language
+                    foreach (CLanguageInfo language in CFormController.Instance.languageBox.Items)
+                    {
+                        if (language.Value.Equals(this.projectInfo.languageID))
+                            CFormController.Instance.languageBox.SelectedItem = language;
+                    }
+                }
+            }
         }
 
         /// <summary>
-        /// Init when htmlEditor is ready
+        /// Gets string representation of selected tab
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <returns>Name of tab</returns>
+        public String getSelectedTab()
+        {
+            if (this.tabControl1.SelectedTab == browserTabPage)
+                return "browser";
+            if (this.tabControl1.SelectedTab == textEditorTabPage)
+                return "editor";
+            else return String.Empty;
+        }
+
+        #region Event callbacks
+
         void htmlEditor1_ReadyStateChanged(object sender, ReadyStateChangedEventArgs e)
         {
             if (e.ReadyState == "complete")
@@ -193,60 +282,6 @@ namespace Frontend.UserControls
             //caret.MoveCaretToPointer(displayPointer, false, CARET_DIRECTION.CARET_DIRECTION_FORWARD);
         }
 
-        /// <summary>
-        /// Project content
-        /// </summary>
-        public String XMLProjectContent
-        {
-            set
-            {
-                // Parse preview only if browser is shown
-                if (this.tabControl1.SelectedTab == browserTabPage)
-                {
-                    string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
-                    htmlEditor1.LoadDocument("<body>" + html + "</body>");
-                }
-                textBox1.Text = value;
-            }
-            get
-            {
-                // Read project xml from browser preview
-                if (this.tabControl1.SelectedTab == browserTabPage)
-                {
-                    // Or at least try
-                    try
-                    {
-                        return CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
-                    }
-                    catch(Exception)
-                    {
-                        return textBox1.Text;
-                    }
-                }
-                // Or from editmode textbox
-                else
-                {
-                    return textBox1.Text;
-                }
-            }
-        }
-
-        private String _url;
-        /// <summary>
-        /// Url of edited file
-        /// </summary>
-        public String url
-        {
-            set
-            {
-                this._url = value;
-            }
-            get
-            {
-                return this._url;
-            }
-        }
-
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
             // If modules from toolbox dropped
@@ -262,7 +297,7 @@ namespace Frontend.UserControls
 
                 // And insert them on cursor position
                 int cursorPosition = textBox1.SelectionStart;
-                textBox1.Text = textBox1.Text.Insert(textBox1.SelectionStart, input);
+                this.ActiveProjectContent = this.ActiveProjectContent.Insert(textBox1.SelectionStart, input);
                 textBox1.SelectionStart = cursorPosition + input.Length;
             }
         }
@@ -287,12 +322,12 @@ namespace Frontend.UserControls
 
         private void wb_VisibleChanged(object sender, EventArgs e)
         {
-            this.XMLProjectContent = textBox1.Text;
+            this.ActiveProjectContent = this.projectInfo.projectXml;
         }
 
         private void textBox1_VisibleChanged(object sender, EventArgs e)
         {
-            this.XMLProjectContent = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+            this.ActiveProjectContent = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             // Properties not clickable from editmode .. yet
             CFormController.Instance.mainForm.hideProperties();
         }
@@ -304,28 +339,20 @@ namespace Frontend.UserControls
             showSource.ShowDialog();
         }
 
-        public String getSelectedTab()
-        {
-            if (this.tabControl1.SelectedTab == browserTabPage)
-                return "browser";
-            if (this.tabControl1.SelectedTab == textEditorTabPage)
-                return "editor";
-            else return String.Empty;
-        }
-
         private void toggleEditMode_Click(object sender, EventArgs e)
         {
             // Need to invoke setter to refresh content
             // (editmode sets content to null automatically)
-            this.XMLProjectContent = this.XMLProjectContent;
+            this.ActiveProjectContent = this.ActiveProjectContent;
 
             // Toggle design mode
             this.htmlEditor1.IsDesignMode = !this.htmlEditor1.IsDesignMode;
 
             // And invoke getter
-            this.XMLProjectContent = this.XMLProjectContent;
+            this.ActiveProjectContent = this.ActiveProjectContent;
             this.htmlEditor1.InvokeReadyStateChanged("complete");
         }
 
+        #endregion
     }
 }

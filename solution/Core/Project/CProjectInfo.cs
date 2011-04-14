@@ -8,5 +8,6 @@ namespace Core.Project
     public class CProjectInfo
     {
         public String languageID;
+        public String projectXml;
     }
 }

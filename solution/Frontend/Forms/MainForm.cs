@@ -35,6 +35,7 @@ namespace Frontend.Forms
             InitProperties();
 
             CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadLanguageBox);
+            this.tabControl1.SelectedIndexChanged +=new EventHandler(tabControl1_SelectedIndexChanged);
         }
 
         private void reloadLanguageBox(object sender, EventArgs e)
@@ -101,9 +102,10 @@ namespace Frontend.Forms
                 // And add it to tabControl
                 tabControl1.TabPages.Add(tabPage);
                 tabControl1.SelectedTab = tabPage;
+                this.tabControl1_SelectedIndexChanged(null, null);
 
                 // Save it also
-                CFileHelper.saveProject(tabPage);
+                CFileHelper.saveProject(tabPage.projectInfo, tabPage.url);
 
                 showToolBox();
             }
@@ -117,15 +119,14 @@ namespace Frontend.Forms
                 // Get variables needed for canvastabpage
                 string fileURL = openFileDialog.FileName;
 
-                // Get file content
-                String projectContent = CFileHelper.readProject(fileURL);
+                CProjectInfo info = CFileHelper.getProject(fileURL);
 
-                // Create tabpage from them
-                CanvasTabPage tabPage = CCanvasTabPageFactory.createPageFromFile(projectContent, fileURL);
+                CanvasTabPage tabPage = CCanvasTabPageFactory.createPage(CFileHelper.getProject(fileURL), fileURL);
 
                 // And add it to tabControl
                 tabControl1.TabPages.Add(tabPage);
                 tabControl1.SelectedTab = tabPage;
+                this.tabControl1_SelectedIndexChanged(null, null);
 
                 this.showToolBox();
             }
@@ -141,7 +142,7 @@ namespace Frontend.Forms
                 return;
 
             // Invoke setter to get projectinfo if in view mode
-            activeChild.XMLProjectContent = activeChild.XMLProjectContent;
+            activeChild.projectInfo.projectXml = activeChild.ActiveProjectContent;
 
             SaveFileDialog saveFileDialog = CFileDialogFactory.createSaveFileDialog();
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -151,7 +152,7 @@ namespace Frontend.Forms
                 activeChild.Text = System.IO.Path.GetFileName(activeChild.url);
 
                 // And save it
-                CFileHelper.saveProject(activeChild);
+                CFileHelper.saveProject(activeChild.projectInfo, activeChild.url);
             }
         }
 
@@ -163,7 +164,10 @@ namespace Frontend.Forms
                 // Nothing to save
                 return;
 
-            CFileHelper.saveProject(activeChild);
+            // Invoke setter to get projectinfo if in view mode
+            activeChild.projectInfo.projectXml = activeChild.ActiveProjectContent;
+
+            CFileHelper.saveProject(activeChild.projectInfo, activeChild.url);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -419,11 +423,6 @@ namespace Frontend.Forms
             }
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.hideProperties();
-        }
-
         private void generateCodeButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
@@ -432,6 +431,22 @@ namespace Frontend.Forms
 
             GenerateCodeForm gcf = new GenerateCodeForm(activeChild);
             gcf.Show();
+        }
+
+        void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get active child and update its properties
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            if (activeChild == null)
+                return;
+
+            //CFormController.Instance.languageBox.SelectedItem = activeChild.
+            foreach (CLanguageInfo language in CFormController.Instance.languageBox.Items)
+            {
+                if (language.Value.Equals(activeChild.projectInfo.languageID))
+                    CFormController.Instance.languageBox.SelectedItem = language;
+            }
         }
     }
 }

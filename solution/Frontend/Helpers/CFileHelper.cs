@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Frontend.UserControls;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using Core.Project;
+using HtmlAgilityPack;
 
 namespace Frontend.Helpers
 {
@@ -39,12 +43,18 @@ namespace Frontend.Helpers
         /// </summary>
         /// <param name="page">CanvasTabPage to save project from</param>
         /// <returns>Boolean of success</returns>
-        public static bool saveProject(CanvasTabPage page)
+        public static bool saveProject(CProjectInfo projectInfo, String url)
         {
             try
             {
-                StreamWriter sw = new StreamWriter(page.url);
-                sw.Write(page.XMLProjectContent);
+                // Init serializer
+                DataContractSerializer serializer = new DataContractSerializer(typeof(CProjectInfo));
+                
+                // And stream to file
+                StreamWriter sw = new StreamWriter(url);
+
+                // Serialize projectInfo to file
+                serializer.WriteObject(sw.BaseStream, projectInfo);
                 sw.Close();
             }
             catch (Exception)
@@ -62,6 +72,19 @@ namespace Frontend.Helpers
         public static String readProject(String fileUrl)
         {
             return System.IO.File.ReadAllText(fileUrl);
+        }
+
+        public static CProjectInfo getProject(String fileUrl)
+        {
+            // Init serializer
+            DataContractSerializer serializer = new DataContractSerializer(typeof(CProjectInfo));
+
+            // And stream from file
+            StreamReader sr = new StreamReader(fileUrl);
+            CProjectInfo projectInfo = (CProjectInfo)serializer.ReadObject(sr.BaseStream);
+            sr.Close();
+
+            return projectInfo;
         }
 
     }

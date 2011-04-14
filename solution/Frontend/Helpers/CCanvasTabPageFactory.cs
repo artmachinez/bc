@@ -22,7 +22,23 @@ namespace Frontend.Helpers
         {
             CanvasTabPage tabPage = new CanvasTabPage();
             tabPage.projectInfo = projectInfo;
-            tabPage.XMLProjectContent = ProjectResources.new_file.ToString();
+            tabPage.ActiveProjectContent = ProjectResources.new_file.ToString();
+            tabPage.Text = System.IO.Path.GetFileName(url);
+            tabPage.url = url;
+            return tabPage;
+        }
+
+        /// <summary>
+        /// Creates new page with new project. Project info must be passed
+        /// </summary>
+        /// <param name="projectInfo"></param>
+        /// <param name="url">Url of file (which project will be saved in)</param>
+        /// <returns></returns>
+        internal static CanvasTabPage createPage(CProjectInfo projectInfo, String url)
+        {
+            CanvasTabPage tabPage = new CanvasTabPage();
+            tabPage.projectInfo = projectInfo;
+            tabPage.ActiveProjectContent = projectInfo.projectXml;
             tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;
@@ -38,7 +54,7 @@ namespace Frontend.Helpers
         internal static CanvasTabPage createPageFromFile(String fileContent, String url)
         {
             CanvasTabPage tabPage = new CanvasTabPage();
-            tabPage.XMLProjectContent = fileContent;
+            tabPage.ActiveProjectContent = fileContent;
             tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;

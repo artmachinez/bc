@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Frontend.Helpers;
 
 namespace Frontend.UserControls
 {
@@ -14,8 +15,7 @@ namespace Frontend.UserControls
         public ClosableTabControl()
         {
             InitializeComponent();
-            //FocusOnTab
-            //TabRenderer.DrawTabPage(
+            CFormController.Instance.mainTabControl = this;
         }
 
 
