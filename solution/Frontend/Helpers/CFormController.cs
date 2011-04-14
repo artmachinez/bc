@@ -5,16 +5,18 @@ using System.Text;
 using Frontend.Forms;
 using System.Windows.Forms;
 
-namespace Frontend
+namespace Frontend.Helpers
 {
+    /// <summary>
+    /// Stores pointers to important parts of Frontend, 
+    /// so they don't have to be called like '.parent.parent.firstchild.whatever'
+    /// later on.
+    /// </summary>
     public class CFormController
     {
         internal MainForm mainForm;
-
         internal ToolBoxForm toolbox;
-
-        internal ComboBox languageBox;
-
+        internal ToolStripComboBox languageBox;
         internal PropertiesForm propertyBox;
 
         private static CFormController instance = null;

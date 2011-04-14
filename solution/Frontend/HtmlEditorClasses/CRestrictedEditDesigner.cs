@@ -21,6 +21,9 @@ namespace Frontend.HtmlEditorClasses
     /// <param name="e"></param>
     public delegate void CanvasClickedEventHandler(object sender, ElementDataEventArgs e);
 
+    /// <summary>
+    /// Disables mouse events on module div in view mode
+    /// </summary>
     [ComVisible(true)]
     class CRestrictedEditDesigner : IHTMLEditDesigner
     {

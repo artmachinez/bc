@@ -59,6 +59,7 @@
             this.propertiesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateCodeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,19 +82,18 @@
             this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.langSelectBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.langSelectBox = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.boldButton = new System.Windows.Forms.ToolStripButton();
             this.italicButton = new System.Windows.Forms.ToolStripButton();
             this.underlineButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.generateCodeButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new Frontend.UserControls.ClosableTabControl();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -372,6 +372,13 @@
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
+            // generateCodeButton
+            // 
+            this.generateCodeButton.Name = "generateCodeButton";
+            this.generateCodeButton.Size = new System.Drawing.Size(166, 22);
+            this.generateCodeButton.Text = "Generate Website";
+            this.generateCodeButton.Click += new System.EventHandler(this.generateCodeButton_Click);
+            // 
             // windowsMenu
             // 
             this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -484,7 +491,8 @@
             this.printToolStripButton,
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
-            this.helpToolStripButton});
+            this.helpToolStripButton,
+            this.langSelectBox});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(955, 25);
@@ -558,6 +566,15 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "Help";
             // 
+            // langSelectBox
+            // 
+            this.langSelectBox.BackColor = System.Drawing.SystemColors.Window;
+            this.langSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.langSelectBox.MaxDropDownItems = 99;
+            this.langSelectBox.Name = "langSelectBox";
+            this.langSelectBox.Size = new System.Drawing.Size(75, 25);
+            this.langSelectBox.ToolTipText = "Modules\' language";
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -587,34 +604,10 @@
             this.splitContainer2.SplitterDistance = 615;
             this.splitContainer2.TabIndex = 0;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.AllowDrop = true;
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(615, 519);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.TabStop = false;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // langSelectBox
-            // 
-            this.langSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.langSelectBox.Location = new System.Drawing.Point(161, 27);
-            this.langSelectBox.Name = "langSelectBox";
-            this.langSelectBox.Size = new System.Drawing.Size(66, 21);
-            this.langSelectBox.TabIndex = 0;
             // 
             // toolStrip1
             // 
@@ -672,12 +665,21 @@
             this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.TabIndex = 9;
             // 
-            // generateCodeButton
+            // tabControl1
             // 
-            this.generateCodeButton.Name = "generateCodeButton";
-            this.generateCodeButton.Size = new System.Drawing.Size(166, 22);
-            this.generateCodeButton.Text = "Generate Website";
-            this.generateCodeButton.Click += new System.EventHandler(this.generateCodeButton_Click);
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Padding = new System.Drawing.Point(12, 2);
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(615, 519);
+            this.tabControl1.TabIndex = 0;
+            this.tabControl1.TabStop = false;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -687,7 +689,6 @@
             this.ClientSize = new System.Drawing.Size(955, 615);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.langSelectBox);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
@@ -695,6 +696,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
@@ -774,13 +776,13 @@
         private System.Windows.Forms.ToolStripMenuItem propertiesMenuItem;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         internal System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ComboBox langSelectBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton italicButton;
         private System.Windows.Forms.ToolStripButton underlineButton;
         private System.Windows.Forms.ToolStripButton boldButton;
         private System.Windows.Forms.ToolStripMenuItem generateCodeButton;
+        private System.Windows.Forms.ToolStripComboBox langSelectBox;
     }
 }
 

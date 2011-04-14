@@ -116,9 +116,19 @@
     <Compile Include="Forms\ShowSourceForm.Designer.cs">
       <DependentUpon>ShowSourceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CCanvasTabPageFactory.cs" />
+    <Compile Include="Helpers\CFileDialogFactory.cs" />
+    <Compile Include="Helpers\CFileHelper.cs" />
+    <Compile Include="Helpers\CLanguageInfoHelper.cs" />
+    <Compile Include="Helpers\CLanguageItem.cs" />
+    <Compile Include="Helpers\LanguageInfoHelper.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>LanguageInfoHelper.settings</DependentUpon>
+    </Compile>
     <Compile Include="HtmlEditorClasses\comsupport.cs" />
     <Compile Include="HtmlEditorClasses\CRestrictedEditDesigner.cs" />
-    <Compile Include="CFormController.cs" />
+    <Compile Include="Helpers\CFormController.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +197,10 @@
       <DependentUpon>ClosableTabControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Helpers\LanguageInfoHelper.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>LanguageInfoHelper.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
