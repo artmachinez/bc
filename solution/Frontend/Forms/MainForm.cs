@@ -40,11 +40,11 @@ namespace Frontend.Forms
         private void reloadLanguageBox(object sender, EventArgs e)
         {
             langSelectBox.Items.Clear();
-            CLanguageItem emptyItem = CLanguageInfoHelper.getLangItem("empty");
+            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
-                langSelectBox.Items.Add(CLanguageInfoHelper.getLangItem(lang));
+                langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -52,12 +52,12 @@ namespace Frontend.Forms
         private void InitLanguageBox()
         {
             CFormController.Instance.languageBox = langSelectBox;
-            CLanguageItem emptyItem = CLanguageInfoHelper.getLangItem("empty");
+            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
                 //new item
-                langSelectBox.Items.Add(CLanguageInfoHelper.getLangItem(lang));
+                langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -66,7 +66,7 @@ namespace Frontend.Forms
         {
             toolboxForm = new ToolBoxForm();
             toolboxForm.MdiParent = this;
-            toolboxForm.loadModules(CLanguageInfoHelper.getLangItem("empty"));
+            toolboxForm.loadModules(CLanguageInfoFactory.getLangItem("empty"));
             toolboxForm.Dock = DockStyle.Fill;
             splitContainer1.Panel1.Controls.Add(toolboxForm);
             toolboxForm.Show();
@@ -90,11 +90,13 @@ namespace Frontend.Forms
             {
                 // Get variables needed for canvastabpage
                 string fileURL = saveFileDialog.FileName;
-                string fileName = System.IO.Path.GetFileName(fileURL);
-                CLanguageItem language = (CLanguageItem)langSelectBox.SelectedItem;
+
+                // New form - new info
+                CProjectInfo projectInfo = new CProjectInfo();
+                projectInfo.languageID = ((CLanguageInfo)langSelectBox.SelectedItem).Value;
 
                 // Create tabpage from them
-                CanvasTabPage tabPage = CCanvasTabPageFactory.createNewPage(language, fileName, fileURL);
+                CanvasTabPage tabPage = CCanvasTabPageFactory.createNewPage(projectInfo, fileURL);
 
                 // And add it to tabControl
                 tabControl1.TabPages.Add(tabPage);
@@ -114,14 +116,14 @@ namespace Frontend.Forms
             {
                 // Get variables needed for canvastabpage
                 string fileURL = openFileDialog.FileName;
-                string fileName = System.IO.Path.GetFileName(fileURL);
 
                 // Get file content
                 String projectContent = CFileHelper.readProject(fileURL);
 
                 // Create tabpage from them
-                CanvasTabPage tabPage = CCanvasTabPageFactory.createPageFromFile(projectContent, fileName, fileURL);
+                CanvasTabPage tabPage = CCanvasTabPageFactory.createPageFromFile(projectContent, fileURL);
 
+                // And add it to tabControl
                 tabControl1.TabPages.Add(tabPage);
                 tabControl1.SelectedTab = tabPage;
 
@@ -134,9 +136,12 @@ namespace Frontend.Forms
             // Get active child and update its properties
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
 
-            // Nothing to save as
             if (activeChild == null)
+                // Nothing to save as
                 return;
+
+            // Invoke setter to get projectinfo if in view mode
+            activeChild.XMLProjectContent = activeChild.XMLProjectContent;
 
             SaveFileDialog saveFileDialog = CFileDialogFactory.createSaveFileDialog();
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -153,8 +158,11 @@ namespace Frontend.Forms
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
             if (activeChild == null)
+                // Nothing to save
                 return;
+
             CFileHelper.saveProject(activeChild);
         }
 

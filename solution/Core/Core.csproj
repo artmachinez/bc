@@ -67,13 +67,14 @@
     <Compile Include="Modules\AModuleUserSetup.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Project\CLanguageInfoHelper.cs" />
-    <Compile Include="Project\CLanguageItem.cs" />
-    <Compile Include="Project\LanguageInfoHelper.Designer.cs">
-      <DependentUpon>LanguageInfoHelper.settings</DependentUpon>
+    <Compile Include="Project\CLanguageInfoFactory.cs" />
+    <Compile Include="Project\CLanguageInfo.cs" />
+    <Compile Include="Project\LanguagesInfos.Designer.cs">
+      <DependentUpon>LanguagesInfos.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Project\CProjectInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +87,9 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Mod.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Project\LanguageInfoHelper.settings">
+    <None Include="Project\LanguagesInfos.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>LanguageInfoHelper.Designer.cs</LastGenOutput>
+      <LastGenOutput>LanguagesInfos.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

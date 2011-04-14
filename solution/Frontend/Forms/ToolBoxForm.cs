@@ -35,14 +35,14 @@ namespace Frontend.Forms
         /// <param name="e"></param>
         private void reloadModules(object sender, EventArgs e)
         {
-            this.loadModules((CLanguageItem)CFormController.Instance.languageBox.SelectedItem);
+            this.loadModules((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem);
         }
 
         /// <summary>
         /// Loads modules to listview
         /// </summary>
         /// <param name="language"></param>
-        public void loadModules(CLanguageItem language)
+        public void loadModules(CLanguageInfo language)
         {
             List<Type> modules = new List<Type>();
             try

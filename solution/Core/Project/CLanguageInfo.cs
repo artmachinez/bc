@@ -10,7 +10,7 @@ namespace Core.Project
     /// In modules, the language is set just be lang ID, more info for languages is set in
     /// LanguageInfoHelper.settings
     /// </summary>
-    public class CLanguageItem
+    public class CLanguageInfo
     {
         /// <summary>
         /// Value set in modules - without spaces and stuff

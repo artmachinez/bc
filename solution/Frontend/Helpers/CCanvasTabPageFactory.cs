@@ -13,31 +13,17 @@ namespace Frontend.Helpers
     internal class CCanvasTabPageFactory
     {
         /// <summary>
-        /// Creates new empty page
+        /// Creates new page with new project. Project info must be passed
         /// </summary>
-        /// <param name="language">Language project is in</param>
-        /// <param name="title">Title of page</param>
-        /// <returns>New page</returns>
-        internal static CanvasTabPage createNewPage(CLanguageItem language, String title)
-        {
-            CanvasTabPage tabPage = new CanvasTabPage();
-            tabPage.XMLProjectContent = ImageResources.new_file.ToString();
-            tabPage.Text = title;
-            return tabPage;
-        }
-
-        /// <summary>
-        /// Creates new empty page
-        /// </summary>
-        /// <param name="language">Language project is in</param>
-        /// <param name="title">Title of page</param>
+        /// <param name="projectInfo"></param>
         /// <param name="url">Url of file (which project will be saved in)</param>
-        /// <returns>New page</returns>
-        internal static CanvasTabPage createNewPage(CLanguageItem language, String title, String url)
+        /// <returns></returns>
+        internal static CanvasTabPage createNewPage(CProjectInfo projectInfo, String url)
         {
             CanvasTabPage tabPage = new CanvasTabPage();
-            tabPage.XMLProjectContent = ImageResources.new_file.ToString();
-            tabPage.Text = title;
+            tabPage.projectInfo = projectInfo;
+            tabPage.XMLProjectContent = ProjectResources.new_file.ToString();
+            tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;
         }
@@ -49,11 +35,11 @@ namespace Frontend.Helpers
         /// <param name="title">Title of page</param>
         /// <param name="url">Url of file (which project will be saved in)</param>
         /// <returns>Page</returns>
-        internal static CanvasTabPage createPageFromFile(String fileContent, String title, String url)
+        internal static CanvasTabPage createPageFromFile(String fileContent, String url)
         {
             CanvasTabPage tabPage = new CanvasTabPage();
             tabPage.XMLProjectContent = fileContent;
-            tabPage.Text = title;
+            tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;
         }

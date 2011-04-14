@@ -10,7 +10,7 @@ namespace Core.Project
     /// In modules, the language is set just be lang ID, more info for languages is set in
     /// LanguageInfoHelper.settings
     /// </summary>
-    public class CLanguageInfoHelper
+    public class CLanguageInfoFactory
     {
         /// <summary>
         /// Creates wrapper language class, tries to get info from 
@@ -18,9 +18,9 @@ namespace Core.Project
         /// </summary>
         /// <param name="langID"></param>
         /// <returns></returns>
-        public static CLanguageItem getLangItem(String langID)
+        public static CLanguageInfo getLangItem(String langID)
         {
-            CLanguageItem item = new CLanguageItem();
+            CLanguageInfo item = new CLanguageInfo();
 
             // Set value
             item.Value = langID;
@@ -28,7 +28,7 @@ namespace Core.Project
             // Try to set nice text
             try
             {
-                item.Text = (String)LanguageInfoHelper.Default[langID];
+                item.Text = (String)LanguagesInfos.Default[langID];
             }
             catch (System.Configuration.SettingsPropertyNotFoundException)
             {
