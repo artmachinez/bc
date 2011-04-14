@@ -21,6 +21,20 @@ namespace Frontend.UserControls
     {
         private bool eventsBound = false;
 
+        private CLanguageItem _lang;
+        public CLanguageItem lang
+        {
+            set
+            {
+                // Check if modules compatible, language-wise
+
+                // If not - ask user if he wants to continue
+
+                // Else just set new lang
+                this._lang = value;
+            }
+        }
+
         public CanvasTabPage()
         {
             InitializeComponent();

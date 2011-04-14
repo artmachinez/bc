@@ -28,17 +28,18 @@ namespace Frontend.Forms
         {
             InitializeComponent();
             CFormController.Instance.mainForm = this;
+
             InitLanguageBox();
             InitToolbox();
-            CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadLanguageBox);
             InitProperties();
+
+            CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadLanguageBox);
         }
 
         private void reloadLanguageBox(object sender, EventArgs e)
         {
             langSelectBox.Items.Clear();
-            LanguageDropDownItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
-            //emptyItem.Value = String.Empty;
+            CLanguageItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
@@ -50,8 +51,7 @@ namespace Frontend.Forms
         private void InitLanguageBox()
         {
             CFormController.Instance.languageBox = langSelectBox;
-            LanguageDropDownItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
-            //emptyItem.Value = String.Empty;
+            CLanguageItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
@@ -84,81 +84,68 @@ namespace Frontend.Forms
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            Stream fileStream;
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Project File (*." + Core.App.Default.projectExtension + ")|*." + Core.App.Default.projectExtension;
-            saveFileDialog.Title = "Create New File";
+            SaveFileDialog saveFileDialog = CFileDialogFactory.createNewFileDialog();
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                fileStream = saveFileDialog.OpenFile();
-                if (fileStream != null)
-                {
-                    string fileURL = saveFileDialog.FileName;
-                    string fileName = System.IO.Path.GetFileName(fileURL);
+                // Get variables needed for canvastabpage
+                string fileURL = saveFileDialog.FileName;
+                string fileName = System.IO.Path.GetFileName(fileURL);
+                CLanguageItem language = (CLanguageItem)langSelectBox.SelectedItem;
 
-                    CanvasTabPage canvas = new CanvasTabPage();
-                    canvas.XMLProjectContent = ImageResources.new_file.ToString();
-                    canvas.Text = fileName;
-                    tabControl1.TabPages.Add(canvas);
-                    tabControl1.SelectedTab = canvas;
+                // Create tabpage from them
+                CanvasTabPage tabPage = CCanvasTabPageFactory.createNewPage(language, fileName, fileURL);
 
+                // And add it to tabControl
+                tabControl1.TabPages.Add(tabPage);
+                tabControl1.SelectedTab = tabPage;
 
-                    StreamWriter sw = new StreamWriter(fileStream);
-                    sw.Write(canvas.XMLProjectContent);
-                    sw.Close();
-                    fileStream.Close();
+                // Save it also
+                CFileHelper.saveProject(tabPage);
 
-                    canvas.url = fileURL;
-                    showToolBox();
-                }
+                showToolBox();
             }
         }
 
         private void OpenFile(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "Project File (*." + Core.App.Default.projectExtension + ")|*." + Core.App.Default.projectExtension;
+            OpenFileDialog openFileDialog = CFileDialogFactory.createOpenFileDialog();
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
+                // Get variables needed for canvastabpage
                 string fileURL = openFileDialog.FileName;
                 string fileName = System.IO.Path.GetFileName(fileURL);
 
-                CanvasTabPage canvas = new CanvasTabPage();
-                canvas.XMLProjectContent = System.IO.File.ReadAllText(fileURL);
-                canvas.Text = fileName;
-                canvas.url = fileURL;
-                tabControl1.TabPages.Add(canvas);
-                tabControl1.SelectedTab = canvas;
-                showToolBox();
+                // Get file content
+                String projectContent = CFileHelper.readProject(fileURL);
+
+                // Create tabpage from them
+                CanvasTabPage tabPage = CCanvasTabPageFactory.createPageFromFile(projectContent, fileName, fileURL);
+
+                tabControl1.TabPages.Add(tabPage);
+                tabControl1.SelectedTab = tabPage;
+
+                this.showToolBox();
             }
         }
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stream fileStream;
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Project File (*." + Core.App.Default.projectExtension + ")|*." + Core.App.Default.projectExtension;
+            // Get active child and update its properties
+            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+
+            // Nothing to save as
+            if (activeChild == null)
+                return;
+
+            SaveFileDialog saveFileDialog = CFileDialogFactory.createSaveFileDialog();
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                fileStream = saveFileDialog.OpenFile();
-                if (fileStream != null)
-                {
-                    string fileURL = saveFileDialog.FileName;
-                    string fileName = System.IO.Path.GetFileName(fileURL);
+                // Get variables needed for canvastabpage
+                activeChild.url = saveFileDialog.FileName;
+                activeChild.Text = System.IO.Path.GetFileName(activeChild.url);
 
-                    CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-
-                    StreamWriter sw = new StreamWriter(fileStream);
-                    sw.Write(activeChild.XMLProjectContent);
-                    sw.Close();
-                    fileStream.Close();
-
-                    activeChild.Text = fileName;
-                    activeChild.url = fileURL;
-                }
+                // And save it
+                CFileHelper.saveProject(activeChild);
             }
         }
 
@@ -167,7 +154,7 @@ namespace Frontend.Forms
             CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
             if (activeChild == null)
                 return;
-            System.IO.File.WriteAllText(@activeChild.url, activeChild.XMLProjectContent);
+            CFileHelper.saveProject(activeChild);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

@@ -116,7 +116,11 @@
     <Compile Include="Forms\ShowSourceForm.Designer.cs">
       <DependentUpon>ShowSourceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CCanvasTabPageFactory.cs" />
+    <Compile Include="Helpers\CFileDialogFactory.cs" />
+    <Compile Include="Helpers\CFileHelper.cs" />
     <Compile Include="Helpers\CLanguageInfoHelper.cs" />
+    <Compile Include="Helpers\CLanguageItem.cs" />
     <Compile Include="Helpers\LanguageInfoHelper.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

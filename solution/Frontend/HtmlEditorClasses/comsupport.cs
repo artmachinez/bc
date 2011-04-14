@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Frontend.HtmlEditorClasses
 {
+    /// <summary>
+    /// Needed classes for com integration of mshtml which are not in onlyconnect.HtmlEditor
+    /// </summary>
+
     public struct BUTTON
     {
         public static int NONE = 0;

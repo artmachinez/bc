@@ -5,27 +5,27 @@ using System.Text;
 
 namespace Frontend.Helpers
 {
-    public class LanguageDropDownItem
+    /// <summary>
+    /// Class for manipulating with languages
+    /// In modules, the language is set just be lang ID, more info for languages is set in
+    /// LanguageInfoHelper.settings
+    /// </summary>
+    internal class CLanguageInfoHelper
     {
-        public String Value;
-        public String Text;
-
-        public override String ToString()
+        /// <summary>
+        /// Creates wrapper language class, tries to get info from 
+        /// LanguageInfoHelper.settings
+        /// </summary>
+        /// <param name="langID"></param>
+        /// <returns></returns>
+        internal static CLanguageItem getLangItem(String langID)
         {
-            return Text;
-        }
-    }
-
-    public class CLanguageInfoHelper
-    {
-        public static LanguageDropDownItem getLangItem(String langID)
-        {
-            LanguageDropDownItem item = new LanguageDropDownItem();
+            CLanguageItem item = new CLanguageItem();
 
             // Set value
             item.Value = langID;
 
-            // Set nice text
+            // Try to set nice text
             try
             {
                 item.Text = (String)LanguageInfoHelper.Default[langID];
