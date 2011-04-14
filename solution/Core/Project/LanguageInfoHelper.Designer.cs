@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Frontend.Helpers {
+namespace Core.Project {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

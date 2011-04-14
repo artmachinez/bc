@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Core;
 using Core.Modules;
+using Core.Project;
 using Frontend.UserControls;
 using System.Collections;
 using System.Reflection;
@@ -39,11 +40,11 @@ namespace Frontend.Forms
         private void reloadLanguageBox(object sender, EventArgs e)
         {
             langSelectBox.Items.Clear();
-            CLanguageItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
+            CLanguageItem emptyItem = CLanguageInfoHelper.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
-                langSelectBox.Items.Add(Helpers.CLanguageInfoHelper.getLangItem(lang));
+                langSelectBox.Items.Add(CLanguageInfoHelper.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -51,12 +52,12 @@ namespace Frontend.Forms
         private void InitLanguageBox()
         {
             CFormController.Instance.languageBox = langSelectBox;
-            CLanguageItem emptyItem = Helpers.CLanguageInfoHelper.getLangItem("empty");
+            CLanguageItem emptyItem = CLanguageInfoHelper.getLangItem("empty");
             langSelectBox.Items.Add(emptyItem);
             foreach (String lang in CModuleReader.Instance.languages)
             {
                 //new item
-                langSelectBox.Items.Add(Helpers.CLanguageInfoHelper.getLangItem(lang));
+                langSelectBox.Items.Add(CLanguageInfoHelper.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
         }
@@ -65,7 +66,7 @@ namespace Frontend.Forms
         {
             toolboxForm = new ToolBoxForm();
             toolboxForm.MdiParent = this;
-            toolboxForm.loadModules(Helpers.CLanguageInfoHelper.getLangItem("empty"));
+            toolboxForm.loadModules(CLanguageInfoHelper.getLangItem("empty"));
             toolboxForm.Dock = DockStyle.Fill;
             splitContainer1.Panel1.Controls.Add(toolboxForm);
             toolboxForm.Show();

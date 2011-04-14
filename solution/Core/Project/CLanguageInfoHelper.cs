@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Frontend.Helpers
+namespace Core.Project
 {
     /// <summary>
     /// Class for manipulating with languages
     /// In modules, the language is set just be lang ID, more info for languages is set in
     /// LanguageInfoHelper.settings
     /// </summary>
-    internal class CLanguageInfoHelper
+    public class CLanguageInfoHelper
     {
         /// <summary>
         /// Creates wrapper language class, tries to get info from 
@@ -18,7 +18,7 @@ namespace Frontend.Helpers
         /// </summary>
         /// <param name="langID"></param>
         /// <returns></returns>
-        internal static CLanguageItem getLangItem(String langID)
+        public static CLanguageItem getLangItem(String langID)
         {
             CLanguageItem item = new CLanguageItem();
 
