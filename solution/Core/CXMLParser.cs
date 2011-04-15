@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using Core.Modules;
@@ -36,6 +37,11 @@ namespace Core
         }
 
         #endregion
+
+        /// <summary>
+        /// Cached preview
+        /// </summary>
+        private Hashtable ProjectXMLToPreviewCache = new Hashtable();
 
         /// <summary>
         /// Creates instance of module from HTML node
@@ -115,6 +121,15 @@ namespace Core
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(inputHTML);
 
+            // For checking/saving output to cache
+            int hash = inputHTML.GetHashCode();
+
+            // Check cache
+            if (this.ProjectXMLToPreviewCache.ContainsKey(hash))
+            {
+                return (String)ProjectXMLToPreviewCache[hash];
+            }
+
             HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
 
             if (moduleNodeList != null)
@@ -137,13 +152,19 @@ namespace Core
                 }
             }
 
+            // Clear cache and add output of this
+            ProjectXMLToPreviewCache.Clear();
+            ProjectXMLToPreviewCache.Add(hash, doc.DocumentNode.OuterHtml);
+
             return doc.DocumentNode.OuterHtml;
         }
         /// <summary>
-        /// 
+        /// Since module tags are stored even in preview, this code
+        /// just deletes the previews of modules
+        /// Therefore it doesnt need to be cached
         /// </summary>
-        /// <param name="previewHTML"></param>
-        /// <returns></returns>
+        /// <param name="previewHTML">Preview of project</param>
+        /// <returns>Project XML</returns>
         public String getProjectXMLFromPreview(String previewHTML)
         {
             if (previewHTML == null)

@@ -322,7 +322,7 @@ namespace Frontend.UserControls
 
         private void wb_VisibleChanged(object sender, EventArgs e)
         {
-            this.ActiveProjectContent = this.projectInfo.projectXml;
+            this.ActiveProjectContent = this.textBox1.Text;
         }
 
         private void textBox1_VisibleChanged(object sender, EventArgs e)
