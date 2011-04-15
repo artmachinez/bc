@@ -23,9 +23,36 @@ namespace Frontend.Forms
         public ToolBoxForm()
         {
             InitializeComponent();
+            InitLanguageBox();
             CFormController.Instance.toolbox = this;
             CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadModules);
+            CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadLanguageBox);
             CFormController.Instance.languageBox.SelectedIndexChanged += new EventHandler(reloadModules);
+        }
+
+        private void InitLanguageBox()
+        {
+            CFormController.Instance.languageBox = this.langSelectBox;
+            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
+            this.langSelectBox.Items.Add(emptyItem);
+            foreach (String lang in CModuleReader.Instance.languages)
+            {
+                //new item
+                this.langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
+            }
+            this.langSelectBox.SelectedIndex = 0;
+        }
+
+        private void reloadLanguageBox(object sender, EventArgs e)
+        {
+            langSelectBox.Items.Clear();
+            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
+            langSelectBox.Items.Add(emptyItem);
+            foreach (String lang in CModuleReader.Instance.languages)
+            {
+                langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
+            }
+            langSelectBox.SelectedIndex = 0;
         }
 
         /// <summary>

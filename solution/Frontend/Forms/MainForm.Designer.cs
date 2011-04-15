@@ -82,7 +82,6 @@
             this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.langSelectBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -491,8 +490,7 @@
             this.printToolStripButton,
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
-            this.helpToolStripButton,
-            this.langSelectBox});
+            this.helpToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(955, 25);
@@ -566,15 +564,6 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "Help";
             // 
-            // langSelectBox
-            // 
-            this.langSelectBox.BackColor = System.Drawing.SystemColors.Window;
-            this.langSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.langSelectBox.MaxDropDownItems = 99;
-            this.langSelectBox.Name = "langSelectBox";
-            this.langSelectBox.Size = new System.Drawing.Size(75, 25);
-            this.langSelectBox.ToolTipText = "Modules\' language";
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -615,6 +604,7 @@
             this.boldButton,
             this.italicButton,
             this.underlineButton});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 49);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(955, 25);
@@ -782,7 +772,6 @@
         private System.Windows.Forms.ToolStripButton underlineButton;
         private System.Windows.Forms.ToolStripButton boldButton;
         private System.Windows.Forms.ToolStripMenuItem generateCodeButton;
-        private System.Windows.Forms.ToolStripComboBox langSelectBox;
     }
 }
 

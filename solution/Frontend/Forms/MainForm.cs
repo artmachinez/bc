@@ -29,38 +29,10 @@ namespace Frontend.Forms
         {
             InitializeComponent();
             CFormController.Instance.mainForm = this;
-
-            InitLanguageBox();
             InitToolbox();
             InitProperties();
 
-            CModuleReader.Instance.ModulesReloadedEvent += new ModulesReloadedHandler(reloadLanguageBox);
-            this.tabControl1.SelectedIndexChanged +=new EventHandler(tabControl1_SelectedIndexChanged);
-        }
-
-        private void reloadLanguageBox(object sender, EventArgs e)
-        {
-            langSelectBox.Items.Clear();
-            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
-            langSelectBox.Items.Add(emptyItem);
-            foreach (String lang in CModuleReader.Instance.languages)
-            {
-                langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
-            }
-            langSelectBox.SelectedIndex = 0;
-        }
-
-        private void InitLanguageBox()
-        {
-            CFormController.Instance.languageBox = langSelectBox;
-            CLanguageInfo emptyItem = CLanguageInfoFactory.getLangItem("empty");
-            langSelectBox.Items.Add(emptyItem);
-            foreach (String lang in CModuleReader.Instance.languages)
-            {
-                //new item
-                langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
-            }
-            langSelectBox.SelectedIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
         }
 
         private void InitToolbox()
@@ -94,7 +66,7 @@ namespace Frontend.Forms
 
                 // New form - new info
                 CProjectInfo projectInfo = new CProjectInfo();
-                projectInfo.languageID = ((CLanguageInfo)langSelectBox.SelectedItem).Value;
+                projectInfo.languageID = ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value;
 
                 // Create tabpage from them
                 CanvasTabPage tabPage = CCanvasTabPageFactory.createNewPage(projectInfo, fileURL);
