@@ -87,7 +87,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,7 +118,6 @@
     </Compile>
     <Compile Include="Helpers\CCanvasTabPageFactory.cs" />
     <Compile Include="Helpers\CFileDialogFactory.cs" />
-    <Compile Include="Helpers\CFileHelper.cs" />
     <Compile Include="HtmlEditorClasses\comsupport.cs" />
     <Compile Include="HtmlEditorClasses\CRestrictedEditDesigner.cs" />
     <Compile Include="Helpers\CFormController.cs" />

@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +68,7 @@
     <Compile Include="Modules\AModuleUserSetup.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Project\CFileHelper.cs" />
     <Compile Include="Project\CLanguageInfoFactory.cs" />
     <Compile Include="Project\CLanguageInfo.cs" />
     <Compile Include="Project\LanguagesInfos.Designer.cs">

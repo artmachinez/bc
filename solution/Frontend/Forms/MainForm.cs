@@ -121,6 +121,12 @@ namespace Frontend.Forms
 
                 CProjectInfo info = CFileHelper.getProject(fileURL);
 
+                if (info == null)
+                {
+                    MessageBox.Show("Unable to open project", "Error in opening file");
+                    return;
+                }
+
                 CanvasTabPage tabPage = CCanvasTabPageFactory.createPage(CFileHelper.getProject(fileURL), fileURL);
 
                 // And add it to tabControl
