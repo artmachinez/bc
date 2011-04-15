@@ -148,7 +148,7 @@ namespace Frontend.Forms
                 return;
 
             // Invoke setter to get projectinfo if in view mode
-            activeChild.projectInfo.projectXml = activeChild.ActiveProjectContent;
+            activeChild.projectInfo.projectXml = activeChild.activeProjectContent;
 
             SaveFileDialog saveFileDialog = CFileDialogFactory.createSaveFileDialog();
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -171,7 +171,7 @@ namespace Frontend.Forms
                 return;
 
             // Invoke setter to get projectinfo if in view mode
-            activeChild.projectInfo.projectXml = activeChild.ActiveProjectContent;
+            activeChild.projectInfo.projectXml = activeChild.activeProjectContent;
 
             CFileHelper.saveProject(activeChild.projectInfo, activeChild.url);
         }

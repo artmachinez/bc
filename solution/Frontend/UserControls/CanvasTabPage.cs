@@ -39,14 +39,14 @@ namespace Frontend.UserControls
         /// Active Project content 
         /// - sets/gets data in dependency of texteditor/wysiwygeditor visibility
         /// </summary>
-        public String ActiveProjectContent
+        public String activeProjectContent
         {
             set
             {
                 // Parse preview only if browser is shown
                 if (this.tabControl1.SelectedTab == browserTabPage)
                 {
-                    string html = CXMLParser.Instance.getPreviewFromProjectXML(value);
+                    string html = CXMLParser.Instance.GetPreviewFromProjectXML(value);
                     htmlEditor1.LoadDocument("<body>" + html + "</body>");
                 }
                 this.projectInfo.projectXml = value;
@@ -60,7 +60,7 @@ namespace Frontend.UserControls
                     // Or at least try
                     try
                     {
-                        return CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+                        return CXMLParser.Instance.GetProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
                     }
                     catch (Exception)
                     {
@@ -88,17 +88,32 @@ namespace Frontend.UserControls
         void languageBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Change project only if language is actually changed
-            bool langChanged = (this.projectInfo.languageID == ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value);
+            bool langChanged = (this.projectInfo.languageID != ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value);
             // And its ment to be for this project - tab is active
             bool thisSelected = (CFormController.Instance.mainTabControl.SelectedTab == this);
 
-            if (thisSelected && !langChanged)
+            if (thisSelected && langChanged)
             {
-                if (MessageBox.Show("Really change?", "Confirm change", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                // User accepted lang change
+                ToolStripComboBox langBox = (ToolStripComboBox)sender;
+
+
+                String oldContent = this.activeProjectContent;
+                // Parse out modules not supported in new language
+                String oldLanguage = this.projectInfo.languageID;
+                String newLanguage = ((CLanguageInfo)langBox.SelectedItem).Value;
+                String newContent = CXMLParser.Instance.ChangeProjectLanguage(this.activeProjectContent, newLanguage);
+
+                if (newContent.Equals(oldContent))
                 {
-                    // User accepted lang change
-                    ToolStripComboBox send = (ToolStripComboBox)sender;
-                    this.projectInfo.languageID = ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value;
+                    this.projectInfo.languageID = newLanguage;
+                    return;
+                }
+
+                if (MessageBox.Show("Really change? (Some modules might be lost)", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    this.activeProjectContent = newContent;
+                    this.projectInfo.languageID = newLanguage;
                 }
                 else
                 {
@@ -185,7 +200,7 @@ namespace Frontend.UserControls
             HtmlAgilityPack.HtmlNode activeNode = CFormController.Instance.mainForm.propertiesForm.activeElem;
 
             // Change its content
-            activeNode.InnerHtml = CXMLParser.Instance.getNodeFromModule(CFormController.Instance.mainForm.propertiesForm.module).OuterHtml;
+            activeNode.InnerHtml = CXMLParser.Instance.GetNodeFromModule(CFormController.Instance.mainForm.propertiesForm.module).OuterHtml;
             activeNode.InnerHtml += CFormController.Instance.mainForm.propertiesForm.module.generatePreview();
 
             // And load all back to IHTMLDocument
@@ -202,7 +217,7 @@ namespace Frontend.UserControls
                 ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
                 foreach (ListViewItem listViewItemModule in listViewItemModules)
                 {
-                    input += CXMLParser.Instance.getPreviewFromProjectXML(CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml);
+                    input += CXMLParser.Instance.GetPreviewFromProjectXML(CXMLParser.Instance.GetNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml);
                 }
 
                 // Get relative drop location
@@ -292,12 +307,12 @@ namespace Frontend.UserControls
                 ListView.SelectedListViewItemCollection listViewItemModules = (ListView.SelectedListViewItemCollection)e.Data.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false);
                 foreach (ListViewItem listViewItemModule in listViewItemModules)
                 {
-                    input += CXMLParser.Instance.getNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml;
+                    input += CXMLParser.Instance.GetNodeFromModule(CModuleReader.Instance.GetModuleInstanceFromName(listViewItemModule.Text)).OuterHtml;
                 }
 
                 // And insert them on cursor position
                 int cursorPosition = textBox1.SelectionStart;
-                this.ActiveProjectContent = this.ActiveProjectContent.Insert(textBox1.SelectionStart, input);
+                this.activeProjectContent = this.activeProjectContent.Insert(textBox1.SelectionStart, input);
                 textBox1.SelectionStart = cursorPosition + input.Length;
             }
         }
@@ -322,12 +337,12 @@ namespace Frontend.UserControls
 
         private void wb_VisibleChanged(object sender, EventArgs e)
         {
-            this.ActiveProjectContent = this.textBox1.Text;
+            this.activeProjectContent = this.textBox1.Text;
         }
 
         private void textBox1_VisibleChanged(object sender, EventArgs e)
         {
-            this.ActiveProjectContent = CXMLParser.Instance.getProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
+            this.activeProjectContent = CXMLParser.Instance.GetProjectXMLFromPreview(htmlEditor1.HtmlDocument2.GetBody().innerHTML);
             // Properties not clickable from editmode .. yet
             CFormController.Instance.mainForm.hideProperties();
         }
@@ -343,13 +358,13 @@ namespace Frontend.UserControls
         {
             // Need to invoke setter to refresh content
             // (editmode sets content to null automatically)
-            this.ActiveProjectContent = this.ActiveProjectContent;
+            this.activeProjectContent = this.activeProjectContent;
 
             // Toggle design mode
             this.htmlEditor1.IsDesignMode = !this.htmlEditor1.IsDesignMode;
 
             // And invoke getter
-            this.ActiveProjectContent = this.ActiveProjectContent;
+            this.activeProjectContent = this.activeProjectContent;
             this.htmlEditor1.InvokeReadyStateChanged("complete");
         }
 

@@ -41,14 +41,14 @@ namespace Core
         /// <summary>
         /// Cached preview
         /// </summary>
-        private Hashtable ProjectXMLToPreviewCache = new Hashtable();
+        private Hashtable projectXMLToPreviewCache = new Hashtable();
 
         /// <summary>
         /// Creates instance of module from HTML node
         /// </summary>
         /// <param name="node">Module HTML node</param>
         /// <returns>Instance of AModule with UserSetup</returns>
-        public AModule getModuleFromNode(HtmlNode node)
+        public AModule GetModuleFromNode(HtmlNode node)
         {
             AModule module = CModuleReader.Instance.GetModuleInstanceFromName(node.Attributes["name"].Value);
 
@@ -76,7 +76,7 @@ namespace Core
         /// </summary>
         /// <param name="module">Module</param>
         /// <returns>XML Node of module</returns>
-        public HtmlNode getNodeFromModule(AModule module)
+        public HtmlNode GetNodeFromModule(AModule module)
         {
             Type moduleType = module.GetType();
             Type setupType = module.setup.GetType();
@@ -86,7 +86,7 @@ namespace Core
 
 
             HtmlDocument htmlDoc = new HtmlDocument();
-            HtmlNode node = htmlDoc.CreateElement("module"); //XmlNodeType.Element, App.Default.moduleNamespace, moduleName, App.Default.moduleNamespaceURI); 
+            HtmlNode node = htmlDoc.CreateElement("module");
 
             // Save all setup_* members to attributes
             MemberInfo[] setupMembers = setupType.GetMember("setup_*", BindingFlags.Public | BindingFlags.Instance);
@@ -116,7 +116,7 @@ namespace Core
         /// </summary>
         /// <param name="inputHTML">Complete project HTML</param>
         /// <returns>Complete preview</returns>
-        public String getPreviewFromProjectXML(String inputHTML)
+        public String GetPreviewFromProjectXML(String inputHTML)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(inputHTML);
@@ -125,9 +125,9 @@ namespace Core
             int hash = inputHTML.GetHashCode();
 
             // Check cache
-            if (this.ProjectXMLToPreviewCache.ContainsKey(hash))
+            if (this.projectXMLToPreviewCache.ContainsKey(hash))
             {
-                return (String)ProjectXMLToPreviewCache[hash];
+                return (String)projectXMLToPreviewCache[hash];
             }
 
             HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
@@ -137,7 +137,7 @@ namespace Core
                 foreach (HtmlNode moduleNode in moduleNodeList)
                 {
 
-                    AModule module = this.getModuleFromNode(moduleNode);
+                    AModule module = this.GetModuleFromNode(moduleNode);
 
                     // Because nodetag is not html, HtmlNode is not in dom structure (parent is null).
                     // Therefore HtmlNode.ReplaceChild method cannot by applied asi in this.getProjectXMLFromPreview
@@ -153,8 +153,8 @@ namespace Core
             }
 
             // Clear cache and add output of this
-            ProjectXMLToPreviewCache.Clear();
-            ProjectXMLToPreviewCache.Add(hash, doc.DocumentNode.OuterHtml);
+            projectXMLToPreviewCache.Clear();
+            projectXMLToPreviewCache.Add(hash, doc.DocumentNode.OuterHtml);
 
             return doc.DocumentNode.OuterHtml;
         }
@@ -165,7 +165,7 @@ namespace Core
         /// </summary>
         /// <param name="previewHTML">Preview of project</param>
         /// <returns>Project XML</returns>
-        public String getProjectXMLFromPreview(String previewHTML)
+        public String GetProjectXMLFromPreview(String previewHTML)
         {
             if (previewHTML == null)
                 return String.Empty;
@@ -192,7 +192,7 @@ namespace Core
         /// </summary>
         /// <param name="projectXML"></param>
         /// <returns></returns>
-        public String getHTMLFromProjectXML(String projectXML)
+        public String GetHTMLFromProjectXML(String projectXML)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(projectXML);
@@ -205,12 +205,40 @@ namespace Core
             {
                 foreach (HtmlNode moduleNode in moduleNodeList)
                 {
-                    AModule module = this.getModuleFromNode(moduleNode);
+                    AModule module = this.GetModuleFromNode(moduleNode);
                     // OuterHtml plx
                     moduleNode.InnerHtml += module.generateHTML();
                 }
             }
 
+            return doc.DocumentNode.OuterHtml;
+        }
+
+        /// <summary>
+        /// Changes language of project XML - removes all modules that are not in new language
+        /// </summary>
+        /// <param name="projectXML"></param>
+        /// <param name="newLang"></param>
+        /// <returns></returns>
+        public String ChangeProjectLanguage(String projectXML, String newLang)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(projectXML);
+
+            HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
+
+            if (moduleNodeList != null)
+            {
+                foreach (HtmlNode moduleNode in moduleNodeList)
+                {
+                    AModule module = this.GetModuleFromNode(moduleNode);
+                    List<String> availableLangs = CModuleReader.GetAvailableLanguages(module.GetType());
+                    if (!availableLangs.Contains(newLang) && availableLangs.Count != 0)
+                    {
+                        moduleNode.Remove();
+                    }
+                }
+            }
             return doc.DocumentNode.OuterHtml;
         }
     }

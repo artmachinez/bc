@@ -58,7 +58,7 @@ namespace Frontend.Forms
             this.activeElem = element;
 
             // Create module
-            module = CXMLParser.Instance.getModuleFromNode(element.FirstChild);
+            module = CXMLParser.Instance.GetModuleFromNode(element.FirstChild);
 
             // Clear Properties
             tableLayoutPanel1.Controls.Clear();

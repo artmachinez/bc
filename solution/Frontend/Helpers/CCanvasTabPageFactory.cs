@@ -22,7 +22,7 @@ namespace Frontend.Helpers
         {
             CanvasTabPage tabPage = new CanvasTabPage();
             tabPage.projectInfo = projectInfo;
-            tabPage.ActiveProjectContent = ProjectResources.new_file.ToString();
+            tabPage.activeProjectContent = ProjectResources.new_file.ToString();
             tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;
@@ -38,7 +38,7 @@ namespace Frontend.Helpers
         {
             CanvasTabPage tabPage = new CanvasTabPage();
             tabPage.projectInfo = projectInfo;
-            tabPage.ActiveProjectContent = projectInfo.projectXml;
+            tabPage.activeProjectContent = projectInfo.projectXml;
             tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;
@@ -54,7 +54,7 @@ namespace Frontend.Helpers
         internal static CanvasTabPage createPageFromFile(String fileContent, String url)
         {
             CanvasTabPage tabPage = new CanvasTabPage();
-            tabPage.ActiveProjectContent = fileContent;
+            tabPage.activeProjectContent = fileContent;
             tabPage.Text = System.IO.Path.GetFileName(url);
             tabPage.url = url;
             return tabPage;

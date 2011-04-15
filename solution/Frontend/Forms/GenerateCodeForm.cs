@@ -39,7 +39,7 @@ namespace Frontend.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine(CXMLParser.Instance.getHTMLFromProjectXML(this.page.ActiveProjectContent));
+            Debug.WriteLine(CXMLParser.Instance.GetHTMLFromProjectXML(this.page.activeProjectContent));
             //this.generateHTMLFile();
             //this.Close();
         }
@@ -47,7 +47,7 @@ namespace Frontend.Forms
         private void generateHTMLFile()
         {
             StreamWriter fileStream = new StreamWriter(this.pathTextBox.Text);
-            fileStream.Write(this.page.ActiveProjectContent);
+            fileStream.Write(this.page.activeProjectContent);
             fileStream.Close();
         }
 
