@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Core;
+using Core.Project;
 using System.Diagnostics;
 
 namespace Frontend.Forms
@@ -18,8 +19,10 @@ namespace Frontend.Forms
 
         public GenerateCodeForm(UserControls.CanvasTabPage page)
         {
-            this.page = page;
             InitializeComponent();
+            page.projectInfo.projectXml = page.activeProjectContent;
+            this.page = page;
+            this.languageValueLabel.Text = page.projectInfo.languageID;
         }
 
         private void pathTextBox_MouseClick(object sender, MouseEventArgs e)
@@ -30,25 +33,26 @@ namespace Frontend.Forms
             saveFileDialog.Title = "generate web";
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                string fileURL = saveFileDialog.FileName;
-                string fileName = System.IO.Path.GetFileName(fileURL);
-
-                this.pathTextBox.Text = fileURL;
+                this.pathTextBox.Text = saveFileDialog.FileName;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void generateButton_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine(CXMLParser.Instance.GetHTMLFromProjectXML(this.page.activeProjectContent));
-            //this.generateHTMLFile();
-            //this.Close();
+            if (!CFileHelper.generatePage(page.projectInfo, this.pathTextBox.Text))
+            {
+                MessageBox.Show("Error generating output");
+            }
+            else
+            {
+                MessageBox.Show("Code generated successfully");
+                this.Close();
+            }
         }
 
-        private void generateHTMLFile()
+        private void cancelButton_Click(object sender, EventArgs e)
         {
-            StreamWriter fileStream = new StreamWriter(this.pathTextBox.Text);
-            fileStream.Write(this.page.activeProjectContent);
-            fileStream.Close();
+            this.Close();
         }
 
 

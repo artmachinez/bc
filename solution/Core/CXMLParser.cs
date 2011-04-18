@@ -191,13 +191,15 @@ namespace Core
         /// Generates final HTML from project XML
         /// </summary>
         /// <param name="projectXML"></param>
-        /// <returns></returns>
-        public String GetHTMLFromProjectXML(String projectXML)
+        /// <param name="moduleList">List of modules generated from project code</param>
+        /// <returns>HTML part of final output</returns>
+        public String GetHTMLFromProjectXML(String projectXML, out List<AModule> moduleList)
         {
+            // List of modules, to have module ID saved
+            moduleList = new List<AModule>();
+
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(projectXML);
-
-            // Need to set script paths
 
             // And generate modules' html
             HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
@@ -205,9 +207,10 @@ namespace Core
             {
                 foreach (HtmlNode moduleNode in moduleNodeList)
                 {
+                    // Change project modulenode for proper html output
                     AModule module = this.GetModuleFromNode(moduleNode);
-                    // OuterHtml plx
                     moduleNode.InnerHtml += module.generateHTML();
+                    moduleList.Add(module);
                 }
             }
 

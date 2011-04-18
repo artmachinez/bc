@@ -6,7 +6,9 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using Core.Project;
+using Core.Modules;
 using HtmlAgilityPack;
+using System.Reflection;
 
 namespace Core.Project
 {
@@ -15,6 +17,68 @@ namespace Core.Project
     /// </summary>
     public class CFileHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectInfo"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static bool generatePage(CProjectInfo projectInfo, String url)
+        {
+            List<AModule> moduleList;
+            String index = CXMLParser.Instance.GetHTMLFromProjectXML(projectInfo.projectXml, out moduleList);
+
+            // Save html file
+            saveFile(index, url);
+
+            // Generate all the templates in module directory
+            foreach (AModule module in moduleList)
+            {
+
+                // Create directory for each module
+                String newDirPath = Path.GetDirectoryName(url) + Path.DirectorySeparatorChar + "modules" + Path.DirectorySeparatorChar + module.setup.id;
+                DirectoryInfo di = Directory.CreateDirectory(newDirPath);
+                String[] moduleResources = module.GetType().Assembly.GetManifestResourceNames();
+                foreach (String resource in moduleResources)
+                {
+                    // There are more resources - preview one, html one, 
+                    // but just those in given language are needed
+                    String nspace = "Modules.Login_Templates." + projectInfo.languageID;
+                    if(resource.StartsWith(nspace))
+                    {
+                        String name = resource.Substring(nspace.Length + 1);
+                        String renderedTemplate = module.renderTemplate(projectInfo.languageID + "." + name);
+
+                        if (!saveFile(renderedTemplate, newDirPath + Path.DirectorySeparatorChar + name))
+                            return false;
+                    }
+                }
+                //return true;
+            }
+
+            return true;
+        }
+
+        private static bool saveFile(String content, String url)
+        {
+            StreamWriter sw = null;
+            try
+            {
+                sw = new StreamWriter(url);
+                sw.Write(content);
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sw != null)
+                    sw.Close();
+            }
+            return true;
+        }
+
         /// <summary>
         /// Saves serialized ProjectInfo to file
         /// </summary>
