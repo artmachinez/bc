@@ -11,6 +11,11 @@ namespace Frontend.HtmlEditorClasses
     /// </summary>
     public static class HTMLDocumentConverter
     {
+        /// <summary>
+        /// Converts onlyconnect.IHTMLDocument2 class to HtmlAgilityPack.HtmlDocument
+        /// </summary>
+        /// <param name="doc">IHTMLDocument2 document</param>
+        /// <returns>Converted HtmlDocument</returns>
         public static HtmlAgilityPack.HtmlDocument mshtmlDocToAgilityPackDoc(onlyconnect.IHTMLDocument2 doc)
         {
             HtmlAgilityPack.HtmlDocument outDoc = new HtmlAgilityPack.HtmlDocument();

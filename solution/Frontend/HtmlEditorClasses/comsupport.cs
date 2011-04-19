@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+/// <summary>
+/// Needed classes for com integration of mshtml which are not in onlyconnect.HtmlEditor
+/// </summary>
 namespace Frontend.HtmlEditorClasses
 {
-    /// <summary>
-    /// Needed classes for com integration of mshtml which are not in onlyconnect.HtmlEditor
-    /// </summary>
-
     public struct BUTTON
     {
         public static int NONE = 0;

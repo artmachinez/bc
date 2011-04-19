@@ -213,7 +213,9 @@ namespace Core.Helpers
                 {
                     // Change project modulenode for proper html output
                     AModule module = this.GetModuleFromNode(moduleNode);
-                    moduleNode.InnerHtml += module.generateHTML();
+                    moduleNode.Name = "div";
+                    moduleNode.Attributes.RemoveAll();
+                    moduleNode.InnerHtml = module.generateHTML();
                     moduleList.Add(module);
                 }
             }

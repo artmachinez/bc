@@ -8,30 +8,46 @@ using System.Diagnostics;
 
 namespace Frontend.HtmlEditorClasses
 {
+
     /// <summary>
-    /// Fires when module in htmleditor clicked
+    /// Delegate for event moduleClicked
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="Frontend.HtmlEditorClasses.ElementDataEventArgs"/> instance containing the event data.</param>
     public delegate void ModuleClickedEventHandler(object sender, ElementDataEventArgs e);
     /// <summary>
-    /// Fires when canvas clicked (not module on it though)
+    /// Delegate for event canvasClicked
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="Frontend.HtmlEditorClasses.ElementDataEventArgs"/> instance containing the event data.</param>
     public delegate void CanvasClickedEventHandler(object sender, ElementDataEventArgs e);
 
     /// <summary>
-    /// Disables mouse events on module div in view mode
+    /// Disables mouse events on module div in view mode.
     /// </summary>
     [ComVisible(true)]
     class CRestrictedEditDesigner : IHTMLEditDesigner
     {
+        /// <summary>
+        /// Occurs when [module clicked].
+        /// </summary>
         public event ModuleClickedEventHandler moduleClicked;
 
+        /// <summary>
+        /// Occurs when [canvas clicked].
+        /// </summary>
         public event CanvasClickedEventHandler canvasClicked;
 
-        private bool isModule(IHTMLElement elem, out IHTMLElement foundModule)
+
+        /// <summary>
+        /// Determines whether the specified elem is module.
+        /// </summary>
+        /// <param name="elem">The elem.</param>
+        /// <param name="foundModule">The found module.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified elem is module; otherwise, <c>false</c>.
+        /// </returns>
+        internal static bool isModule(IHTMLElement elem, out IHTMLElement foundModule)
         {
             foundModule = null;
 
