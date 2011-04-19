@@ -86,48 +86,6 @@ namespace Frontend.UserControls
             CFormController.Instance.languageBox.SelectedIndexChanged += new EventHandler(languageBox_SelectedIndexChanged);
         }
 
-        void languageBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Change project only if language is actually changed
-            bool langChanged = (this.projectInfo.languageID != ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value);
-            // And its ment to be for this project - tab is active
-            bool thisSelected = (CFormController.Instance.mainTabControl.SelectedTab == this);
-
-            if (thisSelected && langChanged)
-            {
-                // User accepted lang change
-                ToolStripComboBox langBox = (ToolStripComboBox)sender;
-
-
-                String oldContent = this.activeProjectContent;
-                // Parse out modules not supported in new language
-                String oldLanguage = this.projectInfo.languageID;
-                String newLanguage = ((CLanguageInfo)langBox.SelectedItem).Value;
-                String newContent = CXMLParser.Instance.ChangeProjectLanguage(this.activeProjectContent, newLanguage);
-
-                if (newContent.Equals(oldContent))
-                {
-                    this.projectInfo.languageID = newLanguage;
-                    return;
-                }
-
-                if (MessageBox.Show("Really change? (Some modules might be lost)", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    this.activeProjectContent = newContent;
-                    this.projectInfo.languageID = newLanguage;
-                }
-                else
-                {
-                    // User declined lang change, set language back to project language
-                    foreach (CLanguageInfo language in CFormController.Instance.languageBox.Items)
-                    {
-                        if (language.Value.Equals(this.projectInfo.languageID))
-                            CFormController.Instance.languageBox.SelectedItem = language;
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Gets string representation of selected tab
         /// </summary>
@@ -367,6 +325,57 @@ namespace Frontend.UserControls
             // And invoke getter
             this.activeProjectContent = this.activeProjectContent;
             this.htmlEditor1.InvokeReadyStateChanged("complete");
+        }
+
+        /// <summary>
+        /// Fires when box with languages changed - needs to check if there are conflict
+        /// modules, ask user if he really wants to change language and if so, 
+        /// remove conflict modules.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void languageBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Change project only if language is actually changed
+            bool langChanged = (this.projectInfo.languageID != ((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem).Value);
+            // And its ment to be for this project - tab is active
+            bool thisSelected = (CFormController.Instance.mainTabControl.SelectedTab == this);
+
+            if (thisSelected && langChanged)
+            {
+                // User accepted lang change
+                ToolStripComboBox langBox = (ToolStripComboBox)sender;
+
+
+                String oldContent = this.activeProjectContent;
+                // Parse out modules not supported in new language
+                String oldLanguage = this.projectInfo.languageID;
+                String newLanguage = ((CLanguageInfo)langBox.SelectedItem).Value;
+                String newContent = CXMLParser.Instance.ChangeProjectLanguage(this.activeProjectContent, newLanguage);
+
+                // Nothing to worry about, we can change language
+                if (newContent.Equals(oldContent))
+                {
+                    this.projectInfo.languageID = newLanguage;
+                    return;
+                }
+
+                bool userAccepted = (MessageBox.Show("Really change? (Some modules might be lost)", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes);
+                if (userAccepted)
+                {
+                    this.activeProjectContent = newContent;
+                    this.projectInfo.languageID = newLanguage;
+                }
+                else
+                {
+                    // User declined lang change, set language back to project language
+                    foreach (CLanguageInfo language in CFormController.Instance.languageBox.Items)
+                    {
+                        if (language.Value.Equals(this.projectInfo.languageID))
+                            CFormController.Instance.languageBox.SelectedItem = language;
+                    }
+                }
+            }
         }
 
         #endregion

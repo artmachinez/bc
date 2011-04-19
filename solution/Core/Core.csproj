@@ -57,11 +57,6 @@
     </Compile>
     <Compile Include="Helpers\CModuleReader.cs" />
     <Compile Include="Helpers\CXMLParser.cs" />
-    <Compile Include="Mod.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Mod.settings</DependentUpon>
-    </Compile>
     <Compile Include="Modules\AModule.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -84,10 +79,6 @@
     <None Include="App.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>App.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Mod.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Mod.Designer.cs</LastGenOutput>
     </None>
     <None Include="Project\LanguagesInfos.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

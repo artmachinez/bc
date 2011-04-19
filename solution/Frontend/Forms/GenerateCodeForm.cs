@@ -16,8 +16,16 @@ namespace Frontend.Forms
 {
     public partial class GenerateCodeForm : Form
     {
+        /// <summary>
+        /// Needed reference of tabPage, to get language info, 
+        /// project XML and possibly other needed stuff
+        /// </summary>
         private UserControls.CanvasTabPage page;
 
+        /// <summary>
+        /// Construct
+        /// </summary>
+        /// <param name="page"></param>
         public GenerateCodeForm(UserControls.CanvasTabPage page)
         {
             InitializeComponent();
@@ -25,6 +33,8 @@ namespace Frontend.Forms
             this.page = page;
             this.languageValueLabel.Text = page.projectInfo.languageID;
         }
+
+        #region Callbacks
 
         private void pathTextBox_MouseClick(object sender, MouseEventArgs e)
         {
@@ -56,10 +66,6 @@ namespace Frontend.Forms
             this.Close();
         }
 
-
-
-
-
-
+        #endregion
     }
 }

@@ -21,41 +21,35 @@ namespace Frontend.Forms
     public partial class MainForm : Form
     {
         /// <summary>
-        /// programatically created toolboxForm
+        /// Programatically created toolbox
         /// </summary>
         private ToolBoxForm toolboxForm;
+        /// <summary>
+        /// Programatically created properties
+        /// </summary>
         public PropertiesForm propertiesForm;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
             CFormController.Instance.mainForm = this;
             InitToolbox();
             InitProperties();
-
-            this.tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
         }
 
-        private void InitToolbox()
+        /// <summary>
+        /// Changes text of status strip in the bottom of form
+        /// </summary>
+        /// <param name="status"></param>
+        internal void setStatus(String status)
         {
-            toolboxForm = new ToolBoxForm();
-            toolboxForm.MdiParent = this;
-            toolboxForm.loadModules(CLanguageInfoFactory.getLangItem("empty"));
-            toolboxForm.Dock = DockStyle.Fill;
-            splitContainer1.Panel1.Controls.Add(toolboxForm);
-            toolboxForm.Show();
-            hideToolBox();
+            this.toolStripStatusLabel.Text = status;
         }
 
-        private void InitProperties()
-        {
-            propertiesForm = new PropertiesForm();
-            propertiesForm.MdiParent = this;
-            propertiesForm.Dock = DockStyle.Fill;
-            splitContainer2.Panel2.Controls.Add(propertiesForm);
-            propertiesForm.Show();
-            hideProperties();
-        }
+        #region File manipulation callbacks
 
         private void ShowNewForm(object sender, EventArgs e)
         {
@@ -73,9 +67,12 @@ namespace Frontend.Forms
                 CanvasTabPage tabPage = CCanvasTabPageFactory.createNewPage(projectInfo, fileURL);
 
                 // And add it to tabControl
-                tabControl1.TabPages.Add(tabPage);
-                tabControl1.SelectedTab = tabPage;
-                this.tabControl1_SelectedIndexChanged(null, null);
+                pageContainerControl.TabPages.Add(tabPage);
+                pageContainerControl.SelectedTab = tabPage;
+
+                // Manually cast selectindexchanged, since it doesnt fire when the first tab
+                // is opened
+                this.pageContainerControl_SelectedIndexChanged(null, null);
 
                 // Save it also
                 CFileHelper.saveProject(tabPage.projectInfo, tabPage.url);
@@ -103,9 +100,12 @@ namespace Frontend.Forms
                 CanvasTabPage tabPage = CCanvasTabPageFactory.createPage(CFileHelper.getProject(fileURL), fileURL);
 
                 // And add it to tabControl
-                tabControl1.TabPages.Add(tabPage);
-                tabControl1.SelectedTab = tabPage;
-                this.tabControl1_SelectedIndexChanged(null, null);
+                pageContainerControl.TabPages.Add(tabPage);
+                pageContainerControl.SelectedTab = tabPage;
+
+                // Manually cast selectindexchanged, since it doesnt fire when the first tab
+                // is opened
+                this.pageContainerControl_SelectedIndexChanged(null, null);
 
                 this.showToolBox();
             }
@@ -114,7 +114,7 @@ namespace Frontend.Forms
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Get active child and update its properties
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
 
             if (activeChild == null)
                 // Nothing to save as
@@ -137,7 +137,7 @@ namespace Frontend.Forms
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
 
             if (activeChild == null)
                 // Nothing to save
@@ -159,9 +159,13 @@ namespace Frontend.Forms
             this.Close();
         }
 
+        #endregion
+
+        #region Text edit callbacks
+
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -176,7 +180,7 @@ namespace Frontend.Forms
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -191,7 +195,7 @@ namespace Frontend.Forms
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -206,7 +210,7 @@ namespace Frontend.Forms
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -221,7 +225,7 @@ namespace Frontend.Forms
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -236,7 +240,7 @@ namespace Frontend.Forms
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
             if (activeChild == null)
                 return;
             if (activeChild.getSelectedTab().Equals("browser"))
@@ -249,6 +253,70 @@ namespace Frontend.Forms
             }
         }
 
+        private void boldButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("bold", false, null);
+            }
+        }
+
+        private void underlinedButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("underline", false, null);
+            }
+        }
+
+        private void centerButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
+            }
+        }
+
+        private void italicButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("italic", false, null);
+            }
+        }
+
+        private void centerButton_Click_1(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            if (activeChild.getSelectedTab().Equals("browser"))
+            {
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("center", false, null);
+            }
+        }
+
+        #endregion
+
+        #region Show/hide utilities callbacks
+
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
@@ -259,29 +327,9 @@ namespace Frontend.Forms
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
-        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.Cascade);
-        }
-
-        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.ArrangeIcons);
-        }
-
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabControl1.TabPages.Clear();
+            pageContainerControl.TabPages.Clear();
             hideToolBox();
         }
 
@@ -289,6 +337,31 @@ namespace Frontend.Forms
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.ShowDialog();
+        }
+
+        private void generateCodeButton_Click(object sender, EventArgs e)
+        {
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
+            if (activeChild == null)
+                return;
+
+            GenerateCodeForm gcf = new GenerateCodeForm(activeChild);
+            gcf.Show();
+        }
+
+        #endregion
+
+        #region Toolbox manipulation
+
+        private void InitToolbox()
+        {
+            toolboxForm = new ToolBoxForm();
+            toolboxForm.MdiParent = this;
+            toolboxForm.loadModules(CLanguageInfoFactory.getLangItem("empty"));
+            toolboxForm.Dock = DockStyle.Fill;
+            splitContainer1.Panel1.Controls.Add(toolboxForm);
+            toolboxForm.Show();
+            hideToolBox();
         }
 
         private void toolBoxMenuItem_Click(object sender, EventArgs e)
@@ -300,18 +373,6 @@ namespace Frontend.Forms
             else
             {
                 hideToolBox();
-            }
-        }
-
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (propertiesMenuItem.Checked)
-            {
-                showProperties();
-            }
-            else
-            {
-                hideProperties();
             }
         }
 
@@ -327,6 +388,32 @@ namespace Frontend.Forms
             toolBoxMenuItem.Checked = false;
             splitContainer1.Panel1Collapsed = true;
             splitContainer1.Panel1.Hide();
+        }
+
+        #endregion
+
+        #region Properties manipulation
+
+        private void InitProperties()
+        {
+            propertiesForm = new PropertiesForm();
+            propertiesForm.MdiParent = this;
+            propertiesForm.Dock = DockStyle.Fill;
+            splitContainer2.Panel2.Controls.Add(propertiesForm);
+            propertiesForm.Show();
+            hideProperties();
+        }
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (propertiesMenuItem.Checked)
+            {
+                showProperties();
+            }
+            else
+            {
+                hideProperties();
+            }
         }
 
         internal void showProperties(HtmlAgilityPack.HtmlNode element = null)
@@ -349,73 +436,19 @@ namespace Frontend.Forms
             splitContainer2.Panel2.Hide();
         }
 
-        internal void setStatus(String status)
-        {
-            this.toolStripStatusLabel.Text = status;
-        }
+        #endregion
 
-        private void boldButton_Click(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild == null)
-                return;
+        #region Other callbacks
 
-            if (activeChild.getSelectedTab().Equals("browser"))
-            {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("bold", false, null);
-            }
-        }
-
-        private void underlinedButton_Click(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild == null)
-                return;
-
-            if (activeChild.getSelectedTab().Equals("browser"))
-            {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("underline", false, null);
-            }
-        }
-
-        private void centerButton_Click(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild == null)
-                return;
-
-            if (activeChild.getSelectedTab().Equals("browser"))
-            {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
-            }
-        }
-
-        private void italicButton_Click(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild == null)
-                return;
-
-            if (activeChild.getSelectedTab().Equals("browser"))
-            {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("italic", false, null);
-            }
-        }
-
-        private void generateCodeButton_Click(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
-            if (activeChild == null)
-                return;
-
-            GenerateCodeForm gcf = new GenerateCodeForm(activeChild);
-            gcf.Show();
-        }
-
-        void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Changing language in languagebox with tabpage change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pageContainerControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get active child and update its properties
-            CanvasTabPage activeChild = (CanvasTabPage)tabControl1.SelectedTab;
+            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
 
             if (activeChild == null)
                 return;
@@ -427,5 +460,8 @@ namespace Frontend.Forms
                     CFormController.Instance.languageBox.SelectedItem = language;
             }
         }
+
+        #endregion
+
     }
 }

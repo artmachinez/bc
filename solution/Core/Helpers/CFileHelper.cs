@@ -31,7 +31,8 @@ namespace Core.Helpers
             String index = CXMLParser.Instance.GetHTMLFromProjectXML(projectInfo.projectXml, out moduleList);
 
             // Save html file
-            saveFile(index, path);
+            if (!saveFile(index, path))
+                return false;
 
             // Generate all the templates in module directory
             foreach (AModule module in moduleList)
@@ -57,32 +58,6 @@ namespace Core.Helpers
                             return false;
                     }
                 }
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Saving contents to file, not firing exceptions
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private static bool saveFile(String content, String url)
-        {
-            StreamWriter sw = null;
-            try
-            {
-                sw = new StreamWriter(url);
-                sw.Write(content);
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                if (sw != null)
-                    sw.Close();
             }
             return true;
         }
@@ -156,5 +131,30 @@ namespace Core.Helpers
             return projectInfo;
         }
 
+        /// <summary>
+        /// Saving contents to file, not firing exceptions
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private static bool saveFile(String content, String url)
+        {
+            StreamWriter sw = null;
+            try
+            {
+                sw = new StreamWriter(url);
+                sw.Write(content);
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sw != null)
+                    sw.Close();
+            }
+            return true;
+        }
     }
 }

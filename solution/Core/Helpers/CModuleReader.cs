@@ -200,7 +200,7 @@ namespace Core.Helpers
         public String GetModulesDir()
         {
             String currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetCallingAssembly().Location);
-            String modulesDir = currentDir + Path.DirectorySeparatorChar + Mod.Default.modulesDir;
+            String modulesDir = currentDir + Path.DirectorySeparatorChar + App.Default.modulesDir;
             String completePath = new Uri(modulesDir).LocalPath;
 
             if (!Directory.Exists(completePath))

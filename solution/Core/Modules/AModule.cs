@@ -42,7 +42,7 @@ namespace Core.Modules
             this.setup = setup;
         }
 
-        #region Methods for generating output
+        #region Methods for generating output from templates
 
         /// <summary>
         /// Generates HTML part of module
@@ -51,8 +51,6 @@ namespace Core.Modules
         public virtual String generateHTML()
         {
             return this.renderTemplate("html.tpl");
-            //Template template = Template.Parse(this.getTemplate("html.tpl"));
-            //return template.Render(Hash.FromAnonymousObject(new { _setup = this.setup }));
         }
 
         /// <summary>
@@ -62,19 +60,14 @@ namespace Core.Modules
         public String generatePreview()
         {
             return this.renderTemplate("preview.tpl");
-            //Template template = Template.Parse(this.getTemplate("preview.tpl"));
-            //String xml = template.Render(Hash.FromAnonymousObject(new { _setup = this.setup.getDictionary() }));
-            //return xml;
         }
-
-        #endregion
 
         /// <summary>
         /// Gets string of template from its name.
         /// Templates must be in folder [modulename]_Templates, in namespace Modules
         /// and has to be set as embedded resources.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Name of template</param>
         /// <returns>Template string</returns>
         internal virtual String getTemplate(String name)
         {
@@ -92,10 +85,19 @@ namespace Core.Modules
             }
         }
 
+        /// <summary>
+        /// Passes this.userSetup to template and renders its contents
+        /// Templates must be in folder [modulename]_Templates, in namespace Modules
+        /// and has to be set as embedded resources.
+        /// </summary>
+        /// <param name="name">Name of template</param>
+        /// <returns>Rendered template string</returns>
         internal virtual String renderTemplate(String name)
         {
             Template template = Template.Parse(this.getTemplate(name));
             return template.Render(Hash.FromAnonymousObject(new { _setup = this.setup.getDictionary() }));
         }
+
+        #endregion
     }
 }

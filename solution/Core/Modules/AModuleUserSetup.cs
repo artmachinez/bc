@@ -11,13 +11,18 @@ namespace Core.Modules
 {
     public abstract class AModuleUserSetup
     {
+
+        #region Properties required to inherit in module
+
         /// <summary>
         /// Needed to set to get reference
         /// (usersetup and module classes can be named however)
         /// </summary>
         public static String moduleName;
 
-        #region Inner needed variables
+        #endregion
+
+        #region Inner properties
 
         /// <summary>
         /// Not really used since mshtml somehow handles positioning.
@@ -69,7 +74,7 @@ namespace Core.Modules
         {
             Dictionary<String, String> dict = new Dictionary<String, String>();
 
-            // Save all setup_* members to attributes
+            // Save all setup_* members
             MemberInfo[] setupMembers = this.GetType().GetMember("setup_*", MemberTypes.Property, BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
             foreach (MemberInfo setupMember in setupMembers)
             {

@@ -70,7 +70,7 @@ namespace Frontend.Forms
             int row = 0;
             foreach (HtmlAgilityPack.HtmlAttribute attribute in element.FirstChild.Attributes)
             {
-                if (attribute.Name.Length > 6 && attribute.Name.Substring(0, 6).Equals("setup_"))
+                if (attribute.Name.Length > 6 && attribute.Name.StartsWith("setup_"))
                 {
 
                     tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
@@ -80,6 +80,7 @@ namespace Frontend.Forms
                     tableLayoutPanel1.Controls.Add(label, 0, row);
 
                     TextBox textbox = new TextBox();
+                    textbox.Width = 200;
                     textbox.Name = attribute.Name;
                     textbox.Text = attribute.Value;
                     textbox.KeyDown += new KeyEventHandler(textbox_KeyDown);

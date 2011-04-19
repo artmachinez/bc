@@ -31,6 +31,9 @@ namespace Frontend.Forms
             CFormController.Instance.languageBox.SelectedIndexChanged += new EventHandler(reloadModules);
         }
 
+        /// <summary>
+        /// Add all languages to languagebox
+        /// </summary>
         private void InitLanguageBox()
         {
             CFormController.Instance.languageBox = this.langSelectBox;
@@ -44,6 +47,11 @@ namespace Frontend.Forms
             this.langSelectBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Reload languagebox - some modules have been added or something
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void reloadLanguageBox(object sender, EventArgs e)
         {
             langSelectBox.Items.Clear();
