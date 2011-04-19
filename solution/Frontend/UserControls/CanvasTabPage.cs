@@ -146,10 +146,17 @@ namespace Frontend.UserControls
             // On leftclick show properties window - only when in designmode though
             if (e.eventObj.Button == BUTTON.LEFT && this.htmlEditor1.IsDesignMode)
             {
-                HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
-                HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
-                CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
-                CFormController.Instance.mainForm.showProperties(elem);
+                try
+                {
+                    HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
+                    HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
+                    CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
+                    CFormController.Instance.mainForm.showProperties(elem);
+                }
+                catch (Exception)
+                {
+                    // failed to show properties
+                }
             }
         }
 

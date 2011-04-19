@@ -309,7 +309,7 @@ namespace Frontend.Forms
 
             if (activeChild.getSelectedTab().Equals("browser"))
             {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("center", false, null);
+                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
             }
         }
 
