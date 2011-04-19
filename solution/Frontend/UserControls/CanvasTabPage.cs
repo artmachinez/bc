@@ -19,6 +19,9 @@ using Frontend.Helpers;
 
 namespace Frontend.UserControls
 {
+    /// <summary>
+    /// A project page, contains text editor and wysiwyg editor
+    /// </summary>
     public partial class CanvasTabPage : TabPage
     {
         /// <summary>

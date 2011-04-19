@@ -14,6 +14,9 @@ using System.Diagnostics;
 
 namespace Frontend.Forms
 {
+    /// <summary>
+    /// Form for generating final output of a project
+    /// </summary>
     public partial class GenerateCodeForm : Form
     {
         /// <summary>

@@ -10,6 +10,9 @@ using System.Drawing;
 
 namespace Core.Modules
 {
+    /// <summary>
+    /// Class which all the modules have to inherit from
+    /// </summary>
     public abstract class AModule
     {
         #region Properties required to inherit in module
@@ -31,6 +34,9 @@ namespace Core.Modules
 
         #endregion
 
+        /// <summary>
+        /// Here are saved all the user set properties
+        /// </summary>
         public AModuleUserSetup setup;
 
         /// <summary>

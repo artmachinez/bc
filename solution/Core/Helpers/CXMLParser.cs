@@ -13,6 +13,10 @@ using HtmlAgilityPack;
 
 namespace Core.Helpers
 {
+    /// <summary>
+    /// Class for handling module tags in project XML, 
+    /// transforming it to preview XML and others transformations
+    /// </summary>
     public class CXMLParser
     {
         #region Singleton biz

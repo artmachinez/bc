@@ -12,7 +12,13 @@ namespace Core.Project
     /// </summary>
     public class CProjectInfo
     {
+        /// <summary>
+        /// ID of language set in project
+        /// </summary>
         public String languageID;
+        /// <summary>
+        /// All xml content of a project
+        /// </summary>
         public String projectXml;
     }
 }

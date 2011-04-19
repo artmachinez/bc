@@ -9,8 +9,14 @@ using System.Windows.Forms;
 
 namespace Frontend.Forms
 {
+    /// <summary>
+    /// Shows source of HTML preview of a project
+    /// </summary>
     public partial class ShowSourceForm : Form
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ShowSourceForm()
         {
             InitializeComponent();

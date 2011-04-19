@@ -21,6 +21,10 @@ namespace Core.Project
         /// </summary>
         public String Text;
 
+        /// <summary>
+        /// Override of ToString to be compatible with dropdownlistitem
+        /// </summary>
+        /// <returns></returns>
         public override String ToString()
         {
             return Text;

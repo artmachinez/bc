@@ -16,6 +16,9 @@ namespace Core.Helpers
     /// <param name="e"></param>
     public delegate void ModulesReloadedHandler(object sender, EventArgs e);
 
+    /// <summary>
+    /// Keeps an eye on module directory, loads all modules in there and watches for changes
+    /// </summary>
     public class CModuleReader
     {
         /// <summary>

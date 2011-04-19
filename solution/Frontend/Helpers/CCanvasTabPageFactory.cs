@@ -48,7 +48,6 @@ namespace Frontend.Helpers
         /// Creates page from existing content
         /// </summary>
         /// <param name="fileContent">Existing content</param>
-        /// <param name="title">Title of page</param>
         /// <param name="url">Url of file (which project will be saved in)</param>
         /// <returns>Page</returns>
         internal static CanvasTabPage createPageFromFile(String fileContent, String url)

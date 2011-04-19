@@ -18,6 +18,9 @@ using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
+    /// <summary>
+    /// Main window, MDI Parent of all subforms
+    /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>

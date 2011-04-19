@@ -10,14 +10,20 @@ using Frontend.Helpers;
 
 namespace Frontend.UserControls
 {
+    /// <summary>
+    /// Tabcontrol with all opened projects.
+    /// Implements own closetab mechanism.
+    /// </summary>
     public partial class ClosableTabControl : TabControl
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ClosableTabControl()
         {
             InitializeComponent();
             CFormController.Instance.mainTabControl = this;
         }
-
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {

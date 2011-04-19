@@ -20,8 +20,16 @@ using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
+    /// <summary>
+    /// Delegate for moduleChanged event
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public delegate void ModuleChanged(object sender, EventArgs e);
 
+    /// <summary>
+    /// Form on the right side of main window, shows all properties of a module
+    /// </summary>
     public partial class PropertiesForm : Form
     {
         /// <summary>
@@ -42,6 +50,9 @@ namespace Frontend.Forms
         /// </summary>
         public event ModuleChanged moduleChanged;
 
+        /// <summary>
+        /// Construct
+        /// </summary>
         public PropertiesForm()
         {
             InitializeComponent();

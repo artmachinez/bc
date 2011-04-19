@@ -9,6 +9,36 @@ using System.Reflection;
 
 namespace Core.Modules
 {
+    /// <summary>
+    /// Class for saving all the user variables wanted in a module.
+    /// Inherited class can create own variables and use them in templates like this:
+    /// <code>
+    ///      private String _setup_variable = "not set";
+    ///      public String setup_variable
+    ///      {
+    ///          get
+    ///          { 
+    ///              return this._setup_variable; 
+    ///          }
+    ///          set 
+    ///          {
+    ///              if(this._setup_variable.Length > 5)
+    ///                  throw new Excpetion('variable must be max 5 chars long');
+    ///              this._setup_variable = value; 
+    ///          }
+    ///      }
+    /// </code>
+    /// 
+    /// Variable must be defined as String and as a class member - with setter and getter
+    /// 
+    /// Example of usage in templates:
+    ///
+    /// <code>
+    ///     <div>dynamic text: {{_setup.setup_variable}}</div>
+    /// </code>
+    /// 
+    /// More examples in example module.
+    /// </summary>
     public abstract class AModuleUserSetup
     {
 
@@ -34,35 +64,6 @@ namespace Core.Modules
         /// Unique id used to identify element in html
         /// </summary>
         public String id = System.Guid.NewGuid().ToString();
-
-        #endregion
-
-        #region Own variables
-
-        // Own module variables can be defined and used in templates.
-        // Example of defined variable:
-        //
-        //      private String _setup_variable = "not set";
-        //      public String setup_variable
-        //      {
-        //          get
-        //          { 
-        //              return this._setup_variable; 
-        //          }
-        //          set 
-        //          {
-        //              if(this._setup_variable.Length > 5)
-        //                  throw new Excpetion('variable must be max 5 chars long');
-        //              this._setup_variable = value; 
-        //          }
-        //      }
-        //
-        // Variable must be defined as String and as a class member 
-        // - with setter and getter
-        //
-        // Example of usage in templates:
-        //
-        //      <div>dynamic text: {{_setup.setup_variable}}</div>
 
         #endregion
 

@@ -19,6 +19,9 @@ using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
+    /// <summary>
+    /// Form on the left side of program window, shows all the loaded modules
+    /// </summary>
     public partial class ToolBoxForm : Form
     {
         public ToolBoxForm()
