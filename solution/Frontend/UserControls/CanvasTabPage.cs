@@ -13,6 +13,7 @@ using System.IO;
 using Frontend.Forms;
 using System.Runtime.InteropServices;
 using onlyconnect;
+using HtmlAgilityPack;
 using System.Diagnostics;
 using Frontend.HtmlEditorClasses;
 using Frontend.Helpers;
@@ -176,6 +177,18 @@ namespace Frontend.UserControls
             htmlEditor1.LoadDocument("<BODY>" + activeNode.OwnerDocument.DocumentNode.InnerHtml + "</BODY>");
         }
 
+        /// <summary>
+        /// This method needs heavy revision.
+        /// 
+        /// Since element on which was module dropped is COM interface IHTMLElement
+        /// and that seems like it's not supporting own module tag (it gets removed on whatever operation),
+        /// this method adds id to IHTMLElement(if needed), to be able to identify it in HtmlAgilityPack HtmlDocument
+        /// then adds preview output as end to that element, then converts document back to COM IHTMLDocument2
+        /// 
+        /// Doh.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void theSite_drop(DataObject sender, DragEventArgs e)
         {
             CFormController.Instance.mainForm.setStatus("drop" + e.X.ToString());
@@ -196,6 +209,13 @@ namespace Frontend.UserControls
 
                 // Get element on which module was dropped
                 IHTMLElement hoverElem = htmlEditor1.HtmlDocument2.ElementFromPoint(X, Y);
+                IHTMLElement moduleElem = null;
+
+                // If it gets dropped on module, pass its parent element instead
+                if(CRestrictedEditDesigner.isModule(hoverElem, out moduleElem))
+                {
+                    hoverElem = moduleElem;
+                }
 
                 if (hoverElem.tagName.Equals("BODY"))
                 {
@@ -209,19 +229,44 @@ namespace Frontend.UserControls
                 {
                     Debug.WriteLine("dropped on " + hoverElem.tagName);
 
-                    // Mshtml deletes <module> in element load, 
-                    // uhm so it has to be converted to HtmlAgilityPack.HtmlDocument
-                    // and then back
-                    Guid guid = new Guid();
-                    hoverElem.SetAttribute("id", guid.ToString(), 0);
+                    //Mshtml deletes <module> in element load, 
+                    //uhm so it has to be converted to HtmlAgilityPack.HtmlDocument
+                    //and then back
+                    String guid = Guid.NewGuid().ToString();
+                    Boolean idChanged;
+                    if (hoverElem.id == null)
+                    {
+                        hoverElem.id = guid;
+                        idChanged = true;
+                    }
+                    else
+                    {
+                        guid = hoverElem.id;
+                        idChanged = false;
+                    }
 
                     // Get wanted element and modify its content
                     HtmlAgilityPack.HtmlDocument htmlDoc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
-                    HtmlAgilityPack.HtmlNode node = htmlDoc.GetElementbyId(guid.ToString());
-                    node.Attributes.Remove("id");
-                    node.InnerHtml += input;
+                    HtmlAgilityPack.HtmlNode node = htmlDoc.GetElementbyId(guid);
 
-                    Debug.WriteLine("dropping in the end of " + node.Name);
+                    // Dont remove id if it was there before
+                    if(idChanged)
+                        node.Attributes.Remove("id");
+
+                    // Need to create element, because HtmlNode dont have OuterHtml settable
+                    HtmlNode addedModulesNode = htmlDoc.CreateElement("div");
+                    addedModulesNode.InnerHtml = input;
+
+                    try
+                    {
+                        // Well, this sometimes fails.. god knows why
+                        htmlDoc.DocumentNode.InsertAfter(addedModulesNode, node);
+                    }
+                    catch (Exception)
+                    {
+                        // So if it fails, add module in the end of parent module
+                        node.ParentNode.InnerHtml += input;
+                    }
 
                     // And back to IHTMLDocument
                     htmlEditor1.LoadDocument("<body>" + htmlDoc.DocumentNode.InnerHtml + "</body>");
