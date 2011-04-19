@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Core;
 using Core.Modules;
+using Core.Helpers;
 using System.Collections;
 using System.Reflection;
 using System.IO;

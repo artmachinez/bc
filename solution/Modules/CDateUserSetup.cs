@@ -6,7 +6,7 @@ using Core.Modules;
 
 namespace Modules.Date
 {
-    public class CDateUserSetup: AModuleUserSetup
+    public class CDateUserSetup : AModuleUserSetup
     {
         new public static String moduleName = "Date";
 

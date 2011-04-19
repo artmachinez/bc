@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Core;
 using Core.Project;
+using Core.Helpers;
 using System.IO;
 using Frontend.Forms;
 using System.Runtime.InteropServices;

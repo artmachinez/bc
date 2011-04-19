@@ -10,7 +10,7 @@ using Core.Modules;
 using HtmlAgilityPack;
 using System.Reflection;
 
-namespace Core.Project
+namespace Core.Helpers
 {
     /// <summary>
     /// Class for reading from/writing to project files
@@ -18,32 +18,36 @@ namespace Core.Project
     public class CFileHelper
     {
         /// <summary>
-        /// 
+        /// Generates complete page to specified path
+        /// Project content of the page is in projectInfo.projectXml, language
+        /// which to generate to is in projectInfo.languageID
         /// </summary>
-        /// <param name="projectInfo"></param>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static bool generatePage(CProjectInfo projectInfo, String url)
+        /// <param name="projectInfo">ProjectInfo instance</param>
+        /// <param name="path">Path of HTML index</param>
+        /// <returns>Boolean of success</returns>
+        public static bool generatePage(CProjectInfo projectInfo, String path)
         {
             List<AModule> moduleList;
             String index = CXMLParser.Instance.GetHTMLFromProjectXML(projectInfo.projectXml, out moduleList);
 
             // Save html file
-            saveFile(index, url);
+            saveFile(index, path);
 
             // Generate all the templates in module directory
             foreach (AModule module in moduleList)
             {
+                // Get module name
+                String moduleName = (String)module.GetType().GetField("name", BindingFlags.Static | BindingFlags.Public | BindingFlags.GetProperty).GetValue(null);
 
                 // Create directory for each module
-                String newDirPath = Path.GetDirectoryName(url) + Path.DirectorySeparatorChar + "modules" + Path.DirectorySeparatorChar + module.setup.id;
+                String newDirPath = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar + "modules" + Path.DirectorySeparatorChar + module.setup.id;
                 DirectoryInfo di = Directory.CreateDirectory(newDirPath);
                 String[] moduleResources = module.GetType().Assembly.GetManifestResourceNames();
                 foreach (String resource in moduleResources)
                 {
                     // There are more resources - preview one, html one, 
                     // but just those in given language are needed
-                    String nspace = "Modules.Login_Templates." + projectInfo.languageID;
+                    String nspace = "Modules." + moduleName  + "_Templates." + projectInfo.languageID;
                     if(resource.StartsWith(nspace))
                     {
                         String name = resource.Substring(nspace.Length + 1);
@@ -53,12 +57,16 @@ namespace Core.Project
                             return false;
                     }
                 }
-                //return true;
             }
-
             return true;
         }
 
+        /// <summary>
+        /// Saving contents to file, not firing exceptions
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private static bool saveFile(String content, String url)
         {
             StreamWriter sw = null;

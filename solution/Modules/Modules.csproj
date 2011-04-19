@@ -60,32 +60,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Date_ws_asp.tpl" />
-    <EmbeddedResource Include="Templates\Date_ws_php.tpl" />
-    <EmbeddedResource Include="Templates\Image_html.tpl" />
-    <EmbeddedResource Include="Templates\Link_html.tpl" />
+    <EmbeddedResource Include="Date_Templates\asp\backend.asp" />
+    <EmbeddedResource Include="Date_Templates\php\backend.php" />
+    <EmbeddedResource Include="Image_Templates\html.tpl" />
+    <EmbeddedResource Include="Link_Templates\html.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Date_preview.tpl">
+    <EmbeddedResource Include="Date_Templates\preview.tpl">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Date_html.tpl" />
+    <EmbeddedResource Include="Date_Templates\html.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Date_js.tpl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Templates\Date_css.tpl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Templates\Image_preview.tpl">
+    <EmbeddedResource Include="Image_Templates\preview.tpl">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Link_preview.tpl" />
+    <EmbeddedResource Include="Link_Templates\preview.tpl" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Date_Templates\asp\caller.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Date_Templates\php\caller.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,7 +11,7 @@ using System.IO;
 using System.Drawing;
 using HtmlAgilityPack;
 
-namespace Core
+namespace Core.Helpers
 {
     public class CXMLParser
     {

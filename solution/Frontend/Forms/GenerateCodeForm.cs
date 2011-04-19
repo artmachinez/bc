@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using Core;
 using Core.Project;
+using Core.Helpers;
 using System.Diagnostics;
 
 namespace Frontend.Forms

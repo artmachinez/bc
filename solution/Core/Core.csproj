@@ -55,8 +55,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>App.settings</DependentUpon>
     </Compile>
-    <Compile Include="CModuleReader.cs" />
-    <Compile Include="CXMLParser.cs" />
+    <Compile Include="Helpers\CModuleReader.cs" />
+    <Compile Include="Helpers\CXMLParser.cs" />
     <Compile Include="Mod.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -68,7 +68,7 @@
     <Compile Include="Modules\AModuleUserSetup.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Project\CFileHelper.cs" />
+    <Compile Include="Helpers\CFileHelper.cs" />
     <Compile Include="Project\CLanguageInfoFactory.cs" />
     <Compile Include="Project\CLanguageInfo.cs" />
     <Compile Include="Project\LanguagesInfos.Designer.cs">

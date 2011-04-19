@@ -7,7 +7,7 @@ using System.Reflection;
 using System.IO;
 using System.Windows.Threading;
 
-namespace Core
+namespace Core.Helpers
 {
     /// <summary>
     /// Delegates change on modules directory
