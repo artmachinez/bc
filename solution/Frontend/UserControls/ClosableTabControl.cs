@@ -25,6 +25,11 @@ namespace Frontend.UserControls
             CFormController.Instance.mainTabControl = this;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.TabControl.DrawItem"/> event.
+        /// TODO: Create Nice close buttons and maybe background on tabs
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.DrawItemEventArgs"/> that contains the event data.</param>
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             Rectangle tabArea = GetTabRect(e.Index);
@@ -63,9 +68,9 @@ namespace Frontend.UserControls
         }
 
         /// <summary>
-        /// gets close button rectangle from tab rectangle
+        /// Gets the close button area.
         /// </summary>
-        /// <param name="tabRectangle"></param>
+        /// <param name="tabRectangle">The tab rectangle.</param>
         /// <returns></returns>
         private RectangleF GetCloseButtonArea(RectangleF tabRectangle)
         {
@@ -73,6 +78,10 @@ namespace Frontend.UserControls
         }
 
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             RectangleF tabTextArea;
@@ -105,33 +114,25 @@ namespace Frontend.UserControls
                     graphics.DrawImage(ProjectResources.inactive_close_button, closeButtonArea);
                 }
             }
-
             base.OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseClick"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
             RectangleF tabTextArea = (RectangleF)this.GetTabRect(this.SelectedIndex);
-            RectangleF closeButtonArea = this.GetCloseButtonArea(tabTextArea); //new RectangleF(tabTextArea.X + tabTextArea.Width - 14, 3, 13, 13);
+            RectangleF closeButtonArea = this.GetCloseButtonArea(tabTextArea);
             if (closeButtonArea.Contains(e.Location) && e.Button == MouseButtons.Left )
             {
-                if (SaveBeforeExitBox())
-                {
-                    this.TabPages.RemoveAt(SelectedIndex);
-                }
+                this.TabPages.RemoveAt(SelectedIndex);
             }
             else
             {
                 base.OnMouseClick(e);
             }
         }
-
-        private bool SaveBeforeExitBox()
-        {
-            return true;
-        }
-
-
-
     }
 }

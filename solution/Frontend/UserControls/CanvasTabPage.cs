@@ -186,6 +186,8 @@ namespace Frontend.UserControls
         /// then adds preview output as end to that element, then converts document back to COM IHTMLDocument2
         /// 
         /// Doh.
+        /// 
+        /// TODO: Could use hard refactoring, probably own customized html editor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -220,10 +222,10 @@ namespace Frontend.UserControls
                 if (hoverElem.tagName.Equals("BODY"))
                 {
                     Debug.WriteLine("dropped on body");
-                    if(hoverElem.innerText == null && hoverElem.innerHTML == null)
+                    if (hoverElem.innerText == null && hoverElem.innerHTML == null)
                         htmlEditor1.LoadDocument("<body>" + input + "</body>");
                     else
-                        hoverElem.innerHTML += input;
+                        htmlEditor1.LoadDocument("<body>" + hoverElem.innerHTML + input + "</body>");
                 }
                 else
                 {
@@ -281,6 +283,16 @@ namespace Frontend.UserControls
 
         void dropTarget_dragOver(DataObject sender, DragEventArgs e)
         {
+
+            htmlEditor1.theSite.UpdateUI();
+            // Get relative drop location
+            //Point htmlEditorCorner = htmlEditor1.PointToScreen(new Point(0, 0));
+            //int X = e.X - htmlEditorCorner.X;
+            //int Y = e.Y - htmlEditorCorner.Y;
+
+            //// Get element on which module was dropped
+            //IHTMLElement hoverElem = htmlEditor1.HtmlDocument2.ElementFromPoint(X, Y);
+            //htmlEditor1.InvokeUpdateUI(hoverElem);
             //Point htmlEditorCorner = htmlEditor1.PointToScreen(new Point(0, 0));
             //int X = e.X - htmlEditorCorner.X;
             //int Y = e.Y - htmlEditorCorner.Y;

@@ -439,8 +439,8 @@ namespace onlyconnect
             //Debug.WriteLine("RequestUIActivate");
             //return HESULT.S_FALSE prevents focus grab
             //but means no caret
-            //return HRESULT.S_FALSE;
-            return HRESULT.S_OK;
+            return HRESULT.S_FALSE;
+            //return HRESULT.S_OK;
         }
 
         public int GetWindowContext(out IOleInPlaceFrame ppFrame, out IOleInPlaceUIWindow

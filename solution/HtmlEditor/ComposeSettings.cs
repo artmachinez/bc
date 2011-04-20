@@ -24,9 +24,6 @@ namespace onlyconnect
 		
 		public ComposeSettings(HtmlEditor editor)
 		{
-			//
-			// TODO: Add constructor logic here
-			//
 			this.mHtmlEditor = editor;
 		}
 

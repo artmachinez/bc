@@ -11,9 +11,6 @@ namespace onlyconnect
 	{
 		public DownloadOnlySite()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
 		}
 
 

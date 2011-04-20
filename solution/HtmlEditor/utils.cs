@@ -15,9 +15,6 @@ namespace onlyconnect
     {
         public utils()
         {
-            //
-            // TODO: Add constructor logic here
-            //
         }
 
         public static string DecodeHRESULT(int hr)

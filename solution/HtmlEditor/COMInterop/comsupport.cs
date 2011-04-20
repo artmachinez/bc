@@ -23,9 +23,6 @@ namespace onlyconnect
 
         public ComSupport()
         {
-            //
-            // TODO: Add constructor logic here
-            //
         }
     }
 

@@ -60,7 +60,8 @@ namespace Frontend.Forms
         }
 
         /// <summary>
-        /// Creates textboxes and shit
+        /// Creates textboxes with labels
+        /// TODO: textboxes are not copy-pastable, not even selectable
         /// </summary>
         /// <param name="element">Module element</param>
         /// <returns></returns>
