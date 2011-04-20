@@ -109,6 +109,7 @@
             this.Controls.Add(this.pathLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "GenerateCodeForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Generate Code";
             this.ResumeLayout(false);
             this.PerformLayout();

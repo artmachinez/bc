@@ -42,15 +42,21 @@ namespace Core.Helpers
 
                 // Create directory for each module
                 String newDirPath = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar + "modules" + Path.DirectorySeparatorChar + module.setup.id;
-                DirectoryInfo di = Directory.CreateDirectory(newDirPath);
+                DirectoryInfo di = null;
                 String[] moduleResources = module.GetType().Assembly.GetManifestResourceNames();
                 foreach (String resource in moduleResources)
                 {
                     // There are more resources - preview one, html one, 
                     // but just those in given language are needed
-                    String nspace = "Modules." + moduleName  + "_Templates." + projectInfo.languageID;
-                    if(resource.StartsWith(nspace))
+                    String nspace = "Modules." + moduleName + "_Templates." + projectInfo.languageID;
+                    if (resource.StartsWith(nspace))
                     {
+                        // Create directory only if needed
+                        if (di == null)
+                        {
+                            di = Directory.CreateDirectory(newDirPath);
+                        }
+
                         String name = resource.Substring(nspace.Length + 1);
                         String renderedTemplate = module.renderTemplate(projectInfo.languageID + "." + name);
 
@@ -124,7 +130,7 @@ namespace Core.Helpers
             finally
             {
                 // Whatever happened, try to close the file
-                if(sr!=null)
+                if (sr != null)
                     sr.Close();
             }
 
@@ -134,8 +140,8 @@ namespace Core.Helpers
         /// <summary>
         /// Saving contents to file, not firing exceptions
         /// </summary>
-        /// <param name="content"></param>
-        /// <param name="url"></param>
+        /// <param name="content">The content.</param>
+        /// <param name="url">The URL.</param>
         /// <returns></returns>
         private static bool saveFile(String content, String url)
         {
