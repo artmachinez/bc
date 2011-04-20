@@ -41,6 +41,11 @@ namespace Frontend.UserControls
         public String url;
 
         /// <summary>
+        /// Last clicked element
+        /// </summary>
+        private IHTMLElement activeElement;
+
+        /// <summary>
         /// Active Project content 
         /// - sets/gets data in dependency of texteditor/wysiwygeditor visibility
         /// </summary>
@@ -145,23 +150,17 @@ namespace Frontend.UserControls
             // Set menu
             if (e.eventObj.Button == BUTTON.RIGHT)
             {
+                this.activeElement = e.element;
                 htmlEditor1.ContextMenuStrip = moduleRightClickMenu;
             }
-            // On leftclick show properties window - only when in designmode though
-            if (e.eventObj.Button == BUTTON.LEFT && this.htmlEditor1.IsDesignMode)
-            {
-                try
-                {
-                    HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
-                    HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(e.element.id);
-                    CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
-                    CFormController.Instance.mainForm.showProperties(elem);
-                }
-                catch (Exception)
-                {
-                    // failed to show properties
-                }
-            }
+        }
+
+        private void moduleProperties_Click(object sender, EventArgs e)
+        {
+            HtmlAgilityPack.HtmlDocument doc = HTMLDocumentConverter.mshtmlDocToAgilityPackDoc(htmlEditor1.HtmlDocument2);
+            HtmlAgilityPack.HtmlNode elem = doc.GetElementbyId(this.activeElement.id);
+            CFormController.Instance.mainForm.propertiesForm.moduleChanged += new ModuleChanged(propertiesForm_moduleChanged);
+            CFormController.Instance.mainForm.showProperties(elem);
         }
 
         void propertiesForm_moduleChanged(object sender, EventArgs e)
@@ -193,7 +192,7 @@ namespace Frontend.UserControls
         /// <param name="e"></param>
         void theSite_drop(DataObject sender, DragEventArgs e)
         {
-            CFormController.Instance.mainForm.setStatus("drop" + e.X.ToString());
+            CFormController.Instance.mainForm.setStatus("Module(s) Added");
             if (sender.GetData("System.Windows.Forms.ListView+SelectedListViewItemCollection", false) != null)
             {
                 // Get module preview (multiple modules can be dragged)
@@ -388,6 +387,8 @@ namespace Frontend.UserControls
 
             // Toggle design mode
             this.htmlEditor1.IsDesignMode = !this.htmlEditor1.IsDesignMode;
+            this.toggleEditMode.Checked = this.htmlEditor1.IsDesignMode;
+            this.moduleToggleEditMode.Checked = this.htmlEditor1.IsDesignMode;
 
             // And invoke getter
             this.activeProjectContent = this.activeProjectContent;
@@ -424,6 +425,7 @@ namespace Frontend.UserControls
                 if (newContent.Equals(oldContent))
                 {
                     this.projectInfo.languageID = newLanguage;
+                    CFormController.Instance.mainForm.setStatus("Language Changed");
                     return;
                 }
 
@@ -432,6 +434,7 @@ namespace Frontend.UserControls
                 {
                     this.activeProjectContent = newContent;
                     this.projectInfo.languageID = newLanguage;
+                    CFormController.Instance.mainForm.setStatus("Language Changed");
                 }
                 else
                 {

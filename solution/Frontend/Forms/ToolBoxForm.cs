@@ -65,6 +65,7 @@ namespace Frontend.Forms
                 langSelectBox.Items.Add(CLanguageInfoFactory.getLangItem(lang));
             }
             langSelectBox.SelectedIndex = 0;
+            CFormController.Instance.mainForm.setStatus("LanguageBox Reloaded");
         }
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace Frontend.Forms
         private void reloadModules(object sender, EventArgs e)
         {
             this.loadModules((CLanguageInfo)CFormController.Instance.languageBox.SelectedItem);
+            CFormController.Instance.mainForm.setStatus("Modules Reloaded");
         }
 
         /// <summary>

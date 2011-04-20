@@ -38,10 +38,10 @@ namespace Frontend.UserControls
             this.moduleRightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.moduleProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.moduleViewSource = new System.Windows.Forms.ToolStripMenuItem();
+            this.moduleToggleEditMode = new System.Windows.Forms.ToolStripMenuItem();
             this.rightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewSource = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleEditMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.moduleToggleEditMode = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.browserTabPage.SuspendLayout();
             this.textEditorTabPage.SuspendLayout();
@@ -137,7 +137,7 @@ namespace Frontend.UserControls
             this.moduleViewSource,
             this.moduleToggleEditMode});
             this.moduleRightClickMenu.Name = "moduleRightClickMenu";
-            this.moduleRightClickMenu.Size = new System.Drawing.Size(169, 70);
+            this.moduleRightClickMenu.Size = new System.Drawing.Size(139, 70);
             this.moduleRightClickMenu.Text = "moduleRightClickMenu";
             // 
             // moduleProperties
@@ -145,6 +145,7 @@ namespace Frontend.UserControls
             this.moduleProperties.Name = "moduleProperties";
             this.moduleProperties.Size = new System.Drawing.Size(168, 22);
             this.moduleProperties.Text = "Properties";
+            this.moduleProperties.Click += new System.EventHandler(this.moduleProperties_Click);
             // 
             // moduleViewSource
             // 
@@ -153,13 +154,23 @@ namespace Frontend.UserControls
             this.moduleViewSource.Text = "View Source";
             this.moduleViewSource.Click += new System.EventHandler(this.viewSource_Click);
             // 
+            // moduleToggleEditMode
+            // 
+            this.moduleToggleEditMode.Checked = true;
+            this.moduleToggleEditMode.CheckOnClick = true;
+            this.moduleToggleEditMode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.moduleToggleEditMode.Name = "moduleToggleEditMode";
+            this.moduleToggleEditMode.Size = new System.Drawing.Size(138, 22);
+            this.moduleToggleEditMode.Text = "Edit Mode";
+            this.moduleToggleEditMode.Click += new System.EventHandler(this.toggleEditMode_Click);
+            // 
             // rightClickMenu
             // 
             this.rightClickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewSource,
             this.toggleEditMode});
             this.rightClickMenu.Name = "rightClickMenu";
-            this.rightClickMenu.Size = new System.Drawing.Size(169, 48);
+            this.rightClickMenu.Size = new System.Drawing.Size(139, 48);
             this.rightClickMenu.Text = "rightClickMenu";
             // 
             // viewSource
@@ -171,17 +182,13 @@ namespace Frontend.UserControls
             // 
             // toggleEditMode
             // 
+            this.toggleEditMode.Checked = true;
+            this.toggleEditMode.CheckOnClick = true;
+            this.toggleEditMode.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toggleEditMode.Name = "toggleEditMode";
-            this.toggleEditMode.Size = new System.Drawing.Size(168, 22);
-            this.toggleEditMode.Text = "Toggle Edit Mode";
+            this.toggleEditMode.Size = new System.Drawing.Size(138, 22);
+            this.toggleEditMode.Text = "Edit Mode";
             this.toggleEditMode.Click += new System.EventHandler(this.toggleEditMode_Click);
-            // 
-            // moduleToggleEditMode
-            // 
-            this.moduleToggleEditMode.Name = "moduleToggleEditMode";
-            this.moduleToggleEditMode.Size = new System.Drawing.Size(168, 22);
-            this.moduleToggleEditMode.Text = "Toggle Edit Mode";
-            this.moduleToggleEditMode.Click += new System.EventHandler(this.toggleEditMode_Click);
             // 
             // CanvasTabPage
             // 

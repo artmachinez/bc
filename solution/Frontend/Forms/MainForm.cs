@@ -18,6 +18,7 @@ using Frontend.Helpers;
 
 namespace Frontend.Forms
 {
+
     /// <summary>
     /// Main window, MDI Parent of all subforms
     /// </summary>
@@ -41,6 +42,9 @@ namespace Frontend.Forms
             CFormController.Instance.mainForm = this;
             InitToolbox();
             InitProperties();
+            ToolStripManager.Renderer =
+            new ToolStripProfessionalRenderer(new MenuProfessionalColorTable());
+            CFormController.Instance.mainForm.setStatus("Ready");
         }
 
         /// <summary>
@@ -80,6 +84,8 @@ namespace Frontend.Forms
                 // Save it also
                 CFileHelper.saveProject(tabPage.projectInfo, tabPage.url);
 
+                CFormController.Instance.mainForm.setStatus("Project Created");
+
                 showToolBox();
             }
         }
@@ -110,6 +116,8 @@ namespace Frontend.Forms
                 // is opened
                 this.pageContainerControl_SelectedIndexChanged(null, null);
 
+                CFormController.Instance.mainForm.setStatus("Project Opened");
+
                 this.showToolBox();
             }
         }
@@ -135,6 +143,8 @@ namespace Frontend.Forms
 
                 // And save it
                 CFileHelper.saveProject(activeChild.projectInfo, activeChild.url);
+
+                CFormController.Instance.mainForm.setStatus("Project Saved");
             }
         }
 
@@ -150,6 +160,8 @@ namespace Frontend.Forms
             activeChild.projectInfo.projectXml = activeChild.activeProjectContent;
 
             CFileHelper.saveProject(activeChild.projectInfo, activeChild.url);
+
+            CFormController.Instance.mainForm.setStatus("Project Saved");
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -305,18 +317,6 @@ namespace Frontend.Forms
             }
         }
 
-        private void centerButton_Click_1(object sender, EventArgs e)
-        {
-            CanvasTabPage activeChild = (CanvasTabPage)pageContainerControl.SelectedTab;
-            if (activeChild == null)
-                return;
-
-            if (activeChild.getSelectedTab().Equals("browser"))
-            {
-                activeChild.htmlEditor1.HtmlDocument2.ExecCommand("justifycenter", false, null);
-            }
-        }
-
         #endregion
 
         #region Show/hide utilities callbacks
@@ -467,5 +467,26 @@ namespace Frontend.Forms
 
         #endregion
 
+    }
+
+    /// <summary>
+    /// Own colortable for menu draw
+    /// </summary>
+    class MenuProfessionalColorTable : ProfessionalColorTable
+    {
+        public override Color ToolStripGradientBegin
+        { get { return Color.FromArgb(255, 255, 255); } }
+
+        public override Color ToolStripGradientMiddle
+        { get { return Color.FromArgb(255, 255, 255); } }
+
+        public override Color ToolStripGradientEnd
+        { get { return Color.FromArgb(240, 240, 240); } }
+
+        public override Color MenuStripGradientBegin
+        { get { return Color.FromArgb(255, 255, 255); } }
+
+        public override Color MenuStripGradientEnd
+        { get { return Color.FromArgb(180, 200, 240); } }
     }
 }

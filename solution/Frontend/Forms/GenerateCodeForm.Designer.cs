@@ -75,6 +75,7 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cancelButton.Location = new System.Drawing.Point(284, 70);
             this.cancelButton.Name = "cancelButton";
@@ -95,8 +96,10 @@
             // 
             // GenerateCodeForm
             // 
+            this.AcceptButton = this.generateButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(371, 102);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.pathTextBox);

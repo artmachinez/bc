@@ -54,6 +54,11 @@ namespace Core.Helpers
         /// <returns>Instance of AModule with UserSetup</returns>
         public AModule GetModuleFromNode(HtmlNode node)
         {
+            if (node.Attributes["name"] == null)
+            {
+                return null;
+            }
+            
             AModule module = CModuleReader.Instance.GetModuleInstanceFromName(node.Attributes["name"].Value);
 
             // Set attributes
@@ -140,19 +145,21 @@ namespace Core.Helpers
             {
                 foreach (HtmlNode moduleNode in moduleNodeList)
                 {
-
                     AModule module = this.GetModuleFromNode(moduleNode);
 
-                    // Because nodetag is not html, HtmlNode is not in dom structure (parent is null).
-                    // Therefore HtmlNode.ReplaceChild method cannot by applied asi in this.getProjectXMLFromPreview
-                    HtmlNode newNode = moduleNode.Clone();
-                    moduleNode.Name = "div";
-                    moduleNode.Attributes.RemoveAll();
-                    moduleNode.Attributes.Add("class", "modulecontainer");
-                    moduleNode.Attributes.Add("id", module.setup.id.ToString());
-                    moduleNode.AppendChild(newNode);
+                    if (module != null)
+                    {
+                        // Because nodetag is not html, HtmlNode is not in dom structure (parent is null).
+                        // Therefore HtmlNode.ReplaceChild method cannot by applied asi in this.getProjectXMLFromPreview
+                        HtmlNode newNode = moduleNode.Clone();
+                        moduleNode.Name = "div";
+                        moduleNode.Attributes.RemoveAll();
+                        moduleNode.Attributes.Add("class", "modulecontainer");
+                        moduleNode.Attributes.Add("id", module.setup.id.ToString());
+                        moduleNode.AppendChild(newNode);
 
-                    moduleNode.InnerHtml += module.generatePreview();
+                        moduleNode.InnerHtml += module.generatePreview();
+                    }
                 }
             }
 
