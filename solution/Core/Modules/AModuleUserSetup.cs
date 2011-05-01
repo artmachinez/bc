@@ -63,7 +63,7 @@ namespace Core.Modules
         /// <summary>
         /// Unique id used to identify element in html
         /// </summary>
-        public String id = System.Guid.NewGuid().ToString();
+        public String id = System.Guid.NewGuid().ToString("N");
 
         #endregion
 
