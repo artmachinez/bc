@@ -2,18 +2,21 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B87169C3-7BE3-4EE5-ACEF-5BBE774DC9AF}</ProjectGuid>
+    <ProjectGuid>{36F8DD97-623D-4759-89A4-7C7A083613E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Modules</RootNamespace>
-    <AssemblyName>Modules</AssemblyName>
+    <AssemblyName>ExampleModules</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,7 +25,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,14 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotLiquid, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\references\DotLiquid.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,48 +47,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CDateModule.cs" />
-    <Compile Include="CDateUserSetup.cs" />
-    <Compile Include="CLinkModule.cs" />
-    <Compile Include="CImageModule.cs" />
-    <Compile Include="CLinkUserSetup.cs" />
-    <Compile Include="CImageUserSetup.cs" />
+    <Compile Include="ChatModule.cs" />
+    <Compile Include="ChatModuleUserSetup.cs" />
+    <Compile Include="LoginModule.cs" />
+    <Compile Include="LoginModuleUserSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Chat_Templates\html.tpl" />
+    <EmbeddedResource Include="Chat_Templates\php\backend.php" />
+    <EmbeddedResource Include="Chat_Templates\preview.tpl" />
+    <EmbeddedResource Include="Login_Templates\html.tpl" />
+    <EmbeddedResource Include="Login_Templates\php\login.php" />
+    <EmbeddedResource Include="Login_Templates\preview.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Chat_Templates\php\caller.js" />
+    <EmbeddedResource Include="Chat_Templates\php\style.css" />
+    <EmbeddedResource Include="Login_Templates\aspx\caller.js" />
+    <EmbeddedResource Include="Login_Templates\aspx\xyz.aspx" />
+    <EmbeddedResource Include="Login_Templates\php\caller.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{1D6EFEDD-88AA-47E2-9E28-4707FFDD2896}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Date_Templates\asp\backend.asp" />
-    <EmbeddedResource Include="Date_Templates\php\backend.php" />
-    <EmbeddedResource Include="Image_Templates\html.tpl" />
-    <EmbeddedResource Include="Link_Templates\html.tpl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Date_Templates\preview.tpl">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Date_Templates\html.tpl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image_Templates\preview.tpl">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Link_Templates\preview.tpl" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Date_Templates\asp\caller.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Date_Templates\php\caller.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

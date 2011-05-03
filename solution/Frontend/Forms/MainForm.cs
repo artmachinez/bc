@@ -176,7 +176,7 @@ namespace Frontend.Forms
 
         #endregion
 
-        // TODO: Disable textedit in modules + create icons for textedit buttons
+        // TODO: Disable textedit in modules
         #region Text edit callbacks
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)

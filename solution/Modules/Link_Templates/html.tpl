@@ -1,1 +1,0 @@
-﻿<a href="{{_setup.setup_href}}" id="{{_setup.setup_id}}">{{_setup.setup_title}}</a>
