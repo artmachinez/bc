@@ -1,7 +1,7 @@
 ﻿<style type="text/css">
-  #div_{{_setup.id}} {color: {{_setup.setup_background}}; width: 100px;}
-  #form_{{_setup.id}} label {color: {{_setup.setup_inputcolor}}; border: 1px solid black}
-  #form_{{_setup.id}} input { width: 4em; float: left; text-align: right; margin-right: 0.5em; display: block }
+  #div_{{_setup.id}} {background: {{_setup.setup_background}}; width: 130px;}
+  #form_{{_setup.id}} input {color: {{_setup.setup_inputcolor}}; border: 1px solid black}
+  #form_{{_setup.id}} label { width: 4em; float: left; text-align: right; margin-right: 0.5em; display: block }
   #accept_{{_setup.id}} { margin-left: 4.5em; }
 </style>
 
