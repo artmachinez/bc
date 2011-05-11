@@ -49,6 +49,12 @@
   <ItemGroup>
     <Compile Include="ChatModule.cs" />
     <Compile Include="ChatModuleUserSetup.cs" />
+    <Compile Include="GoogleJSApiModule.cs" />
+    <Compile Include="GoogleJSApiModuleUserSetup.cs" />
+    <Compile Include="JSDateModule.cs" />
+    <Compile Include="JSDateModuleUserSetup.cs" />
+    <Compile Include="LinkModule.cs" />
+    <Compile Include="LinkModuleUserSetup.cs" />
     <Compile Include="LoginModule.cs" />
     <Compile Include="LoginModuleUserSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,7 +62,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Chat_Templates\html.tpl" />
     <EmbeddedResource Include="Chat_Templates\php\backend.php" />
-    <EmbeddedResource Include="Chat_Templates\preview.tpl" />
+    <EmbeddedResource Include="Chat_Templates\preview.tpl">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login_Templates\html.tpl" />
     <EmbeddedResource Include="Login_Templates\php\login.php" />
     <EmbeddedResource Include="Login_Templates\preview.tpl" />
@@ -73,6 +81,25 @@
       <Project>{1D6EFEDD-88AA-47E2-9E28-4707FFDD2896}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Link_Templates\html.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Link_Templates\preview.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JSDate_Templates\html.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JSDate_Templates\preview.tpl" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="GoogleJSApi_Templates\preview.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GoogleJSApi_Templates\html.tpl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
