@@ -128,6 +128,7 @@ namespace Core.Helpers
         public String GetPreviewFromProjectXML(String inputHTML)
         {
             HtmlDocument doc = new HtmlDocument();
+            inputHTML = this.CleanProjectXml(inputHTML);
             doc.LoadHtml(inputHTML);
 
             // For checking/saving output to cache
@@ -201,7 +202,7 @@ namespace Core.Helpers
         /// <summary>
         /// Generates final HTML from project XML
         /// </summary>
-        /// <param name="projectXML"></param>
+        /// <param name="projectXML">The project XML</param>
         /// <param name="moduleList">List of modules generated from project code</param>
         /// <returns>HTML part of final output</returns>
         public String GetHTMLFromProjectXML(String projectXML, out List<AModule> moduleList)
@@ -231,10 +232,40 @@ namespace Core.Helpers
         }
 
         /// <summary>
+        /// Removes module tags that are not loadable
+        /// </summary>
+        /// <param name="projectXML">The project XML</param>
+        /// <returns></returns>
+        public String CleanProjectXml(String projectXML)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(projectXML);
+
+            HtmlNodeCollection moduleNodeList = doc.DocumentNode.SelectNodes("//module");
+
+            if (moduleNodeList != null)
+            {
+                foreach (HtmlNode moduleNode in moduleNodeList)
+                {
+                    try
+                    {
+                        AModule module = this.GetModuleFromNode(moduleNode);
+                    }
+                    catch (Exception)
+                    {
+                        moduleNode.Remove();
+                    }
+                }
+            }
+            return doc.DocumentNode.OuterHtml;
+        }
+
+
+        /// <summary>
         /// Changes language of project XML - removes all modules that are not in new language
         /// </summary>
-        /// <param name="projectXML"></param>
-        /// <param name="newLang"></param>
+        /// <param name="projectXML">The project XML</param>
+        /// <param name="newLang">The new lang</param>
         /// <returns></returns>
         public String ChangeProjectLanguage(String projectXML, String newLang)
         {

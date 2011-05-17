@@ -133,7 +133,7 @@ namespace Core.Helpers
                 if (sr != null)
                     sr.Close();
             }
-
+            projectInfo.projectXml = CXMLParser.Instance.CleanProjectXml(projectInfo.projectXml);
             return projectInfo;
         }
 
