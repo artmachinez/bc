@@ -11,7 +11,7 @@
             $input.keyup(function (e) {
                 if (e.which == 13) {
 
-                    $.fn.chat.postMessage($input.val().substring(0, $input.val().length - 1), params.chatroom, new function () {
+                    $.fn.chat.postMessage($input.val().substring(0, $input.val().length - 1), params.chatroom, function () {
                         $window.append($('<div></div>').text(params.username + ': ' + $input.val()));
                         $input.val(null);
                         $window.scrollTop(1000);

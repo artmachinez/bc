@@ -12,7 +12,7 @@
       Current users : <span class="currentVisBox"></span>
     </div>
     <div class="item">
-      Total Users : <span class="totalVisBox"></span>
+      Total users : <span class="totalVisBox"></span>
     </div>
     {% if _setup.setup_showip != '0' %}
     <div class="item">
