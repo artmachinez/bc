@@ -6,9 +6,9 @@ using Core.Modules;
 
 namespace Modules
 {
-    class JSDateModuleUserSetup : AModuleUserSetup
+    class DateModuleUserSetup : AModuleUserSetup
     {
-        new public static String moduleName = "JSDate";
+        new public static String moduleName = "Date";
 
         #region User Variables
 

@@ -6,9 +6,9 @@ using Core.Modules;
 
 namespace Modules
 {
-    class GoogleJSApiModuleUserSetup : AModuleUserSetup
+    class JQueryModuleUserSetup : AModuleUserSetup
     {
-        new public static String moduleName = "GoogleJSApi";
+        new public static String moduleName = "JQuery";
 
         #region User Variables
 

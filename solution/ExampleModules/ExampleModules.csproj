@@ -49,10 +49,12 @@
   <ItemGroup>
     <Compile Include="ChatModule.cs" />
     <Compile Include="ChatModuleUserSetup.cs" />
-    <Compile Include="GoogleJSApiModule.cs" />
-    <Compile Include="GoogleJSApiModuleUserSetup.cs" />
-    <Compile Include="JSDateModule.cs" />
-    <Compile Include="JSDateModuleUserSetup.cs" />
+    <Compile Include="CounterDateModule.cs" />
+    <Compile Include="CounterModuleUserSetup.cs" />
+    <Compile Include="JQueryModule.cs" />
+    <Compile Include="JQueryModuleUserSetup.cs" />
+    <Compile Include="DateModule.cs" />
+    <Compile Include="DateModuleUserSetup.cs" />
     <Compile Include="LinkModule.cs" />
     <Compile Include="LinkModuleUserSetup.cs" />
     <Compile Include="LoginModule.cs" />
@@ -66,13 +68,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login_Templates\html.tpl" />
     <EmbeddedResource Include="Login_Templates\php\login.php" />
-    <EmbeddedResource Include="Login_Templates\preview.tpl" />
+    <EmbeddedResource Include="Login_Templates\preview.tpl">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Chat_Templates\php\chat.js" />
     <EmbeddedResource Include="Chat_Templates\php\default.css" />
-    <EmbeddedResource Include="Login_Templates\aspx\caller.js" />
-    <EmbeddedResource Include="Login_Templates\aspx\xyz.aspx" />
     <EmbeddedResource Include="Login_Templates\php\caller.js" />
   </ItemGroup>
   <ItemGroup>
@@ -88,10 +90,10 @@
     <EmbeddedResource Include="Link_Templates\preview.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JSDate_Templates\html.tpl" />
+    <EmbeddedResource Include="Date_Templates\html.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JSDate_Templates\preview.tpl">
+    <EmbeddedResource Include="Date_Templates\preview.tpl">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -103,13 +105,47 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GoogleJSApi_Templates\preview.tpl" />
+    <EmbeddedResource Include="JQuery_Templates\preview.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GoogleJSApi_Templates\html.tpl" />
+    <EmbeddedResource Include="JQuery_Templates\html.tpl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Chat_Templates\html.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JQuery_Templates\aspx\JQuery.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JQuery_Templates\php\JQuery.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\aspx\default.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\aspx\counter.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\aspx\WebService.asmx">
+      <SubType>Component</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\html.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\php\default.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\php\counter.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\php\WebService.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Counter_Templates\preview.tpl">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

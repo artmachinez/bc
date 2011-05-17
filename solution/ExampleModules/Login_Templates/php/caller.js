@@ -28,6 +28,6 @@
                 $("#logout_{{_setup.id}}").show();
             });
         });
-        return false; //not to post the  form physically
+        return false;
     });
 });

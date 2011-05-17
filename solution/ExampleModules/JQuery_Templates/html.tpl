@@ -1,0 +1,1 @@
+﻿<script type="text/javascript" src="modules/{{_setup.id}}/jquery.js"></script>

@@ -1,5 +1,4 @@
-﻿<!--<script type="text/javascript" src="js/jquery.js"></script>-->
-<script type="text/javascript" src="modules/{{_setup.id}}/chat.js"></script>
+﻿<script type="text/javascript" src="modules/{{_setup.id}}/chat.js"></script>
 <link rel="Stylesheet" href="modules/{{_setup.id}}/default.css" />
 
 <script type="text/javascript">

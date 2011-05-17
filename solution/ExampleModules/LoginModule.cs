@@ -10,7 +10,7 @@ namespace Modules
     {
         new public static String group = "Advanced Examples";
         new public static String name = "Login";
-        new public static List<String> WSLanguages = new List<String>(new String[] { "php", "aspx" });
+        new public static List<String> WSLanguages = new List<String>(new String[] { "php" });
 
         public LoginModule(AModuleUserSetup setup) : base(setup) {}
     }

@@ -84,10 +84,17 @@ namespace Core.Modules
 
             // And read it
             Stream resource = this.GetType().Assembly.GetManifestResourceStream(templatePath + name);
-            using (StreamReader reader = new StreamReader(resource))
+            try
             {
-                String template = reader.ReadToEnd();
-                return template;
+                using (StreamReader reader = new StreamReader(resource))
+                {
+                    String template = reader.ReadToEnd();
+                    return template;
+                }
+            }
+            catch (Exception)
+            {
+                return "<div>template.tpl error</div>";
             }
         }
 

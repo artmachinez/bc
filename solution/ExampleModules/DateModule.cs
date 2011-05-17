@@ -6,12 +6,12 @@ using Core.Modules;
 
 namespace Modules
 {
-    public class GoogleJSApiModule : AModule
+    public class DateModule : AModule
     {
-        new public static String group = "Online";
-        new public static String name = "GoogleJSApi";
+        new public static String group = "Simple Examples";
+        new public static String name = "Date";
         new public static List<String> WSLanguages = new List<String>();
 
-        public GoogleJSApiModule(AModuleUserSetup setup) : base(setup) { }
+        public DateModule(AModuleUserSetup setup) : base(setup) { }
     }
 }
