@@ -10,7 +10,7 @@ namespace Modules
     {
         new public static String group = "Advanced Examples";
         new public static String name = "Chat";
-        new public static List<String> WSLanguages = new List<String>(new String[] { "php" });
+        new public static List<String> WSLanguages = new List<String>(new String[] { "php", "aspx" });
 
         public ChatModule(AModuleUserSetup setup) : base(setup) { }
     }

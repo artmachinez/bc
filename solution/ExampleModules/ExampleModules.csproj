@@ -60,8 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Chat_Templates\html.tpl" />
-    <EmbeddedResource Include="Chat_Templates\php\backend.php" />
+    <EmbeddedResource Include="Chat_Templates\php\WebService.php" />
     <EmbeddedResource Include="Chat_Templates\preview.tpl">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -70,8 +69,8 @@
     <EmbeddedResource Include="Login_Templates\preview.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Chat_Templates\php\caller.js" />
-    <EmbeddedResource Include="Chat_Templates\php\style.css" />
+    <EmbeddedResource Include="Chat_Templates\php\chat.js" />
+    <EmbeddedResource Include="Chat_Templates\php\default.css" />
     <EmbeddedResource Include="Login_Templates\aspx\caller.js" />
     <EmbeddedResource Include="Login_Templates\aspx\xyz.aspx" />
     <EmbeddedResource Include="Login_Templates\php\caller.js" />
@@ -92,14 +91,25 @@
     <EmbeddedResource Include="JSDate_Templates\html.tpl" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JSDate_Templates\preview.tpl" />
+    <EmbeddedResource Include="JSDate_Templates\preview.tpl">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Chat_Templates\aspx\chat.js" />
+    <EmbeddedResource Include="Chat_Templates\aspx\default.css" />
+    <EmbeddedResource Include="Chat_Templates\aspx\WebService.asmx">
+      <SubType>Component</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GoogleJSApi_Templates\preview.tpl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GoogleJSApi_Templates\html.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Chat_Templates\html.tpl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

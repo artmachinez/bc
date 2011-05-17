@@ -12,28 +12,21 @@ namespace Modules
 
         #region User Variables
 
-        private String _setup_headercolor = "black";
-        public String setup_headercolor
+        private String _setup_height = "450px";
+        public String setup_height
         {
-            get { return this._setup_headercolor; }
-            set { this._setup_headercolor = value; }
+            get { return this._setup_height; }
+            set { this._setup_height = value; }
         }
 
-        private String _setup_headertext = "My chat";
-        public String setup_headertext
-        {
-            get { return this._setup_headertext; }
-            set { this._setup_headertext = value; }
-        }
-
-        private String _setup_width = "300px";
+        private String _setup_width = "800px";
         public String setup_width
         {
             get { return this._setup_width; }
             set { this._setup_width = value; }
         }
 
-        private String _setup_bgcolor = "white";
+        private String _setup_bgcolor = "#EEEEEE";
         public String setup_bgcolor
         {
             get { return this._setup_bgcolor; }
